@@ -12,7 +12,6 @@ public class Book : BaseEntity
 
     [Required]
     [StringLength(13, ErrorMessage = "The ISBN must be 13 digits long.")]
-    [Un]
     public string ISBN { get; set; } = string.Empty;
 
     [StringLength(250)]
