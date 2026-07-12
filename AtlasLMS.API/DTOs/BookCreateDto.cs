@@ -1,10 +1,8 @@
-﻿using AtlasLMS.API.Entities.Common;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AtlasLMS.API.Entities;
+namespace AtlasLMS.API.DTOs;
 
-public class Book : BaseEntity
+public class BookCreateDto
 {
     [Required]
     [StringLength(55, ErrorMessage = "Title length can't be more than 55.", MinimumLength = 3)]
@@ -20,15 +18,9 @@ public class Book : BaseEntity
     [Required]
     public DateTime PublicationAt { get; set; }
 
-    // Related Properties
-    //
-    //
-    //
-    [ForeignKey("AuthorID")]
+    [Required]
     public int AuthorID { get; set; }
-    public Author? Author { get; set; }
 
-    [ForeignKey("CategoryID")]
+    [Required]
     public int CategoryID { get; set; }
-    public Category? Category { get; set; }
 }

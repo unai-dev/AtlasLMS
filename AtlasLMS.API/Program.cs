@@ -8,13 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 // =======================================
 // =========== BASE CONFIGURATION ========
 // =======================================
-builder.Services.AddLogging();
 builder.Services.AddControllers();
 
 // =======================================
 // =============== DB CONTEXT ============
 // =======================================
-builder.Services.AddDbContext<AtlasDbContext>(cfg => cfg.UseSqlServer("name:LMS_CN"));
+builder.Services.AddDbContext<AtlasDbContext>(cfg => cfg.UseSqlServer(builder.Configuration.GetConnectionString("LMS_CN")));
 
 // =======================================
 // ================ SERVICES =============

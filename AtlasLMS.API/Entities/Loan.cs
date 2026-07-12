@@ -1,4 +1,5 @@
 ﻿using AtlasLMS.API.Entities.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AtlasLMS.API.Entities;
 
@@ -11,6 +12,7 @@ public class Loan : BaseEntity
     //
     //
     //
+    [ForeignKey("BookID")]
     public int BookID { get; set; }
     public Book? Book { get; set; }
 }
