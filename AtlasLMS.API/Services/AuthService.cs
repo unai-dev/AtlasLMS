@@ -34,13 +34,20 @@ public class AuthService : IAuthService
 
         var user = new User
         {
-            UserName = dto.UserName == string.Empty ? dto.Email.Split("@")[0]: dto.UserName,
+            UserName = dto.UserName == string.Empty ? dto.Email.Split("@")[0] : dto.UserName,
             Email = dto.Email
         };
 
         try
         {
             var result = await _userManager.CreateAsync(user, dto.Password!);
+
+            var resultRole = await _userManager.AddToRoleAsync(user, "CUSTOMER");
+
+            if (!resultRole.Succeeded)
+            {
+                throw new BadRequestException("Se creo el usuario, pero el rol no pudo ser asignado");
+            }
 
             return await GetJwtToken(dto.Email);
         }

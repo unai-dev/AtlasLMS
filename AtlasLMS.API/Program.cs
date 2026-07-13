@@ -47,6 +47,11 @@ builder.Services.AddAuthentication().AddJwtBearer(cfg =>
         ClockSkew = TimeSpan.Zero
     };
 });
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("ADMIN", policy => policy.RequireClaim("ADMIN"));
+    opt.AddPolicy("CUSTOMER", policy => policy.RequireClaim("CUSTOMER"));
+});
 // =======================================
 // ================== CORS ===============
 // =======================================
