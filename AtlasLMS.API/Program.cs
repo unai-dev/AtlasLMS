@@ -22,6 +22,7 @@ builder.Services.AddDbContext<AtlasDbContext>(cfg => cfg.UseSqlServer(builder.Co
 // ================ SERVICES =============
 // =======================================
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 // =======================================
 // =============== AUTOMAPPER ============
 // =======================================
@@ -31,6 +32,7 @@ builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 // =============== AUTH ==================
 // =======================================
 builder.Services.AddIdentityCore<User>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AtlasDbContext>()
     .AddDefaultTokenProviders()
     .AddSignInManager();
