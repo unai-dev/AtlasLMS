@@ -26,7 +26,17 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponseDto> Register(UserCreateDto dto)
     {
-        var user = new User { UserName = dto.UserName, Email = dto.Email };
+        var emailUnique = await _userManager.FindByEmailAsync(dto.Email);
+        if (emailUnique is not null)
+        {
+            throw new BadRequestException("Este email ya consta en nuestra base de datos");
+        }
+
+        var user = new User
+        {
+            UserName = dto.UserName == string.Empty ? dto.Email.Split("@")[0]: dto.UserName,
+            Email = dto.Email
+        };
 
         try
         {
