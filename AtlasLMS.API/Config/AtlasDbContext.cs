@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AtlasLMS.API.Config;
 
-public class AtlasDbContext: IdentityDbContext<User>
+public class AtlasDbContext : IdentityDbContext<User>
 {
     public AtlasDbContext(DbContextOptions options) : base(options)
     {

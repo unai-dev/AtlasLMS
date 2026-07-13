@@ -1,4 +1,7 @@
 using AtlasLMS.API.Config;
+using AtlasLMS.API.Entities;
+using AtlasLMS.API.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -18,7 +21,7 @@ builder.Services.AddDbContext<AtlasDbContext>(cfg => cfg.UseSqlServer(builder.Co
 // =======================================
 // ================ SERVICES =============
 // =======================================
-
+builder.Services.AddScoped<IAuthService, AuthService>();
 // =======================================
 // =============== AUTOMAPPER ============
 // =======================================
@@ -27,6 +30,10 @@ builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 // =======================================
 // =============== AUTH ==================
 // =======================================
+builder.Services.AddIdentityCore<User>()
+    .AddEntityFrameworkStores<AtlasDbContext>()
+    .AddDefaultTokenProviders()
+    .AddSignInManager();
 builder.Services.AddAuthentication().AddJwtBearer(cfg =>
 {
     cfg.MapInboundClaims = false;
@@ -40,7 +47,6 @@ builder.Services.AddAuthentication().AddJwtBearer(cfg =>
         ClockSkew = TimeSpan.Zero
     };
 });
-
 // =======================================
 // ================== CORS ===============
 // =======================================
@@ -48,7 +54,7 @@ builder.Services.AddCors(policy =>
 {
     policy.AddDefaultPolicy(cfg =>
     {
-        cfg.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
+        cfg.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
     });
 });
 // =======================================
