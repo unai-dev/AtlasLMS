@@ -45,7 +45,7 @@ public class AuthService : IAuthService
         }
         catch (Exception ex)
         {
-            _logger.Log(LogLevel.Error, ex.Message, ex);
+            _logger.LogError(ex.Message, ex);
             throw new InternalServerException($"Failed to register {dto.Email}");
         }
 
@@ -66,7 +66,7 @@ public class AuthService : IAuthService
         }
         catch (Exception ex)
         {
-            _logger.Log(LogLevel.Error, ex.Message, ex);
+            _logger.LogError(ex.Message, ex);
             throw new InternalServerException($"Failed to login {dto.Email}");
         }
     }
