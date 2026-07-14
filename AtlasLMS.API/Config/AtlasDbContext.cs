@@ -15,6 +15,7 @@ public class AtlasDbContext : IdentityDbContext<User>
     public DbSet<Author> Authors { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Loan> Loans { get; set; }
+    public DbSet<Location> Locations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
