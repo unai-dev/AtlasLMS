@@ -55,7 +55,7 @@ public class AuthorService : IAuthorService
         try
         {
             var author = await _context.Authors.Include(x => x.Books)
-                .ThenInclude(x => x.Title).FirstOrDefaultAsync(x => x.ID == ID) ??
+                .FirstOrDefaultAsync(x => x.ID == ID) ??
                 throw new NotFoundException($"Autor con ID {ID} no encontrado");
 
             return _mapper.Map<AuthorDetailDto>(author);
@@ -69,7 +69,7 @@ public class AuthorService : IAuthorService
 
     public async Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto)
     {
-        var exists = await _context.Authors.AnyAsync(x => x.FirstName.Concat(dto.LastName)  == dto.FirstName.Concat(dto.LastName));
+        var exists = await _context.Authors.AnyAsync(x => x.FirstName == dto.FirstName && x.LastName == dto.LastName);
         if (exists)
         {
             throw new BadRequestException($"El autor {dto.FirstName.Concat(dto.LastName)} ya existe");

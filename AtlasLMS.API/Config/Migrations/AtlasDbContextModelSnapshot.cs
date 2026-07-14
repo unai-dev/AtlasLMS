@@ -120,6 +120,32 @@ namespace AtlasLMS.API.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedAt = new DateTime(2026, 7, 14, 7, 22, 47, 535, DateTimeKind.Local).AddTicks(4352),
+                            Name = "Ficción"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedAt = new DateTime(2026, 7, 14, 7, 22, 47, 536, DateTimeKind.Local).AddTicks(8421),
+                            Name = "Ciencia y Tecnología"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CreatedAt = new DateTime(2026, 7, 14, 7, 22, 47, 536, DateTimeKind.Local).AddTicks(8438),
+                            Name = "Historia y Biografías"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            CreatedAt = new DateTime(2026, 7, 14, 7, 22, 47, 536, DateTimeKind.Local).AddTicks(8440),
+                            Name = "Desarrollo Personal"
+                        });
                 });
 
             modelBuilder.Entity("AtlasLMS.API.Entities.Loan", b =>
