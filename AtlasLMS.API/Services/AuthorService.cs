@@ -69,6 +69,11 @@ public class AuthorService : IAuthorService
 
     public async Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto)
     {
+        var exists = await _context.Authors.AnyAsync(x => x.FirstName.Concat(dto.LastName)  == dto.FirstName.Concat(dto.LastName));
+        if (exists)
+        {
+            throw new BadRequestException($"El autor {dto.FirstName.Concat(dto.LastName)} ya existe");
+        }
         try
         {
             var author = _mapper.Map<Author>(dto);

@@ -53,6 +53,12 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryReadDto> CreateCategoryAsync(CategoryCreateDto dto)
     {
+        var exists = await _context.Categories.AnyAsync(x => x.Name == dto.Name);
+        if (exists)
+        {
+            throw new BadRequestException($"La categoria {dto.Name} ya existe");
+        }
+
         try
         {
             var category = _mapper.Map<Category>(dto);
