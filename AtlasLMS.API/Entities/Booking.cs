@@ -16,7 +16,7 @@ public class Booking : BaseEntity
     //
     //
     [ForeignKey("UserID")]
-    public int UserID { get; set; }
+    public string UserID { get; set; } = default!;
     public User? User { get; set; }
 
     [ForeignKey("BookID")]

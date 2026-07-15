@@ -11,15 +11,15 @@ public class Location : BaseEntity
 {
     [Required]
     [StringLength(10)]
-    public string Aisle { get; set; } = string.Empty;
+    public string Aisle { get; set; } = default!;
 
     [Required]
     [StringLength(10)]
-    public string Shelf { get; set; } = string.Empty;
+    public string Shelf { get; set; } = default!;
 
     [Required]
     [StringLength(10)]
-    public string Column { get; set; } = string.Empty;
+    public string Column { get; set; } = default!;
 
     // Related Properties
     //

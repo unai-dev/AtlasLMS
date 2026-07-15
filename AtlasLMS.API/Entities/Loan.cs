@@ -17,6 +17,6 @@ public class Loan : BaseEntity
     public Book? Book { get; set; }
 
     [ForeignKey("UserID")]
-    public int UserID { get; set; }
+    public string UserID { get; set; } = default!;
     public User? User { get; set; }
 }
