@@ -37,12 +37,10 @@ public class CustomExceptionMiddleware
             _ => HttpStatusCode.InternalServerError,
         };
 
-        var response = new
+        var response = new MiddlewareExceptionResponse
         {
-            success = false,
-            message = ex.Message,
-            statusCode = statusCode,
-            detail = ex.InnerException?.Message
+            Message = ex.Message,
+            StatusCode = statusCode,
         };
 
         context.Response.ContentType = "application/json";

@@ -32,8 +32,11 @@ public class AuthorController : ControllerBase
         Ok(await _authorService.GetAuthorDetailAsync(ID));
 
     [HttpPost]
-    public async Task<ActionResult<AuthorReadDto>> Post([FromBody] AuthorCreateDto dto) =>
-        Ok(await _authorService.CreateAuthorAsync(dto));
+    public async Task<ActionResult<AuthorReadDto>> Post([FromBody] AuthorCreateDto dto)
+    {
+        var result = await _authorService.CreateAuthorAsync(dto);
+        return CreatedAtAction(nameof(Get), new { ID = result.ID }, result);
+    }
 
     [HttpDelete]
     [Route("{id:int}")]

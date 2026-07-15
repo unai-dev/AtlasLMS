@@ -27,8 +27,11 @@ public class CategoryController : ControllerBase
         Ok(await _categoryService.GetCategoryAsync(ID));
 
     [HttpPost]
-    public async Task<ActionResult<CategoryReadDto>> Post([FromBody] CategoryCreateDto dto) =>
-        Ok(await _categoryService.CreateCategoryAsync(dto));
+    public async Task<ActionResult<CategoryReadDto>> Post([FromBody] CategoryCreateDto dto)
+    {
+        var result = await _categoryService.CreateCategoryAsync(dto);
+        return CreatedAtAction(nameof(Get), new { ID = result.ID }, result);
+    }
 
     [HttpDelete]
     [Route("{id:int}")]
