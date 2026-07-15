@@ -8,4 +8,5 @@ public class BookReadDto : BaseDto
     public DateTime PublicationAt { get; set; }
     public int AuthorID { get; set; }
     public int CategoryID { get; set; }
+    public int LocationID { get; set; }
 }

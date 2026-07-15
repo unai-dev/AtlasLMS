@@ -18,5 +18,5 @@ public class BookingUpdateDto
     [Required]
     public int BookID { get; set; }
 
-    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
 }

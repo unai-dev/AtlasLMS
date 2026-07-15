@@ -7,5 +7,8 @@ public class LoanCreateDto
     [Required]
     public int BookID { get; set; }
 
-    public DateTime LifeTime { get; set; } = DateTime.Now.AddDays(14);
+    [Required]
+    public int UserID { get; set; }
+
+    public DateTime LifeTime { get; set; } = DateTime.UtcNow.AddDays(14);
 }

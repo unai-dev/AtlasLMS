@@ -4,4 +4,5 @@ public class LoanReadDto : BaseDto
 {
     public DateTime LifeTime { get; set; }
     public int BookID { get; set; }
+    public int UserID { get; set; }
 }

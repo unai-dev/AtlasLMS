@@ -24,5 +24,8 @@ public class BookUpdateDto
     [Required]
     public int CategoryID { get; set; }
 
-    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    [Required]
+    public int LocationID { get; set; }
+
+    public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
 }

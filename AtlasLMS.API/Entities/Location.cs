@@ -10,14 +10,20 @@ namespace AtlasLMS.API.Entities;
 public class Location : BaseEntity
 {
     [Required]
-    [StringLength(55)]
+    [StringLength(10)]
     public string Aisle { get; set; } = string.Empty;
 
     [Required]
-    [StringLength(55)]
+    [StringLength(10)]
     public string Shelf { get; set; } = string.Empty;
 
     [Required]
-    [StringLength(55)]
+    [StringLength(10)]
     public string Column { get; set; } = string.Empty;
+
+    // Related Properties
+    //
+    //
+    //
+    public List<Book> Books { get; set; } = new List<Book>();
 }

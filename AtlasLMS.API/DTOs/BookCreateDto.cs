@@ -23,4 +23,7 @@ public class BookCreateDto
 
     [Required]
     public int CategoryID { get; set; }
+
+    [Required]
+    public int LocationID { get; set; }
 }

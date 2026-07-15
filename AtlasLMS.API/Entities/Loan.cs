@@ -6,7 +6,7 @@ namespace AtlasLMS.API.Entities;
 public class Loan : BaseEntity
 {
     // 14 days loan period default
-    public DateTime LifeTime { get; set; } = DateTime.Now.AddDays(14);
+    public DateTime LifeTime { get; set; } = DateTime.UtcNow.AddDays(14);
 
     // Related Properties
     //
@@ -15,4 +15,8 @@ public class Loan : BaseEntity
     [ForeignKey("BookID")]
     public int BookID { get; set; }
     public Book? Book { get; set; }
+
+    [ForeignKey("UserID")]
+    public int UserID { get; set; }
+    public User? User { get; set; }
 }
