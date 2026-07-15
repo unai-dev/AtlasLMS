@@ -38,37 +38,21 @@ public class AuthService : IAuthService
             Email = dto.Email
         };
 
-        try
-        {
-            var result = await _userManager.CreateAsync(user, dto.Password!);
-            return await GetJwtToken(dto.Email);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.Message, ex);
-            throw new InternalServerException($"Failed to register {dto.Email}");
-        }
-
+        var result = await _userManager.CreateAsync(user, dto.Password!);
+        return await GetJwtToken(dto.Email);
     }
 
     public async Task<AuthResponseDto> Login(UserCreateDto dto)
     {
         var user = await _userManager.FindByEmailAsync(dto.Email) ?? throw new NotFoundException("El usuario no exite");
+        var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password!, false);
 
-        try
+        if (!result.Succeeded)
         {
-            var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password!, false);
-
-            if (!result.Succeeded) throw new BadRequestException("La contraseña proporcionada no es valida");
-
-            return await GetJwtToken(dto.Email);
-
+            throw new BadRequestException("La contraseña proporcionada no es valida");
         }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.Message, ex);
-            throw new InternalServerException($"Failed to login {dto.Email}");
-        }
+
+        return await GetJwtToken(dto.Email);
     }
 
     private async Task<AuthResponseDto> GetJwtToken(string email)

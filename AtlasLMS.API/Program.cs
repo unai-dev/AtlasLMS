@@ -1,5 +1,6 @@
 using AtlasLMS.API.Config;
 using AtlasLMS.API.Entities;
+using AtlasLMS.API.Middleware;
 using AtlasLMS.API.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -73,6 +74,7 @@ var app = builder.Build();
 // =======================================
 // =============== MIDDLEWARES ===========
 // =======================================
+app.UseMiddleware<CustomExceptionMiddleware>();
 app.MapControllers();
 app.UseCors();
 app.UseAuthentication();

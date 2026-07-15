@@ -23,48 +23,22 @@ public class AuthorService : IAuthorService
 
     public async Task<IEnumerable<AuthorReadDto>> GetAuthorsAsync()
     {
-        try
-        {
-            var authors = await _context.Authors.ToListAsync();
-            return _mapper.Map<IEnumerable<AuthorReadDto>>(authors);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.Message, ex);
-            throw new InternalServerException($"Error interno del servidor {ex.Message}");
-        }
+        var authors = await _context.Authors.ToListAsync();
+        return _mapper.Map<IEnumerable<AuthorReadDto>>(authors);
     }
 
     public async Task<AuthorReadDto> GetAuthorAsync(int ID)
     {
-        try
-        {
-            var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID) ??
-                throw new NotFoundException("Autor no encontrado");
-            return _mapper.Map<AuthorReadDto>(author);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.Message, ex);
-            throw new InternalServerException($"Error interno del servidor {ex.Message}");
-        }
+        var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID) ??
+            throw new NotFoundException($"Autor con ID  {ID} no encontrado");
+        return _mapper.Map<AuthorReadDto>(author);
     }
 
     public async Task<AuthorDetailDto> GetAuthorDetailAsync(int ID)
     {
-        try
-        {
-            var author = await _context.Authors.Include(x => x.Books)
-                .FirstOrDefaultAsync(x => x.ID == ID) ??
-                throw new NotFoundException($"Autor con ID {ID} no encontrado");
-
-            return _mapper.Map<AuthorDetailDto>(author);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.Message, ex);
-            throw new InternalServerException($"Error interno del servidor {ex.Message}");
-        }
+        var author = await _context.Authors.Include(x => x.Books)
+            .FirstOrDefaultAsync(x => x.ID == ID) ?? throw new NotFoundException($"Autor con ID {ID} no encontrado");
+        return _mapper.Map<AuthorDetailDto>(author);
     }
 
     public async Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto)
@@ -72,38 +46,23 @@ public class AuthorService : IAuthorService
         var exists = await _context.Authors.AnyAsync(x => x.FirstName == dto.FirstName && x.LastName == dto.LastName);
         if (exists)
         {
-            throw new BadRequestException($"El autor {dto.FirstName.Concat(dto.LastName)} ya existe");
+            throw new BadRequestException($"El autor {dto.FirstName + " " + dto.LastName} ya existe");
         }
-        try
-        {
-            var author = _mapper.Map<Author>(dto);
-            _context.Add(author);
-            await _context.SaveChangesAsync();
 
-            return _mapper.Map<AuthorReadDto>(author);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.Message, ex);
-            throw new InternalServerException($"Error interno del servidor {ex.Message}");
-        }
+        var author = _mapper.Map<Author>(dto);
+        _context.Add(author);
+        await _context.SaveChangesAsync();
+
+        return _mapper.Map<AuthorReadDto>(author);
     }
+
 
     public async Task DeleteAuthorAsync(int ID)
     {
-        try
-        {
-            var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID) ??
-                throw new NotFoundException("Autor no encontrado");
+        var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID) ??
+            throw new NotFoundException($"Autor con ID {ID} no encontrado");
 
-            _context.Remove(author);
-            await _context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.Message, ex);
-            throw new InternalServerException($"Error interno del servidor {ex.Message}");
-        }
+        _context.Remove(author);
+        await _context.SaveChangesAsync();
     }
-
 }
