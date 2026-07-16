@@ -6,7 +6,6 @@ namespace AtlasLMS.API.Entities;
 
 public class Booking : BaseEntity
 {
-    [Required]
     public DateTime StartTime { get; set; }
     public DateTime PickupDeadline { get; set; } = DateTime.UtcNow.AddDays(7);
     public EBookingStatus Status { get; set; } = EBookingStatus.Active;

@@ -1,4 +1,4 @@
-﻿using AtlasLMS.API.Config;
+﻿using AtlasLMS.API.Data;
 using AtlasLMS.API.DTOs;
 using AtlasLMS.API.Entities;
 using AtlasLMS.API.Utils.Exceptions;
