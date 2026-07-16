@@ -2,10 +2,11 @@ using AtlasLMS.Data;
 using AtlasLMS.Application.DTOs.Create;
 using AtlasLMS.Application.DTOs.Detail;
 using AtlasLMS.Application.DTOs.Read;
-using AtlasLMS.Data.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using AtlasLMS.Application.Contracts;
+using AtlasLMS.Domain.Entities;
 
 namespace AtlasLMS.Application.Services;
 

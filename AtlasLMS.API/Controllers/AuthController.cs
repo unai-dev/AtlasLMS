@@ -1,6 +1,6 @@
+using AtlasLMS.Application.Contracts;
 using AtlasLMS.Application.DTOs;
 using AtlasLMS.Application.DTOs.Create;
-using AtlasLMS.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AtlasLMS.API.Controllers;

@@ -1,7 +1,7 @@
 using AtlasLMS.Application.DTOs;
 using AtlasLMS.Application.DTOs.Create;
 
-namespace AtlasLMS.Application.Services;
+namespace AtlasLMS.Application.Contracts;
 
 public interface IAuthService
 {

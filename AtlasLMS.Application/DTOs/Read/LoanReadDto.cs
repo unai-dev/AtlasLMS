@@ -1,5 +1,5 @@
 using AtlasLMS.Application.DTOs.Common;
-using AtlasLMS.Data.Entities;
+using AtlasLMS.Domain.Entities;
 
 namespace AtlasLMS.Application.DTOs.Read;
 

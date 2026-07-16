@@ -1,6 +1,6 @@
 using AtlasLMS.Application.DTOs.Common;
-using AtlasLMS.Data.Entities;
-using AtlasLMS.Data.Entities.Enums;
+using AtlasLMS.Domain.Entities;
+using AtlasLMS.Domain.Entities.Enums;
 
 namespace AtlasLMS.Application.DTOs.Read;
 

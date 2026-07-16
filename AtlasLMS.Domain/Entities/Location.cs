@@ -1,6 +1,6 @@
-using AtlasLMS.Data.Entities.Common;
+using AtlasLMS.Domain.Entities.Common;
 
-namespace AtlasLMS.Data.Entities;
+namespace AtlasLMS.Domain.Entities;
 
 public class Location : BaseEntity
 {

@@ -1,9 +1,7 @@
-using AtlasLMS.Data.Entities.Common;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+using AtlasLMS.Domain.Entities.Common;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AtlasLMS.Data.Entities;
+namespace AtlasLMS.Domain.Entities;
 
 public class Book : BaseEntity
 {

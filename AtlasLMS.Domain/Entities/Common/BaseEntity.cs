@@ -1,4 +1,4 @@
-namespace AtlasLMS.Data.Entities.Common;
+namespace AtlasLMS.Domain.Entities.Common;
 
 public abstract class BaseEntity
 {

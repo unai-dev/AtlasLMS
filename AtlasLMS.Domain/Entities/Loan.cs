@@ -1,7 +1,7 @@
-using AtlasLMS.Data.Entities.Common;
+using AtlasLMS.Domain.Entities.Common;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AtlasLMS.Data.Entities;
+namespace AtlasLMS.Domain.Entities;
 
 public class Loan : BaseEntity
 {

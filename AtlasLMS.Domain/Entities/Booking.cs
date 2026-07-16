@@ -1,14 +1,14 @@
-using AtlasLMS.Data.Entities.Common;
-using AtlasLMS.Data.Entities.Enums;
+using AtlasLMS.Domain.Entities.Common;
+using AtlasLMS.Domain.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AtlasLMS.Data.Entities;
+namespace AtlasLMS.Domain.Entities;
 
 public class Booking : BaseEntity
 {
     public DateTime StartTime { get; set; }
-    public DateTime PickupDeadline { get; set; } 
-    public EBookingStatus Status { get; set; } 
+    public DateTime PickupDeadline { get; set; }
+    public EBookingStatus Status { get; set; }
 
     // Related Properties
     //

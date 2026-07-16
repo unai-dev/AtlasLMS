@@ -1,4 +1,4 @@
-using AtlasLMS.Data.Entities;
+using AtlasLMS.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,11 +11,11 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
         builder.Property(x => x.Aisle)
             .IsRequired()
             .HasMaxLength(5);
-        
+
         builder.Property(x => x.Shelf)
             .IsRequired()
             .HasMaxLength(5);
-        
+
         builder.Property(x => x.Column)
             .IsRequired()
             .HasMaxLength(5);

@@ -1,7 +1,4 @@
-using AtlasLMS.Data.Entities;
-using AtlasLMS.Data.Entities.Enums;
-using System;
-using System.ComponentModel.DataAnnotations;
+using AtlasLMS.Domain.Entities.Enums;
 
 namespace AtlasLMS.Application.DTOs.Update;
 

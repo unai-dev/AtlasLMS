@@ -2,7 +2,7 @@ using AtlasLMS.Application.DTOs.Create;
 using AtlasLMS.Application.DTOs.Detail;
 using AtlasLMS.Application.DTOs.Read;
 using AtlasLMS.Application.DTOs.Update;
-using AtlasLMS.Data.Entities;
+using AtlasLMS.Domain.Entities;
 using AutoMapper;
 
 namespace AtlasLMS.API.Utils.Mappers;

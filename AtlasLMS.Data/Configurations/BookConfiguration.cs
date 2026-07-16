@@ -1,4 +1,4 @@
-using AtlasLMS.Data.Entities;
+using AtlasLMS.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

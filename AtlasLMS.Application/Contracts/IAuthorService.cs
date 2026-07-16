@@ -2,7 +2,7 @@ using AtlasLMS.Application.DTOs.Create;
 using AtlasLMS.Application.DTOs.Detail;
 using AtlasLMS.Application.DTOs.Read;
 
-namespace AtlasLMS.Application.Services;
+namespace AtlasLMS.Application.Contracts;
 
 public interface IAuthorService
 {
