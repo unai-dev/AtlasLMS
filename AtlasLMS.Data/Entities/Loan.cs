@@ -5,7 +5,9 @@ namespace AtlasLMS.Data.Entities;
 
 public class Loan : BaseEntity
 {
-    public DateTime LifeTime { get; set; }
+    public DateTime StartDate { get; set; }
+    public int LifeTime { get; set; }
+    public DateTime DueDate => StartDate.AddDays(LifeTime);
 
     // Related Properties
     //
@@ -18,9 +20,4 @@ public class Loan : BaseEntity
     [ForeignKey("UserID")]
     public string UserID { get; set; } = default!;
     public User? User { get; set; }
-
-    public Loan()
-    {
-        LifeTime = DateTime.UtcNow.AddDays(30);
-    }
 }
