@@ -1,7 +1,7 @@
-using AtlasLMS.API.Data;
-using AtlasLMS.API.Entities;
-using AtlasLMS.API.Middleware;
-using AtlasLMS.API.Services;
+using AtlasLMS.Data;
+using AtlasLMS.Data.Entities;
+using AtlasLMS.API.Middlewares;
+using AtlasLMS.Application.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
