@@ -4,7 +4,6 @@ using AtlasLMS.Data.Entities;
 using AtlasLMS.Domain.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,14 +16,12 @@ public class AuthService : IAuthService
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly IConfiguration _configuration;
-    private readonly ILogger _logger;
 
-    public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, ILogger<AuthService> logger)
+    public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
-        _logger = logger;
     }
 
     public async Task<AuthResponseDto> Register(UserCreateDto dto)

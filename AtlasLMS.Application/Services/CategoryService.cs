@@ -5,19 +5,16 @@ using AtlasLMS.Data.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace AtlasLMS.Application.Services;
 
 public class CategoryService : ICategoryService
 {
-    private readonly ILogger<CategoryService> _logger;
     private readonly IMapper _mapper;
     private readonly AtlasDbContext _context;
 
-    public CategoryService(ILogger<CategoryService> logger, IMapper mapper, AtlasDbContext context)
+    public CategoryService(IMapper mapper, AtlasDbContext context)
     {
-        _logger = logger;
         _mapper = mapper;
         _context = context;
     }

@@ -24,7 +24,6 @@ public class Booking : BaseEntity
 
     public Booking()
     {
-        PickupDeadline = DateTime.UtcNow.AddDays(7);
         Status = EBookingStatus.Active;
     }
 }

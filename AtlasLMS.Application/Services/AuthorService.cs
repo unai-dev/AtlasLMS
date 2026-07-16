@@ -5,20 +5,17 @@ using AtlasLMS.Application.DTOs.Read;
 using AtlasLMS.Data.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AutoMapper;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
 namespace AtlasLMS.Application.Services;
 
 public class AuthorService : IAuthorService
 {
-    private readonly ILogger<AuthorService> _logger;
     private readonly IMapper _mapper;
     private readonly AtlasDbContext _context;
 
-    public AuthorService(ILogger<AuthorService> logger, IMapper mapper, AtlasDbContext context)
+    public AuthorService(IMapper mapper, AtlasDbContext context)
     {
-        _logger = logger;
         _mapper = mapper;
         _context = context;
     }
