@@ -5,7 +5,9 @@ namespace AtlasLMS.Application.DTOs.Read;
 
 public class LoanReadDto : BaseDto
 {
-    public DateTime LifeTime { get; set; }
+    public DateTime StartDate { get; set; }
+    public int LifeTime { get; set; }
+    public DateTime DueDate { get; set; }
 
     // Related Properties
     //

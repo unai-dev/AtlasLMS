@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AtlasLMS.Data.Migrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20260716100554_Initial")]
+    [Migration("20260716144229_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -181,7 +181,10 @@ namespace AtlasLMS.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LifeTime")
+                    b.Property<int>("LifeTime")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("UpdatedAt")

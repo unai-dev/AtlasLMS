@@ -34,7 +34,7 @@ public class AuthService : IAuthService
 
         var user = new User
         {
-            UserName = dto.UserName == string.Empty ? dto.Email.Split("@")[0] : dto.UserName,
+            UserName = string.IsNullOrEmpty(dto.UserName) ? dto.Email.Split("@")[0] : dto.UserName,
             Email = dto.Email
         };
 

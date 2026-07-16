@@ -7,7 +7,7 @@ public class Loan : BaseEntity
 {
     public DateTime StartDate { get; set; }
     public int LifeTime { get; set; }
-    public DateTime DueDate => StartDate.AddDays(LifeTime);
+    public DateTime DueDate { get; set; }
 
     // Related Properties
     //

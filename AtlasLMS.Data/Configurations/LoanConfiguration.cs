@@ -10,5 +10,8 @@ public class LoanConfiguration : IEntityTypeConfiguration<Loan>
     {
         builder.Property(x => x.LifeTime)
             .IsRequired();
+
+        builder.Property(x => x.StartDate)
+            .IsRequired();
     }
 }
