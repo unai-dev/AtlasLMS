@@ -4,7 +4,7 @@ namespace AtlasLMS.Domain.Entities;
 
 public class Category : BaseEntity
 {
-    public string Name { get; set; } = default!;
+    public required string Name { get; set; }
 
     // Related Properties
     //

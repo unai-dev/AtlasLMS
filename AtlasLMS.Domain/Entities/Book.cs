@@ -5,8 +5,8 @@ namespace AtlasLMS.Domain.Entities;
 
 public class Book : BaseEntity
 {
-    public string Title { get; set; } = default!;
-    public string ISBN { get; set; } = default!;
+    public required string Title { get; set; }
+    public required string ISBN { get; set; }
     public string? Synopsis { get; set; }
     public DateTime PublicationAt { get; set; }
 

@@ -19,5 +19,8 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
         builder.Property(x => x.Column)
             .IsRequired()
             .HasMaxLength(5);
+
+        builder.Property(x => x.ShelfLimit)
+            .HasDefaultValue(5);
     }
 }
