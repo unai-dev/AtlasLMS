@@ -1,9 +1,9 @@
 ﻿namespace AtlasLMS.Domain.Exceptions;
 
-public class InvalidDateRangeException: Exception
+public class InvalidDateRangeException : Exception
 {
-    public InvalidDateRangeException(string msg): base(msg)
+    public InvalidDateRangeException(string msg) : base(msg)
     {
-        
+
     }
 }

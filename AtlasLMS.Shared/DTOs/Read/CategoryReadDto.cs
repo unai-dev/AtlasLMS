@@ -1,6 +1,6 @@
-using AtlasLMS.Application.DTOs.Common;
+using AtlasLMS.Shared.DTOs.Common;
 
-namespace AtlasLMS.Application.DTOs.Read;
+namespace AtlasLMS.Shared.DTOs.Read;
 
 public class CategoryReadDto : BaseDto
 {

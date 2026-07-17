@@ -1,4 +1,4 @@
-namespace AtlasLMS.Application.DTOs.Common;
+namespace AtlasLMS.Shared.DTOs.Common;
 
 public abstract class BaseDto
 {

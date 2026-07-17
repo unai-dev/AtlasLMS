@@ -1,11 +1,13 @@
-using System.ComponentModel.DataAnnotations;
+namespace AtlasLMS.Shared.DTOs.Update;
 
-namespace AtlasLMS.Application.DTOs.Create;
-
-public class LocationCreateDto
+public class LocationUpdateDto
 {
     public required string Aisle { get; set; }
+
     public required string Shelf { get; set; }
+
     public required string Column { get; set; }
     public int LimitOfBooks { get; set; }
+
+    public DateTime UpdatedAt { get; set; }
 }

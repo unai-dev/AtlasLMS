@@ -1,8 +1,6 @@
-using AtlasLMS.Application.DTOs.Common;
+namespace AtlasLMS.Shared.DTOs.Create;
 
-namespace AtlasLMS.Application.DTOs.Read;
-
-public class LocationReadDto : BaseDto
+public class LocationCreateDto
 {
     public required string Aisle { get; set; }
     public required string Shelf { get; set; }

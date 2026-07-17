@@ -1,7 +1,4 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace AtlasLMS.Application.DTOs.Update;
+namespace AtlasLMS.Shared.DTOs.Update;
 
 public class CategoryUpdateDto
 {

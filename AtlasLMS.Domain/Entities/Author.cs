@@ -1,5 +1,4 @@
 using AtlasLMS.Domain.Entities.Common;
-using System.ComponentModel.DataAnnotations;
 
 namespace AtlasLMS.Domain.Entities;
 

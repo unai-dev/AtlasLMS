@@ -1,5 +1,6 @@
 using AtlasLMS.Data.Configurations;
 using AtlasLMS.Domain.Entities;
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

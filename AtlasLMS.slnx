@@ -4,4 +4,5 @@
   <Project Path="AtlasLMS.Blazor/AtlasLMS.Blazor.csproj" Id="892749c0-f35a-4fa9-aee8-390c451afdc6" />
   <Project Path="AtlasLMS.Data/AtlasLMS.Data.csproj" Id="3b625ff3-e3ed-4bda-8eb6-aaa69add854a" />
   <Project Path="AtlasLMS.Domain/AtlasLMS.Domain.csproj" Id="9f69a1c8-57b1-42db-a9d5-b2cf62c6c8c1" />
+  <Project Path="AtlasLMS.Shared/AtlasLMS.Shared.csproj" Id="95a43ff1-a360-4dd3-8882-e7ed03647785" />
 </Solution>

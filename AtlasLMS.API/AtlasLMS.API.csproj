@@ -17,6 +17,7 @@
     <ProjectReference Include="..\AtlasLMS.Application\AtlasLMS.Application.csproj" />
     <ProjectReference Include="..\AtlasLMS.Data\AtlasLMS.Data.csproj" />
     <ProjectReference Include="..\AtlasLMS.Domain\AtlasLMS.Domain.csproj" />
+    <ProjectReference Include="..\AtlasLMS.Shared\AtlasLMS.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,12 @@
 ﻿using AtlasLMS.Application.Contracts;
-using AtlasLMS.Application.DTOs.Create;
-using AtlasLMS.Application.DTOs.Read;
 using AtlasLMS.Data;
 using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
+using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Read;
+
 using AutoMapper;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

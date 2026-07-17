@@ -1,7 +1,6 @@
-using AtlasLMS.Application.DTOs.Common;
-using AtlasLMS.Domain.Entities;
+using AtlasLMS.Shared.DTOs.Common;
 
-namespace AtlasLMS.Application.DTOs.Read;
+namespace AtlasLMS.Shared.DTOs.Read;
 
 public class LoanReadDto : BaseDto
 {
@@ -16,5 +15,5 @@ public class LoanReadDto : BaseDto
     public int BookID { get; set; }
     public BookReadDto? Book { get; set; }
     public required string UserID { get; set; }
-    public User? User { get; set; }
+    public UserReadDto? User { get; set; }
 }
