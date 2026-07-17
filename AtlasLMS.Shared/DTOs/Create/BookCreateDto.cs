@@ -1,7 +1,4 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace AtlasLMS.Application.DTOs.Create;
+namespace AtlasLMS.Shared.DTOs.Create;
 
 public class BookCreateDto
 {

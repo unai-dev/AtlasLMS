@@ -1,6 +1,7 @@
 using AtlasLMS.Application.Contracts;
-using AtlasLMS.Application.DTOs.Create;
-using AtlasLMS.Application.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Read;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

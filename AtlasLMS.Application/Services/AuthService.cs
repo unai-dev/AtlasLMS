@@ -1,14 +1,16 @@
-using AtlasLMS.Application.Contracts;
-using AtlasLMS.Application.DTOs;
-using AtlasLMS.Application.DTOs.Create;
-using AtlasLMS.Domain.Entities;
-using AtlasLMS.Domain.Exceptions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
+using AtlasLMS.Application.Contracts;
+using AtlasLMS.Domain.Entities;
+using AtlasLMS.Domain.Exceptions;
+using AtlasLMS.Shared.DTOs;
+using AtlasLMS.Shared.DTOs.Create;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AtlasLMS.Application.Services;
 

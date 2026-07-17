@@ -1,16 +1,15 @@
-﻿using AtlasLMS.Application.DTOs.Create;
-using AtlasLMS.Application.DTOs.Read;
+﻿using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Read;
 
-namespace AtlasLMS.Application.Contracts
+namespace AtlasLMS.Application.Contracts;
+
+public interface ILocationService
 {
-    public interface ILocationService
-    {
-        Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto);
-        Task DeleteLocationAsync(int ID);
-        Task<IEnumerable<string>> GetAislesAsync();
-        Task<IEnumerable<string>> GetColumnsByAisleAsync(string aisle);
-        Task<LocationReadDto> GetLocationAsync(int ID);
-        Task<IEnumerable<LocationReadDto>> GetLocationsAsync();
-        Task<IEnumerable<string>> GetShelvesAsync(string aisle, string column);
-    }
+    Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto);
+    Task DeleteLocationAsync(int ID);
+    Task<IEnumerable<string>> GetAislesAsync();
+    Task<IEnumerable<string>> GetColumnsByAisleAsync(string aisle);
+    Task<LocationReadDto> GetLocationAsync(int ID);
+    Task<IEnumerable<LocationReadDto>> GetLocationsAsync();
+    Task<IEnumerable<string>> GetShelvesAsync(string aisle, string column);
 }

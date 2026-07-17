@@ -1,12 +1,14 @@
+using System.Text;
+
+using AtlasLMS.API.Middlewares;
+using AtlasLMS.Application.Contracts;
+using AtlasLMS.Application.Services;
 using AtlasLMS.Data;
 using AtlasLMS.Domain.Entities;
-using AtlasLMS.API.Middlewares;
-using AtlasLMS.Application.Services;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using AtlasLMS.Application.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 

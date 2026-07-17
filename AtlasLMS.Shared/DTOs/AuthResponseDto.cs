@@ -1,4 +1,4 @@
-namespace AtlasLMS.Application.DTOs;
+namespace AtlasLMS.Shared.DTOs;
 
 public class AuthResponseDto
 {

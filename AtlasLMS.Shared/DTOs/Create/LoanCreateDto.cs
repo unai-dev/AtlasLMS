@@ -1,4 +1,4 @@
-namespace AtlasLMS.Application.DTOs.Create;
+namespace AtlasLMS.Shared.DTOs.Create;
 
 public class LoanCreateDto
 {

@@ -1,4 +1,4 @@
-namespace AtlasLMS.Domain.Entities.Enums;
+namespace AtlasLMS.Shared.Enums;
 
 public enum EBookingStatus
 {

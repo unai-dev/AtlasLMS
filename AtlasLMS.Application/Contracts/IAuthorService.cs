@@ -1,6 +1,6 @@
-using AtlasLMS.Application.DTOs.Create;
-using AtlasLMS.Application.DTOs.Detail;
-using AtlasLMS.Application.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
+using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Application.Contracts;
 

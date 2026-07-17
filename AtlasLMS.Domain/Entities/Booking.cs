@@ -1,6 +1,7 @@
-using AtlasLMS.Domain.Entities.Common;
-using AtlasLMS.Domain.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
+
+using AtlasLMS.Domain.Entities.Common;
+using AtlasLMS.Shared.Enums;
 
 namespace AtlasLMS.Domain.Entities;
 

@@ -1,7 +1,7 @@
-using AtlasLMS.Application.DTOs.Common;
-using AtlasLMS.Application.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Common;
+using AtlasLMS.Shared.DTOs.Read;
 
-namespace AtlasLMS.Application.DTOs.Detail;
+namespace AtlasLMS.Shared.DTOs.Detail;
 
 public class AuthorDetailDto : BaseDto
 {
