@@ -9,6 +9,7 @@ using AtlasLMS.Shared.DTOs;
 using AtlasLMS.Shared.DTOs.Create;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -32,12 +33,21 @@ public class AuthService : IAuthService
         var emailUnique = await _userManager.FindByEmailAsync(dto.Email);
         if (emailUnique is not null)
         {
-            throw new BadRequestException("Este email ya consta en nuestra base de datos");
+            throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
         }
+
+        if (!string.IsNullOrEmpty(dto.UserName))
+        {
+            var userNameExists = await _userManager.Users.AnyAsync(x => x.UserName == dto.UserName);
+            if (userNameExists)
+                throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta en uso");
+        }
+
+        dto.UserName = dto.Email.Split("@")[0];
 
         var user = new User
         {
-            UserName = string.IsNullOrEmpty(dto.UserName) ? dto.Email.Split("@")[0] : dto.UserName,
+            UserName = dto.UserName,
             Email = dto.Email
         };
 
