@@ -4,6 +4,7 @@ namespace AtlasLMS.Domain.Entities;
 
 public class User : IdentityUser
 {
+    public required string CIF { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 

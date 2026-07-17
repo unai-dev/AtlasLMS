@@ -28,6 +28,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<ILoanService, LoanService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddScoped<IUserService, UserService>();
 // =======================================
 // =============== AUTOMAPPER ============
 // =======================================
