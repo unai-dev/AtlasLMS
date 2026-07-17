@@ -47,6 +47,7 @@ public class AuthService : IAuthService
 
         var user = new User
         {
+            CIF = dto.CIF,
             UserName = dto.UserName,
             Email = dto.Email
         };
