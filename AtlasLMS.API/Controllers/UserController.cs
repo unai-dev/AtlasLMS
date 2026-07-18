@@ -2,13 +2,15 @@
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AtlasLMS.API.Controllers;
 
 [ApiController]
 [Route("api/users")]
-public class UserController: ControllerBase
+[Authorize]
+public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
 
@@ -20,12 +22,12 @@ public class UserController: ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserReadDto>>> Get() =>
         Ok(await _userService.GetUsersAsync());
-   
+
     [HttpGet]
     [Route("{ID}")]
     public async Task<ActionResult<UserReadDto>> Get([FromRoute] string ID) =>
         Ok(await _userService.GetUserAsync(ID));
-   
+
     [HttpGet]
     [Route("detail/{ID}")]
     public async Task<ActionResult<UserReadDto>> GetDetail([FromRoute] string ID) =>
