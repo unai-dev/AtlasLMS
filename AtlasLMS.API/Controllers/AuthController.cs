@@ -1,6 +1,6 @@
 using AtlasLMS.Application.Contracts;
-using AtlasLMS.Shared.DTOs;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.Responses;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +19,11 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public async Task<ActionResult<AuthResponseDto>> Register([FromBody] UserCreateDto dto) =>
+    public async Task<ActionResult<AuthResponse>> Register([FromBody] UserCreateDto dto) =>
         Ok(await _authService.Register(dto));
 
     [HttpPost]
     [Route("login")]
-    public async Task<ActionResult<AuthResponseDto>> Login([FromBody] UserCreateDto dto) =>
+    public async Task<ActionResult<AuthResponse>> Login([FromBody] UserCreateDto dto) =>
         Ok(await _authService.Login(dto));
 }

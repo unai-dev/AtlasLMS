@@ -5,8 +5,8 @@ using System.Text;
 using AtlasLMS.Application.Contracts;
 using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
-using AtlasLMS.Shared.DTOs;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.Responses;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +28,7 @@ public class AuthService : IAuthService
         _configuration = configuration;
     }
 
-    public async Task<AuthResponseDto> Register(UserCreateDto dto)
+    public async Task<AuthResponse> Register(UserCreateDto dto)
     {
         var emailUnique = await _userManager.FindByEmailAsync(dto.Email);
         if (emailUnique is not null)
@@ -56,7 +56,7 @@ public class AuthService : IAuthService
         return await GetJwtToken(dto.Email);
     }
 
-    public async Task<AuthResponseDto> Login(UserCreateDto dto)
+    public async Task<AuthResponse> Login(UserCreateDto dto)
     {
         var user = await _userManager.FindByEmailAsync(dto.Email) ?? throw new NotFoundException("El usuario no exite");
         var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password!, false);
@@ -69,7 +69,7 @@ public class AuthService : IAuthService
         return await GetJwtToken(dto.Email);
     }
 
-    private async Task<AuthResponseDto> GetJwtToken(string email)
+    private async Task<AuthResponse> GetJwtToken(string email)
     {
         var claims = new List<Claim> { new Claim("email", email) };
 
@@ -91,7 +91,7 @@ public class AuthService : IAuthService
 
         var generatedToken = new JwtSecurityTokenHandler().WriteToken(securityKey);
 
-        return new AuthResponseDto { Token = generatedToken, Expiration = expiration };
+        return new AuthResponse { Token = generatedToken, Expiration = expiration };
 
     }
 }

@@ -1,9 +1,9 @@
-using AtlasLMS.Shared.DTOs;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.Responses;
 namespace AtlasLMS.Application.Contracts;
 
 public interface IAuthService
 {
-    Task<AuthResponseDto> Login(UserCreateDto dto);
-    Task<AuthResponseDto> Register(UserCreateDto dto);
+    Task<AuthResponse> Login(UserCreateDto dto);
+    Task<AuthResponse> Register(UserCreateDto dto);
 }
