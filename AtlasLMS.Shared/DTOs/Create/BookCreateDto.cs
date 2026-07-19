@@ -13,5 +13,5 @@ public class BookCreateDto
     //
     public int AuthorID { get; set; }
     public int CategoryID { get; set; }
-    public int LocationID { get; set; }
+    public int? LocationID { get; set; }
 }
