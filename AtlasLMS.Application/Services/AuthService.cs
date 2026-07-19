@@ -43,12 +43,10 @@ public class AuthService : IAuthService
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta en uso");
         }
 
-        dto.UserName = dto.Email.Split("@")[0];
-
         var user = new User
         {
             CIF = dto.CIF,
-            UserName = dto.UserName,
+            UserName = dto.UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : dto.Email.Split("@")[0],
             Email = dto.Email
         };
 

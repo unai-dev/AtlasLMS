@@ -56,6 +56,10 @@ public class UserService : IUserService
         if (existsEmail != null)
             throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
 
+        var existsCIF = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF));
+        if (existsCIF)
+            throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
+
         if (!string.IsNullOrEmpty(dto.UserName))
         {
             var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName == dto.UserName);
@@ -63,10 +67,8 @@ public class UserService : IUserService
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
         }
 
-        var existsCIF = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF));
-        if (existsCIF)
-            throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
 
+        dto.UserName = string.IsNullOrEmpty(dto.UserName) ? dto.UserName : dto.Email.Split("@")[0];
         var user = _mapper.Map<User>(dto);
         await _userManager.CreateAsync(user);
         return _mapper.Map<UserReadDto>(user);
