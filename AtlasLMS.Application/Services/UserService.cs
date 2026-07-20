@@ -67,10 +67,9 @@ public class UserService : IUserService
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
         }
 
-
         dto.UserName = string.IsNullOrEmpty(dto.UserName) ? dto.UserName : dto.Email.Split("@")[0];
         var user = _mapper.Map<User>(dto);
-        await _userManager.CreateAsync(user);
+        await _userManager.CreateAsync(user, dto.Password);
         return _mapper.Map<UserReadDto>(user);
     }
 
