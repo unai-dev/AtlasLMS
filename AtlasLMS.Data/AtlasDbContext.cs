@@ -12,12 +12,12 @@ public class AtlasDbContext : IdentityDbContext<User>
     {
 
     }
-    public DbSet<Book> Books { get; set; }
-    public DbSet<Author> Authors { get; set; }
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Loan> Loans { get; set; }
-    public DbSet<Location> Locations { get; set; }
-    public DbSet<Booking> Bookings { get; set; }
+    public DbSet<Book> Books => Set<Book>();
+    public DbSet<Author> Authors => Set<Author>();
+    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Loan> Loans => Set<Loan>();
+    public DbSet<Location> Locations => Set<Location>();
+    public DbSet<Booking> Bookings => Set<Booking>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
