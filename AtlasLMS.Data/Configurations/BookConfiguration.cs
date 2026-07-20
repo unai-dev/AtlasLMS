@@ -22,5 +22,8 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
 
         builder.Property(x => x.PublicationAt)
             .IsRequired();
+
+        builder.Property(x => x.Stock)
+            .HasDefaultValue(1);
     }
 }
