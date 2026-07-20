@@ -5,7 +5,7 @@ namespace AtlasLMS.Domain.Entities;
 public class User : IdentityUser
 {
     public required string CIF { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 
     // Related Properties
@@ -14,12 +14,4 @@ public class User : IdentityUser
     //
     public List<Loan> Loans { get; set; } = new List<Loan>();
     public List<Booking> Bookings { get; set; } = new List<Booking>();
-
-    /// <summary>
-    /// Default constructor
-    /// </summary>
-    public User()
-    {
-        CreatedAt = DateTime.UtcNow;
-    }
 }
