@@ -38,15 +38,24 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public async Task<UserDetailDto> GetUserDetailAsync(string ID)
+    public async Task<UserDetailDto> GetUserLoansAsync(string ID)
     {
         if (string.IsNullOrWhiteSpace(ID))
             throw new BadRequestException($"El ID no puede estar vacio");
         var user = await _userManager.Users
-            .Include(x => x.Bookings)
-            .Include(x => x.Loans)
-            .FirstOrDefaultAsync(x => x.Id.Equals(ID))
-            ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
+            .Where(x => x.Id.Equals(ID))
+            .Select(x => x.Loans)
+            .ToListAsync();
+        return _mapper.Map<UserDetailDto>(user);
+    }
+    public async Task<UserDetailDto> GetUserBookingsAsync(string ID)
+    {
+        if (string.IsNullOrWhiteSpace(ID))
+            throw new BadRequestException($"El ID no puede estar vacio");
+        var user = await _userManager.Users
+            .Where(x => x.Id.Equals(ID))
+            .Select(x => x.Bookings)
+            .ToListAsync();
         return _mapper.Map<UserDetailDto>(user);
     }
 

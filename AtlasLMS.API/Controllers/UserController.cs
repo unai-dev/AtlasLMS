@@ -29,9 +29,14 @@ public class UserController : ControllerBase
         Ok(await _userService.GetUserAsync(ID));
 
     [HttpGet]
-    [Route("detail/{ID}")]
-    public async Task<ActionResult<UserReadDto>> GetDetail([FromRoute] string ID) =>
-        Ok(await _userService.GetUserDetailAsync(ID));
+    [Route("loan/{ID}")]
+    public async Task<ActionResult<UserReadDto>> GetLoans([FromRoute] string ID) =>
+        Ok(await _userService.GetUserLoansAsync(ID));
+
+    [HttpGet]
+    [Route("booking/{ID}")]
+    public async Task<ActionResult<UserReadDto>> GetBookings([FromRoute] string ID) =>
+        Ok(await _userService.GetUserBookingsAsync(ID));
 
     [HttpPost]
     public async Task<ActionResult<UserReadDto>> Post([FromBody] UserCreateDto dto)

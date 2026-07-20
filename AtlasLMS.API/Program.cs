@@ -81,10 +81,10 @@ var app = builder.Build();
 // =======================================
 // =============== MIDDLEWARES ===========
 // =======================================
+app.UseHttpsRedirection();
 app.UseMiddleware<CustomExceptionMiddleware>();
 app.MapControllers();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHttpsRedirection();
 app.Run();
