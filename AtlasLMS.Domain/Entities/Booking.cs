@@ -9,22 +9,17 @@ public class Booking : BaseEntity
 {
     public DateTime StartTime { get; set; }
     public DateTime PickupDeadline { get; set; }
-    public EBookingStatus Status { get; set; }
+    public EBookingStatus Status { get; set; } = EBookingStatus.Active;
 
     // Related Properties
     //
     //
     //
     [ForeignKey("UserID")]
-    public string UserID { get; set; } = default!;
+    public required string UserID { get; set; }
     public User? User { get; set; }
 
     [ForeignKey("BookID")]
-    public int BookID { get; set; }
+    public required int BookID { get; set; }
     public Book? Book { get; set; }
-
-    public Booking()
-    {
-        Status = EBookingStatus.Active;
-    }
 }

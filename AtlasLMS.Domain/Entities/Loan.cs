@@ -1,5 +1,6 @@
-using AtlasLMS.Domain.Entities.Common;
 using System.ComponentModel.DataAnnotations.Schema;
+
+using AtlasLMS.Domain.Entities.Common;
 
 namespace AtlasLMS.Domain.Entities;
 
@@ -14,10 +15,10 @@ public class Loan : BaseEntity
     //
     //
     [ForeignKey("BookID")]
-    public int BookID { get; set; }
+    public required int BookID { get; set; }
     public Book? Book { get; set; }
 
     [ForeignKey("UserID")]
-    public string UserID { get; set; } = default!;
+    public required string UserID { get; set; }
     public User? User { get; set; }
 }

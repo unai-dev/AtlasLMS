@@ -47,12 +47,16 @@ public class BookService : IBookService
     {
         var bookExists = await _context.Books.AnyAsync(x => x.Title == dto.Title && x.ISBN == dto.ISBN);
         if (bookExists)
-            throw new BadRequestException($"El libro {dto.Title} ya figura en nuestra base de datos");
+            throw new BadRequestException($"El libro '{dto.Title}' ya figura en nuestra base de datos");
 
-        var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == dto.LocationID)
-            ?? throw new NotFoundException($"La localizacion {dto.LocationID} no existe");
-        if (location.LimitOfBooks <= location.LimitOfBooks + 1)
-            throw new BadRequestException($"La localizacion no permite mas libros. Ya excede del limite");
+        if (dto.LocationID > 0)
+        {
+            var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == dto.LocationID)
+                ?? throw new NotFoundException($"La localizacion '{dto.LocationID}' no existe");
+            var totalBooksByLocation = await _context.Books.Where(x => x.LocationID == dto.LocationID).ToListAsync();
+            if (location.LimitOfBooks == totalBooksByLocation.Count)
+                throw new BadRequestException($"La localizacion no permite mas libros. Ya excede del limite");
+        }
 
         var categoryExists = await _context.Categories.AnyAsync(x => x.ID == dto.CategoryID);
         if (!categoryExists)

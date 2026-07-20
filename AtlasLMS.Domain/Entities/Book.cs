@@ -1,5 +1,6 @@
-using AtlasLMS.Domain.Entities.Common;
 using System.ComponentModel.DataAnnotations.Schema;
+
+using AtlasLMS.Domain.Entities.Common;
 
 namespace AtlasLMS.Domain.Entities;
 
@@ -15,14 +16,14 @@ public class Book : BaseEntity
     //
     //
     [ForeignKey("AuthorID")]
-    public int AuthorID { get; set; }
+    public required int AuthorID { get; set; }
     public Author? Author { get; set; }
 
     [ForeignKey("CategoryID")]
-    public int CategoryID { get; set; }
+    public required int CategoryID { get; set; }
     public Category? Category { get; set; }
 
     [ForeignKey("LocationID")]
-    public int LocationID { get; set; }
+    public int? LocationID { get; set; }
     public Location? Location { get; set; }
 }
