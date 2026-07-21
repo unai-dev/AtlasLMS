@@ -2,6 +2,7 @@
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Update;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,11 @@ public class BookController : ControllerBase
         var result = await _bookService.CreateBookAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = result.ID }, result);
     }
+
+    [HttpPut]
+    [Route("{id:int}")]
+    public async Task<ActionResult<BookReadDto>> Put([FromRoute] int ID, [FromBody] BookUpdateDto dto) =>
+        Ok(await _bookService.UpdateBookAsync(ID, dto));
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)

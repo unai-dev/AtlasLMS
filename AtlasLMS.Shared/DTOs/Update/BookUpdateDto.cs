@@ -7,8 +7,6 @@ public class BookUpdateDto
     public int? Stock { get; set; }
     public string? Synopsis { get; set; }
     public DateTime? PublicationAt { get; set; }
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
     //Related properties
     //
     //
