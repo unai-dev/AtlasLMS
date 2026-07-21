@@ -1,0 +1,10 @@
+﻿.screen-left {
+    background: url('/assets//img//bg-login.png') center center / cover no-repeat;
+    position: relative;
+}
+    .screen-left::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgba(30, 58, 138, 0.85);
+    }
