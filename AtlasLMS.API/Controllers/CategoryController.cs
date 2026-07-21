@@ -1,6 +1,7 @@
 using AtlasLMS.Application.Contracts;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Update;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,11 @@ public class CategoryController : ControllerBase
         var result = await _categoryService.CreateCategoryAsync(dto);
         return CreatedAtAction(nameof(Get), new { ID = result.ID }, result);
     }
+
+    [HttpPut]
+    [Route("{id:int}")]
+    public async Task<ActionResult<CategoryReadDto>> Put([FromRoute] int ID, [FromBody] CategoryUpdateDto dto) =>
+        Ok(await _categoryService.UpdateCategoryAsync(ID, dto));
 
     [HttpDelete]
     [Route("{id:int}")]
