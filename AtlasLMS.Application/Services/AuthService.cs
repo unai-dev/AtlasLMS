@@ -32,16 +32,18 @@ public class AuthService : IAuthService
     {
         var emailUnique = await _userManager.FindByEmailAsync(dto.Email);
         if (emailUnique is not null)
-        {
             throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
-        }
 
         if (!string.IsNullOrEmpty(dto.UserName))
         {
-            var userNameExists = await _userManager.Users.AnyAsync(x => x.UserName == dto.UserName);
-            if (userNameExists)
+            var userNameUnique = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName));
+            if (userNameUnique)
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta en uso");
         }
+
+        var cifUnique = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF));
+        if (cifUnique)
+            throw new BadRequestException($"El CIF {dto.CIF} ya esta en uso");
 
         var user = new User
         {
@@ -60,9 +62,7 @@ public class AuthService : IAuthService
         var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password!, false);
 
         if (!result.Succeeded)
-        {
             throw new BadRequestException("La contraseña proporcionada no es valida");
-        }
 
         return await GetJwtToken(dto.Email);
     }
@@ -71,7 +71,8 @@ public class AuthService : IAuthService
     {
         var claims = new List<Claim> { new Claim("email", email) };
 
-        var user = await _userManager.FindByEmailAsync(email) ?? throw new BadRequestException("Este mail no existe en nuestra base de datos");
+        var user = await _userManager.FindByEmailAsync(email) 
+            ?? throw new BadRequestException("Este mail no existe en nuestra base de datos");
         var claimsDB = await _userManager.GetClaimsAsync(user);
         claims.AddRange(claimsDB);
 
