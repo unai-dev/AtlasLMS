@@ -66,6 +66,8 @@ public class AuthorService : IAuthorService
 
         author.FirstName = !string.IsNullOrEmpty(dto.FirstName) ? dto.FirstName : author.FirstName;
         author.LastName = !string.IsNullOrEmpty(dto.LastName) ? dto.LastName : author.LastName;
+        author.UpdatedAt = DateTime.UtcNow;
+
         await _context.SaveChangesAsync();
         return _mapper.Map<AuthorReadDto>(author);
     }

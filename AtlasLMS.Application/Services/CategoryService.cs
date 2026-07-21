@@ -57,6 +57,7 @@ public class CategoryService : ICategoryService
             ?? throw new NotFoundException($"Categoria con el ID {ID} no exist");
 
         category.Name = !string.IsNullOrEmpty(dto.Name) ? dto.Name : category.Name;
+        category.UpdatedAt = DateTime.UtcNow;
         await _context.SaveChangesAsync();
         return _mapper.Map<CategoryReadDto>(category);
     }
