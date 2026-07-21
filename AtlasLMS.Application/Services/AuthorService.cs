@@ -5,6 +5,7 @@ using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Update;
 
 using AutoMapper;
 
@@ -58,6 +59,16 @@ public class AuthorService : IAuthorService
         return _mapper.Map<AuthorReadDto>(author);
     }
 
+    public async Task<AuthorReadDto> UpdateAuthorAsync(int ID, AuthorUpdateDto dto)
+    {
+        var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"El autor con ID {ID} no existe");
+
+        author.FirstName = !string.IsNullOrEmpty(dto.FirstName) ? dto.FirstName : author.FirstName;
+        author.LastName = !string.IsNullOrEmpty(dto.LastName) ? dto.LastName : author.LastName;
+        await _context.SaveChangesAsync();
+        return _mapper.Map<AuthorReadDto>(author);
+    }
 
     public async Task DeleteAuthorAsync(int ID)
     {
