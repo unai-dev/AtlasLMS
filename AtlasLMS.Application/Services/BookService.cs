@@ -67,7 +67,7 @@ public class BookService : IBookService
         if (!authorExists)
             throw new NotFoundException($"El autor con ID {dto.AuthorID} no existe");
 
-        if (dto.PublicationAt >= DateTime.UtcNow)
+        if (dto.PublicationAt > DateTime.UtcNow)
             throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser igual a la actual");
 
         var book = _mapper.Map<Book>(dto);
@@ -115,6 +115,7 @@ public class BookService : IBookService
         book.Title = !string.IsNullOrEmpty(dto.Title) ? dto.Title : book.Title;
         book.ISBN = !string.IsNullOrEmpty(dto.ISBN) ? dto.ISBN : book.ISBN;
         book.Synopsis = !string.IsNullOrEmpty(dto.Synopsis) ? dto.Synopsis : book.Synopsis;
+
         book.Stock = dto.Stock.HasValue ? dto.Stock.Value : book.Stock;
         book.PublicationAt = dto.PublicationAt.HasValue ? dto.PublicationAt.Value : book.PublicationAt;
 
