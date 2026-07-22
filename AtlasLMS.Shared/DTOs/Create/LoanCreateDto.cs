@@ -10,5 +10,5 @@ public class LoanCreateDto
     //
     //
     public int BookID { get; set; }
-    public required string UserID { get; set; }
+    public string UserID { get; set; } = string.Empty;
 }

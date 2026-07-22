@@ -2,8 +2,8 @@ namespace AtlasLMS.Shared.DTOs.Create;
 
 public class BookCreateDto
 {
-    public required string Title { get; set; }
-    public required string ISBN { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string ISBN { get; set; } = string.Empty;
     public int? Stock { get; set; }
     public string? Synopsis { get; set; }
     public DateTime PublicationAt { get; set; }

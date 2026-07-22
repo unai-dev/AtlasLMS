@@ -2,8 +2,8 @@ namespace AtlasLMS.Shared.DTOs.Create;
 
 public class LocationCreateDto
 {
-    public required string Aisle { get; set; }
-    public required string Shelf { get; set; }
-    public required string Column { get; set; }
+    public string Aisle { get; set; }  = string.Empty;
+    public string Shelf { get; set; } = string.Empty;
+    public string Column { get; set; } = string.Empty;
     public int LimitOfBooks { get; set; }
 }

@@ -2,8 +2,8 @@ namespace AtlasLMS.Shared.DTOs.Create;
 
 public class UserCreateDto
 {
-    public required string Email { get; set; }
-    public required string CIF { get; set; }
-    public required string Password { get; set; }
+    public string Email { get; set; } = string.Empty;
+    public string CIF { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
     public string? UserName { get; set; }
 }

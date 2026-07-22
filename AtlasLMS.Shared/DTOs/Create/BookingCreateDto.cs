@@ -12,6 +12,6 @@ public class BookingCreateDto
     //
     //
     //
-    public required string UserID { get; set; }
+    public string UserID { get; set; } = string.Empty;
     public int BookID { get; set; }
 }
