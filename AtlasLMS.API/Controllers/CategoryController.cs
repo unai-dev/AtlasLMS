@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AtlasLMS.API.Controllers;
 
 [ApiController]
-[Route("api/categories/")]
+[Route("api/categories")]
 [Authorize]
 public class CategoryController : ControllerBase
 {

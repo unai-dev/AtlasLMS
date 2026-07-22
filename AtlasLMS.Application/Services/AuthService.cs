@@ -52,14 +52,15 @@ public class AuthService : IAuthService
             Email = dto.Email
         };
 
-        var result = await _userManager.CreateAsync(user, dto.Password!);
+        var result = await _userManager.CreateAsync(user, dto.Password);
         return await GetJwtToken(dto.Email);
     }
 
     public async Task<AuthResponse> Login(UserCreateDto dto)
     {
-        var user = await _userManager.FindByEmailAsync(dto.Email) ?? throw new NotFoundException("El usuario no exite");
-        var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password!, false);
+        var user = await _userManager.FindByEmailAsync(dto.Email) 
+            ?? throw new NotFoundException($"El usuario {dto.Email} no existe");
+        var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
 
         if (!result.Succeeded)
             throw new BadRequestException("La contraseña proporcionada no es valida");
@@ -72,7 +73,7 @@ public class AuthService : IAuthService
         var claims = new List<Claim> { new Claim("email", email) };
 
         var user = await _userManager.FindByEmailAsync(email) 
-            ?? throw new BadRequestException("Este mail no existe en nuestra base de datos");
+            ?? throw new BadRequestException($"El email {email} no figura en nuestra base de datos");
         var claimsDB = await _userManager.GetClaimsAsync(user);
         claims.AddRange(claimsDB);
 

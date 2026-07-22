@@ -22,56 +22,57 @@ public class LocationService : ILocationService
         _context = context;
     }
 
-    //Obtener todas las ubicaciones de la libreria 
     public async Task<IEnumerable<LocationReadDto>> GetLocationsAsync()
     {
         var locations = await _context.Locations.ToListAsync();
         return _mapper.Map<IEnumerable<LocationReadDto>>(locations);
     }
-    //Obtener una ubicacion completa
+
     public async Task<LocationReadDto> GetLocationAsync(int ID)
     {
         var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"La localizacion {ID} no existe");
+            ?? throw new NotFoundException($"La localizacion con ID {ID} no existe");
         return _mapper.Map<LocationReadDto>(location);
     }
-    //Obtener pasillos
+
     public async Task<IEnumerable<string>> GetAislesAsync()
     {
-        var aisles = await _context.Locations.Select(x => x.Aisle).Distinct().ToListAsync();
+        var aisles = await _context.Locations
+            .Select(x => x.Aisle)
+            .Distinct()
+            .ToListAsync();
         return aisles;
     }
-    //Obtener columnas del pasillo indicado
+
     public async Task<IEnumerable<string>> GetColumnsByAisleAsync(string aisle)
     {
         aisle = aisle.Trim().ToUpper();
         var columns = await _context.Locations
-            .Where(x => x.Aisle.ToUpper() == aisle)
+            .Where(x => x.Aisle.ToUpper().Equals(aisle))
             .Select(x => x.Column)
-            .Distinct()
+            .Distinct() //Omitimos duplicados
             .ToListAsync();
         return columns;
     }
-    //Obtener los estantes de la columna y fila indicada
+
     public async Task<IEnumerable<string>> GetShelvesAsync(string aisle, string column)
     {
         aisle = aisle.Trim().ToUpper();
         column = column.Trim().ToUpper();
         var shelves = await _context.Locations
-            .Where(x => x.Aisle.ToUpper() == aisle && x.Column.ToUpper() == column)
+            .Where(x => x.Aisle.ToUpper().Equals(aisle) && x.Column.ToUpper().Equals(column))
             .Select(x => x.Shelf)
-            .Distinct()
+            .Distinct() //Omitimos duplicados
             .ToListAsync();
         return shelves;
     }
-    //Crear localizacion
+
     public async Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto)
     {
-        //Validar si existe la ubicacion
         var existsLocation = await _context.Locations.AnyAsync(
-            x => x.Column == dto.Column &&
-            x.Shelf == dto.Shelf &&
-            x.Aisle == dto.Aisle);
+            x => x.Column.Equals(dto.Column) &&
+            x.Shelf.Equals(dto.Shelf) &&
+            x.Aisle.Equals(dto.Aisle));
         if (existsLocation)
             throw new BadRequestException($"Ya existe la localizacion introducida");
 
@@ -80,11 +81,11 @@ public class LocationService : ILocationService
         await _context.SaveChangesAsync();
         return _mapper.Map<LocationReadDto>(location);
     }
-    //Eliminar localizacion
+
     public async Task DeleteLocationAsync(int ID)
     {
         var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"La localizacion {ID} no existe");
+            ?? throw new NotFoundException($"La localizacion con ID {ID} no existe");
         _context.Remove(location);
         await _context.SaveChangesAsync();
     }

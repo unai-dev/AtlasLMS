@@ -33,20 +33,20 @@ public class BookService : IBookService
     public async Task<BookReadDto> GetBook(int ID)
     {
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"El libro con el ID {ID} no existe");
+            ?? throw new NotFoundException($"El libro con ID {ID} no existe");
         return _mapper.Map<BookReadDto>(book);
     }
 
     public async Task<BookDetailDto> GetBookDetailAsync(int ID)
     {
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"El libro con el ID {ID} no existe");
+            ?? throw new NotFoundException($"El libro con ID {ID} no existe");
         return _mapper.Map<BookDetailDto>(book);
     }
 
     public async Task<BookReadDto> CreateBookAsync(BookCreateDto dto)
     {
-        var bookExists = await _context.Books.AnyAsync(x => x.ISBN == dto.ISBN);
+        var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN));
         if (bookExists)
             throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
 
@@ -104,7 +104,7 @@ public class BookService : IBookService
 
         if (!string.IsNullOrEmpty(dto.ISBN))
         {
-            var bookExists = await _context.Books.AnyAsync(x => x.ISBN == dto.ISBN);
+            var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN));
             if (bookExists)
                 throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
         }

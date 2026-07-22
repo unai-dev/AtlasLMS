@@ -25,30 +25,29 @@ public class LoanService : ILoanService
         _userManager = userManager;
     }
 
-    //Obtener todos los prestamos
     public async Task<IEnumerable<LoanReadDto>> GetLoansAsync()
     {
         var loans = await _context.Loans.ToListAsync();
         return _mapper.Map<IEnumerable<LoanReadDto>>(loans);
     }
-    //Obtener prestamos del usuario
+
     public async Task<IEnumerable<LoanReadDto>> GetLoansByUserAsync(string userID)
     {
-        var userExists = await _userManager.Users.AnyAsync(x => x.Id == userID);
+        var userExists = await _userManager.Users.AnyAsync(x => x.Id.Equals(userID));
         if (!userExists)
-            throw new NotFoundException($"El usuario con el ID {userID} no existe");
+            throw new NotFoundException($"El usuario con ID {userID} no existe");
 
-        var loans = await _context.Loans.Where(x => x.UserID == userID).ToListAsync();
+        var loans = await _context.Loans.Where(x => x.UserID.Equals(userID)).ToListAsync();
         return _mapper.Map<IEnumerable<LoanReadDto>>(loans);
     }
-    //Obtener prestamo en concreto por ID
+
     public async Task<LoanReadDto> GetLoanAsync(int ID)
     {
         var loan = await _context.Loans.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"El prestamo con el ID {ID} no existe");
+            ?? throw new NotFoundException($"El prestamo con ID {ID} no existe");
         return _mapper.Map<LoanReadDto>(loan);
     }
-    //Obtener prestamos menor a la fecha limite
+
     public async Task<IEnumerable<LoanReadDto>> GetLoansByDueDateAsync(DateTime? limitDueDate)
     {
         var query = _context.Loans.AsQueryable();
@@ -61,33 +60,29 @@ public class LoanService : ILoanService
         var loans = await filteredLoans.ToListAsync();
         return _mapper.Map<IEnumerable<LoanReadDto>>(loans);
     }
-    //Obtener prestamo por libro
+
     public async Task<LoanReadDto> GetLoanByBookAsync(int bookID)
     {
         var bookExists = await _context.Books.AnyAsync(x => x.ID == bookID);
-
         if (!bookExists)
-            throw new NotFoundException($"El libro con el ID {bookID} no existe");
+            throw new NotFoundException($"El libro con ID {bookID} no existe");
 
-        var loan = await _context.Loans.Where(x => x.BookID == bookID).FirstOrDefaultAsync()
+        var loan = await _context.Loans.FirstOrDefaultAsync(x => x.BookID == bookID)
             ?? throw new NotFoundException($"No se han encontrado prestamos por el libro indicado");
         return _mapper.Map<LoanReadDto>(loan);
     }
-    //Crear prestamo
+
     public async Task<LoanReadDto> CreateLoanAsync(LoanCreateDto dto)
     {
-        //Validar si el libro tiene prestamo existente
         var isOnLoan = await _context.Loans.AnyAsync(x => x.BookID == dto.BookID && x.DueDate > DateTime.UtcNow);
         if (isOnLoan)
-            throw new BadRequestException($"El libro {dto.BookID} ya esta siendo prestado a otro usuario");
+            throw new BadRequestException($"El libro con ID {dto.BookID} ya esta siendo prestado a otro usuario");
 
-        // Validar si un usuario tiene el libro reservado
         var isBooking = await _context.Bookings.AnyAsync(x => x.BookID == dto.BookID && x.PickupDeadline > DateTime.UtcNow);
         if (isBooking)
             throw new BadRequestException($"El libro {dto.BookID} esta reservado por un usuario");
 
-        //Validar si el usuario existe
-        var userExists = await _userManager.Users.AnyAsync(x => x.Id == dto.UserID);
+        var userExists = await _userManager.Users.AnyAsync(x => x.Id.Equals(dto.UserID));
         if (!userExists)
             throw new NotFoundException($"El usuario {dto.UserID} no existe");
 
@@ -98,11 +93,11 @@ public class LoanService : ILoanService
         return _mapper.Map<LoanReadDto>(loan);
 
     }
-    //Eliminar prestamo
+
     public async Task DeleteLoanAsync(int ID)
     {
         var loan = await _context.Loans.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"El prestamo con el ID {ID} no existe");
+            ?? throw new NotFoundException($"El prestamo con ID {ID} no existe");
         _context.Remove(loan);
         await _context.SaveChangesAsync();
     }

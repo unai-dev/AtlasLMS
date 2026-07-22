@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AtlasLMS.API.Controllers;
 
 [ApiController]
-[Route("api/authors/")]
+[Route("api/authors")]
 [Authorize]
 public class AuthorController : ControllerBase
 {

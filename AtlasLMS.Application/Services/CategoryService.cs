@@ -25,7 +25,7 @@ public class CategoryService : ICategoryService
 
     public async Task<IEnumerable<CategoryReadDto>> GetCategoriesAsync()
     {
-        var categories = await _context.Categories.ToListAsync() ?? [];
+        var categories = await _context.Categories.ToListAsync();
         return _mapper.Map<IEnumerable<CategoryReadDto>>(categories);
     }
 
@@ -53,7 +53,7 @@ public class CategoryService : ICategoryService
     public async Task<CategoryReadDto> UpdateCategoryAsync(int ID, CategoryUpdateDto dto)
     {
         var category = await _context.Categories.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"Categoria con el ID {ID} no exist");
+            ?? throw new NotFoundException($"Categoria con ID {ID} no existe");
 
         category.Name = !string.IsNullOrEmpty(dto.Name) ? dto.Name : category.Name;
         category.UpdatedAt = DateTime.UtcNow;

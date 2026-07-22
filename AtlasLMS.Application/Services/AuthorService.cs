@@ -48,7 +48,8 @@ public class AuthorService : IAuthorService
 
     public async Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto)
     {
-        var authorExists = await _context.Authors.AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
+        var authorExists = await _context.Authors
+            .AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
         if (authorExists)
             throw new BadRequestException($"El autor {dto.FirstName.Concat(" " + dto.LastName)} ya existe");
 
@@ -66,7 +67,8 @@ public class AuthorService : IAuthorService
 
         if (!string.IsNullOrEmpty(dto.FirstName) && !!string.IsNullOrEmpty(dto.LastName))
         {
-            var authorWithNameExists = await _context.Authors.AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
+            var authorWithNameExists = await _context.Authors
+                .AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
             if (authorWithNameExists)
                 throw new BadRequestException($"El autor {dto.FirstName.Concat(" " + dto.LastName)} ya existe");
         }
