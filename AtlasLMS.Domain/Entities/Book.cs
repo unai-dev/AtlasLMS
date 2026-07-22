@@ -27,4 +27,6 @@ public class Book : BaseEntity
     [ForeignKey("LocationID")]
     public int? LocationID { get; set; }
     public Location? Location { get; set; }
+
+    public List<Booking> Bookings { get; set; } = new List<Booking>();
 }
