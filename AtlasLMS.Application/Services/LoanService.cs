@@ -74,6 +74,10 @@ public class LoanService : ILoanService
 
     public async Task<LoanReadDto> CreateLoanAsync(LoanCreateDto dto)
     {
+        var bookExists = await _context.Books.AnyAsync(x => x.ID == dto.BookID);
+        if (!bookExists)
+            throw new NotFoundException($"El libro con ID {dto.BookID} no existe");
+
         var isOnLoan = await _context.Loans.AnyAsync(x => x.BookID == dto.BookID && x.DueDate > DateTime.UtcNow);
         if (isOnLoan)
             throw new BadRequestException($"El libro con ID {dto.BookID} ya esta siendo prestado a otro usuario");
@@ -87,6 +91,7 @@ public class LoanService : ILoanService
             throw new NotFoundException($"El usuario {dto.UserID} no existe");
 
         var loan = _mapper.Map<Loan>(dto);
+        loan.StartDate = DateTime.UtcNow;
         loan.DueDate = loan.StartDate.AddDays(loan.LifeTime);
         _context.Add(loan);
         await _context.SaveChangesAsync();
