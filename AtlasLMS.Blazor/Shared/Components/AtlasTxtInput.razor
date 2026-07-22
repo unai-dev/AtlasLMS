@@ -1,0 +1,23 @@
+﻿<div class="mb-3">
+    <label class="form-label">@Label</label>
+    <InputText type=@Type
+               class="form-control"
+               placeholder=@PlaceHolder
+               Value="@Value"
+               ValueChanged="@ValueChanged"
+               ValueExpression="@ValueExpression" />
+
+    <ValidationMessage For="@ValueExpression" />
+</div>
+
+
+@code {
+    #region     Parameters-----------------------------------------------
+    [Parameter, EditorRequired] public string Label { get; set; }
+    [Parameter] public string Type { get; set; } = "text";
+    [Parameter] public string? PlaceHolder { get; set; }
+    [Parameter] public string Value { get; set; } = null!;
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public Expression<Func<string>> ValueExpression { get; set; } = null!;
+    #endregion
+}

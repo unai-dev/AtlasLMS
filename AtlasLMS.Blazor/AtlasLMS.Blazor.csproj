@@ -16,4 +16,8 @@
     <Folder Include="wwwroot\assets\img\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AtlasLMS.Shared\AtlasLMS.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
