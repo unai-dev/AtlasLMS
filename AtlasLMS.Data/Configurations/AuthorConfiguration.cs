@@ -14,6 +14,7 @@ public class AuthorConfiguration : IEntityTypeConfiguration<Author>
             .HasMaxLength(55);
 
         builder.Property(x => x.LastName)
+            .IsRequired()
             .HasMaxLength(55);
     }
 }

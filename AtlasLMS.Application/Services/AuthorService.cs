@@ -24,7 +24,6 @@ public class AuthorService : IAuthorService
         _context = context;
     }
 
-
     public async Task<IEnumerable<AuthorReadDto>> GetAuthorsAsync()
     {
         var authors = await _context.Authors.ToListAsync();
@@ -40,7 +39,8 @@ public class AuthorService : IAuthorService
 
     public async Task<AuthorDetailDto> GetAuthorDetailAsync(int ID)
     {
-        var author = await _context.Authors.Include(x => x.Books)
+        var author = await _context.Authors
+            .Include(x => x.Books)
             .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"Autor con ID {ID} no encontrado");
         return _mapper.Map<AuthorDetailDto>(author);
@@ -48,9 +48,9 @@ public class AuthorService : IAuthorService
 
     public async Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto)
     {
-        var exists = await _context.Authors.AnyAsync(x => x.FirstName == dto.FirstName && x.LastName == dto.LastName);
-        if (exists)
-            throw new BadRequestException($"El autor {dto.FirstName + " " + dto.LastName} ya existe");
+        var authorExists = await _context.Authors.AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
+        if (authorExists)
+            throw new BadRequestException($"El autor {dto.FirstName.Concat(" " + dto.LastName)} ya existe");
 
         var author = _mapper.Map<Author>(dto);
         _context.Add(author);
@@ -63,6 +63,13 @@ public class AuthorService : IAuthorService
     {
         var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El autor con ID {ID} no existe");
+
+        if (!string.IsNullOrEmpty(dto.FirstName) && !!string.IsNullOrEmpty(dto.LastName))
+        {
+            var authorWithNameExists = await _context.Authors.AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
+            if (authorWithNameExists)
+                throw new BadRequestException($"El autor {dto.FirstName.Concat(" " + dto.LastName)} ya existe");
+        }
 
         author.FirstName = !string.IsNullOrEmpty(dto.FirstName) ? dto.FirstName : author.FirstName;
         author.LastName = !string.IsNullOrEmpty(dto.LastName) ? dto.LastName : author.LastName;
