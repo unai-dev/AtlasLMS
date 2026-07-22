@@ -1,12 +1,16 @@
 ﻿@page "/login"
 
-<AtlasAuthForm ButtonCaption="Iniciar Sesión" User="@user" OnSubmit="@HandleLogin" />
+<AtlasAuthForm ButtonCaption="Iniciar Sesión" User=@user OnSubmit=@HandleLogin CurrentPost=@currentPost/>
 
 @code {
     private LoginDto? user = new();
+    private bool currentPost;
 
-    private void HandleLogin()
+    private async Task HandleLogin()
     {
+        currentPost = true;
         Console.WriteLine($"Iniciando sesión......");
+        await Task.Delay(2000);
+        currentPost = false;
     }
 }

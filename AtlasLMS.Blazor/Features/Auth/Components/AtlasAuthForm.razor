@@ -1,4 +1,4 @@
-﻿<div class="container-fluid atlas-auth-page">
+﻿<div class="atlas-auth-page">
     <div class="row h-100">
         <AtlasHeader />
         <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
@@ -11,15 +11,25 @@
                                @bind-Value="@User.Email" />
 
                 <AtlasTxtInput Label="Contraseña"
-                               PlaceHolder="************"
+                               PlaceHolder="················"
                                Type="password"
                                @bind-Value="@User.Password" />
 
-                <div class="text-end mt-1">
+                <div class="text-end mb-2">
                     <a href="#" class="text-decoration-none text-primary small">¿Olvidaste tu contraseña?</a>
                 </div>
 
-                <button class="btn btn-primary w-100">@ButtonCaption</button>
+                <button class="btn btn-primary w-100 rounded-4" disabled=@CurrentPost>
+                    @if (CurrentPost)
+                    {
+                        <text>Enviando...</text>
+                    }
+                    else
+                    {
+                        @ButtonCaption
+                    }
+
+                </button>
                 <footer class="text-center mt-3 text-muted small">
                     © 2026 AtlasLMS - Software de Gestión de Librerías
                 </footer>
@@ -31,6 +41,7 @@
 @code {
     #region     Parameters--------------------------------------------
     [Parameter, EditorRequired] public LoginDto User { get; set; }
+    [Parameter, EditorRequired] public bool CurrentPost { get; set; }
     [Parameter, EditorRequired] public string ButtonCaption { get; set; }
     [Parameter, EditorRequired] public EventCallback OnSubmit { get; set; }
     #endregion
