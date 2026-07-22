@@ -46,9 +46,9 @@ public class BookService : IBookService
 
     public async Task<BookReadDto> CreateBookAsync(BookCreateDto dto)
     {
-        var bookExists = await _context.Books.AnyAsync(x => x.Title == dto.Title && x.ISBN == dto.ISBN);
+        var bookExists = await _context.Books.AnyAsync(x => x.ISBN == dto.ISBN);
         if (bookExists)
-            throw new BadRequestException($"El libro '{dto.Title}' ya figura en nuestra base de datos");
+            throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
 
         if (dto.LocationID.HasValue)
         {
@@ -102,14 +102,14 @@ public class BookService : IBookService
                 throw new NotFoundException($"La localizacion con el ID {dto.LocationID.Value} no existe");
         }
 
-        if (!string.IsNullOrEmpty(dto.Title) && !string.IsNullOrEmpty(dto.ISBN))
+        if (!string.IsNullOrEmpty(dto.ISBN))
         {
-            var bookExists = await _context.Books.AnyAsync(x => x.Title == dto.Title && x.ISBN == dto.ISBN);
+            var bookExists = await _context.Books.AnyAsync(x => x.ISBN == dto.ISBN);
             if (bookExists)
-                throw new BadRequestException($"El libro {dto.Title} ya figura en nuestra base de datos");
+                throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
         }
 
-        if (dto.PublicationAt.HasValue && dto.PublicationAt >= DateTime.UtcNow)
+        if (dto.PublicationAt.HasValue && dto.PublicationAt > DateTime.UtcNow)
             throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser igual a la actual");
 
         book.Title = !string.IsNullOrEmpty(dto.Title) ? dto.Title : book.Title;
