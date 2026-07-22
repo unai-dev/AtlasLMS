@@ -4,6 +4,7 @@ using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Update;
 
 using AutoMapper;
 
@@ -31,17 +32,13 @@ public class UserService : IUserService
 
     public async Task<UserReadDto> GetUserAsync(string ID)
     {
-        if (string.IsNullOrWhiteSpace(ID))
-            throw new BadRequestException($"El ID no puede estar vacio");
-        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id.Equals(ID))
+        var user = await _userManager.FindByIdAsync(ID)
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
         return _mapper.Map<UserReadDto>(user);
     }
 
     public async Task<UserDetailDto> GetUserLoansAsync(string ID)
     {
-        if (string.IsNullOrWhiteSpace(ID))
-            throw new BadRequestException($"El ID no puede estar vacio");
         var user = await _userManager.Users
             .Where(x => x.Id.Equals(ID))
             .Select(x => x.Loans)
@@ -50,8 +47,6 @@ public class UserService : IUserService
     }
     public async Task<UserDetailDto> GetUserBookingsAsync(string ID)
     {
-        if (string.IsNullOrWhiteSpace(ID))
-            throw new BadRequestException($"El ID no puede estar vacio");
         var user = await _userManager.Users
             .Where(x => x.Id.Equals(ID))
             .Select(x => x.Bookings)
@@ -71,7 +66,7 @@ public class UserService : IUserService
 
         if (!string.IsNullOrEmpty(dto.UserName))
         {
-            var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName == dto.UserName);
+            var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName));
             if (existsUsername)
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
         }
@@ -82,11 +77,47 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
+    public async Task<UserReadDto> UpdateUserAsync(string ID, UserUpdateDto dto)
+    {
+        var user = await _userManager.FindByIdAsync(ID)
+            ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
+
+        if (!string.IsNullOrEmpty(dto.Email))
+        {
+            var existsEmail = await _userManager.FindByEmailAsync(dto.Email);
+            if (existsEmail != null && existsEmail.Id != ID)
+                throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
+        }
+
+        if (!string.IsNullOrEmpty(dto.CIF))
+        {
+            var existsCIF = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF) && x.Id != ID);
+            if (existsCIF)
+                throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
+        }
+
+        if (!string.IsNullOrEmpty(dto.UserName))
+        {
+            var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName) && x.Id != ID);
+            if (existsUsername)
+                throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
+        }
+
+        user.Email = !string.IsNullOrEmpty(dto.Email) ? dto.Email : user.Email;
+        user.CIF = !string.IsNullOrEmpty(dto.CIF) ? dto.CIF : user.CIF;
+        user.UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : user.UserName;
+        user.NormalizedEmail = user.Email?.Normalize();
+        user.NormalizedUserName = user.UserName?.Normalize();
+
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await _userManager.UpdateAsync(user);
+        return _mapper.Map<UserReadDto>(user);
+    }
+
     public async Task DeleteUserAsync(string ID)
     {
-        if (string.IsNullOrWhiteSpace(ID))
-            throw new BadRequestException($"El ID no puede estar vacio");
-        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id.Equals(ID))
+        var user = await _userManager.FindByIdAsync(ID)
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
         await _userManager.DeleteAsync(user);
     }

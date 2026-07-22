@@ -1,6 +1,7 @@
 ﻿using AtlasLMS.Application.Contracts;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Update;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +45,11 @@ public class UserController : ControllerBase
         var result = await _userService.CreateUserAsync(dto);
         return CreatedAtAction(nameof(Get), new { ID = result.ID }, result);
     }
+
+    [HttpPut]
+    [Route("{ID}")]
+    public async Task<ActionResult<UserReadDto>> Put([FromRoute] string ID, [FromBody] UserUpdateDto dto) =>
+        Ok(await _userService.UpdateUserAsync(ID, dto));
 
     [HttpDelete]
     [Route("{ID}")]
