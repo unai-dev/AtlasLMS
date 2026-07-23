@@ -20,9 +20,21 @@ Public Module AtlasHelper
     End Function
 #End Region
 
+#Region "   AreStringsEmpty----------------------------------------------------------------------"
+    Public Function AreStringsEmpty(asValF As String, asValS As String) As Boolean
+        Return String.IsNullOrEmpty(asValF) AndAlso String.IsNullOrEmpty(asValS)
+    End Function
+    Public Function AreStringsEmpty(asValF As String, asValS As String, asValT As String) As Boolean
+        Return String.IsNullOrEmpty(asValF) AndAlso String.IsNullOrEmpty(asValS) AndAlso String.IsNullOrEmpty(asValT)
+    End Function
+#End Region
+
 #Region "   AreNotStringsEmpty------------------------------------------------------------------------"
     Public Function AreNotStringsEmpty(asValF As String, asValS As String) As Boolean
         Return Not String.IsNullOrEmpty(asValF) AndAlso String.IsNullOrEmpty(asValS)
+    End Function
+    Public Function AreNotStringsEmpty(asValF As String, asValS As String, asValT As String) As Boolean
+        Return Not String.IsNullOrEmpty(asValF) AndAlso String.IsNullOrEmpty(asValS) AndAlso String.IsNullOrEmpty(asValT)
     End Function
 #End Region
 
@@ -114,7 +126,7 @@ Public Module AtlasHelper
     End Function
 #End Region
 
-#Region "  ResolveNullableInt ------------------------------------------------------------------"
+#Region "  ResolveNullableInt------------------------------------------------------------------"
     Public Function ResolveNullableInt(aiValNullable As Integer?, aiValExisting As Integer?) As Integer?
         If aiValNullable.HasValue Then
             Return aiValNullable.Value
@@ -153,6 +165,12 @@ Public Module AtlasHelper
 #Region "   IsNotNullAndFutureDate------------------------------------------------------------"
     Public Function IsNotNullAndFutureDate(adDate As DateTime?) As Boolean
         Return adDate.HasValue AndAlso adDate > DateTime.UtcNow
+    End Function
+#End Region
+
+#Region "   IsNotNullAndPassDate------------------------------------------------------------"
+    Public Function IsNotNullAndPassDate(adDate As DateTime?) As Boolean
+        Return adDate.HasValue AndAlso adDate < DateTime.UtcNow
     End Function
 #End Region
 
