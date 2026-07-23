@@ -1,6 +1,7 @@
 ﻿using AtlasLMS.Application.Contracts;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Update;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,11 @@ public class LocationController : ControllerBase
         var result = await _locationService.CreateLocationAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = result.ID }, result);
     }
+
+    [HttpPut]
+    [Route("{id:int}")]
+    public async Task<ActionResult<LocationReadDto>> Put([FromRoute] int ID, [FromBody] LocationUpdateDto dto) =>
+        Ok(await _locationService.UpdateLocationAsync(ID, dto));
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)

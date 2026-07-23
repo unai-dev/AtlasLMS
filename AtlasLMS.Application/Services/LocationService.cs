@@ -4,6 +4,7 @@ using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Update;
 
 using AutoMapper;
 
@@ -46,9 +47,8 @@ public class LocationService : ILocationService
 
     public async Task<IEnumerable<string>> GetColumnsByAisleAsync(string aisle)
     {
-        aisle = aisle.Trim().ToUpper();
         var columns = await _context.Locations
-            .Where(x => x.Aisle.ToUpper().Equals(aisle))
+            .Where(x => x.Aisle.Equals(aisle))
             .Select(x => x.Column)
             .Distinct() //Omitimos duplicados
             .ToListAsync();
@@ -57,10 +57,8 @@ public class LocationService : ILocationService
 
     public async Task<IEnumerable<string>> GetShelvesAsync(string aisle, string column)
     {
-        aisle = aisle.Trim().ToUpper();
-        column = column.Trim().ToUpper();
         var shelves = await _context.Locations
-            .Where(x => x.Aisle.ToUpper().Equals(aisle) && x.Column.ToUpper().Equals(column))
+            .Where(x => x.Aisle.Equals(aisle) && x.Column.Equals(column))
             .Select(x => x.Shelf)
             .Distinct() //Omitimos duplicados
             .ToListAsync();
@@ -69,6 +67,10 @@ public class LocationService : ILocationService
 
     public async Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto)
     {
+        dto.Shelf = dto.Shelf.ToUpper();
+        dto.Column = dto.Column.ToUpper();
+        dto.Aisle = dto.Aisle.ToUpper();
+
         var existsLocation = await _context.Locations.AnyAsync(
             x => x.Column.Equals(dto.Column) &&
             x.Shelf.Equals(dto.Shelf) &&
@@ -78,6 +80,31 @@ public class LocationService : ILocationService
 
         var location = _mapper.Map<Location>(dto);
         _context.Add(location);
+        await _context.SaveChangesAsync();
+        return _mapper.Map<LocationReadDto>(location);
+    }
+
+    public async Task<LocationReadDto> UpdateLocationAsync(int ID, LocationUpdateDto dto)
+    {
+        var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"Ubicaion con ID {ID} no encontrada");
+
+        var existsLocation = await _context.Locations.AnyAsync(
+            x => x.Column.Equals(dto.Column) &&
+            x.Shelf.Equals(dto.Shelf) &&
+            x.Aisle.Equals(dto.Aisle) &&
+            x.ID != ID);
+        if (existsLocation)
+            throw new BadRequestException($"Ya existe la localizacion introducida");
+
+        location.Aisle = !string.IsNullOrEmpty(dto.Aisle) ? dto.Aisle.ToUpper() : location.Aisle.ToUpper();
+        location.Column = !string.IsNullOrEmpty(dto.Column) ? dto.Column.ToUpper() : location.Column.ToUpper();
+        location.Shelf = !string.IsNullOrEmpty(dto.Shelf) ? dto.Shelf.ToUpper() : location.Shelf.ToUpper();
+
+        location.LimitOfBooks = dto.LimitOfBooks.HasValue ? dto.LimitOfBooks.Value : location.LimitOfBooks;
+
+        location.UpdatedAt = DateTime.UtcNow;
+
         await _context.SaveChangesAsync();
         return _mapper.Map<LocationReadDto>(location);
     }
