@@ -50,7 +50,7 @@ public class AuthorService : IAuthorService
     public async Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto)
     {
         var authorExists = await _context.Authors
-            .AnyAsync(x => AtlasHelper.IsEqualsStr(x.FirstName, dto.FirstName) && AtlasHelper.IsEqualsStr(x.LastName, dto.LastName));
+            .AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
         if (authorExists)
             throw new BadRequestException($"El autor {dto.FirstName} {dto.LastName} ya existe");
 
@@ -69,7 +69,7 @@ public class AuthorService : IAuthorService
         if (AtlasHelper.AreNotStringsEmpty(dto.FirstName, dto.LastName))
         {
             var authorWithNameExists = await _context.Authors
-                .AnyAsync(x => AtlasHelper.IsEqualsStr(x.FirstName, dto.FirstName) && AtlasHelper.IsEqualsStr(x.LastName, dto.LastName));
+                .AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
             if (authorWithNameExists)
                 throw new BadRequestException($"El autor {dto.FirstName} {dto.LastName} ya existe");
         }
