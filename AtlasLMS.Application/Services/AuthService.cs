@@ -5,6 +5,7 @@ using System.Text;
 using AtlasLMS.Application.Contracts;
 using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
+using AtlasLMS.Shared.DTOs.Auth;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.Responses;
 
@@ -56,9 +57,9 @@ public class AuthService : IAuthService
         return await GetJwtToken(dto.Email);
     }
 
-    public async Task<AuthResponse> Login(UserCreateDto dto)
+    public async Task<AuthResponse> Login(LoginDto dto)
     {
-        var user = await _userManager.FindByEmailAsync(dto.Email) 
+        var user = await _userManager.FindByEmailAsync(dto.Email)
             ?? throw new NotFoundException($"El usuario {dto.Email} no existe");
         var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
 
@@ -72,7 +73,7 @@ public class AuthService : IAuthService
     {
         var claims = new List<Claim> { new Claim("email", email) };
 
-        var user = await _userManager.FindByEmailAsync(email) 
+        var user = await _userManager.FindByEmailAsync(email)
             ?? throw new BadRequestException($"El email {email} no figura en nuestra base de datos");
         var claimsDB = await _userManager.GetClaimsAsync(user);
         claims.AddRange(claimsDB);
