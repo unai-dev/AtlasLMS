@@ -91,8 +91,10 @@ public class LoanService : ILoanService
             throw new NotFoundException($"El usuario {dto.UserID} no existe");
 
         var loan = _mapper.Map<Loan>(dto);
+
         loan.StartDate = DateTime.UtcNow;
         loan.DueDate = loan.StartDate.AddDays(loan.LifeTime);
+
         _context.Add(loan);
         await _context.SaveChangesAsync();
         return _mapper.Map<LoanReadDto>(loan);

@@ -5,6 +5,7 @@ using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.Enums;
+using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -74,9 +75,10 @@ public class BookingService : IBookingService
         var userExists = await _userManager.FindByIdAsync(dto.UserID)
             ?? throw new NotFoundException($"Usuario con ID {dto.UserID} no existe");
 
-        if (dto.StartTime >= dto.PickupDeadline)
+        if (AtlasHelper.IsDateGreaterOrEqual(dto.StartTime, dto.PickupDeadline))
             throw new BadRequestException($"La fecha de inicio no puede ser mayor a la de recogida");
-        if (dto.StartTime < DateTime.UtcNow || dto.PickupDeadline < DateTime.UtcNow)
+
+        if (AtlasHelper.IsAnyDatePast(dto.StartTime, dto.PickupDeadline))
             throw new BadRequestException($"Las fechas de inicio/final no pueden ser menor a la fecha actual");
 
         var bookIsReserved = await _context.Bookings

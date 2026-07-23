@@ -5,6 +5,7 @@ using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
+using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -67,9 +68,9 @@ public class LocationService : ILocationService
 
     public async Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto)
     {
-        dto.Shelf = dto.Shelf.ToUpper();
-        dto.Column = dto.Column.ToUpper();
-        dto.Aisle = dto.Aisle.ToUpper();
+        dto.Shelf = AtlasHelper.NormalizeUpper(dto.Shelf.ToUpper());
+        dto.Column = AtlasHelper.NormalizeUpper(dto.Column.ToUpper());
+        dto.Aisle = AtlasHelper.NormalizeUpper(dto.Aisle.ToUpper());
 
         var existsLocation = await _context.Locations.AnyAsync(
             x => x.Column.Equals(dto.Column) &&
@@ -89,6 +90,10 @@ public class LocationService : ILocationService
         var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"Ubicaion con ID {ID} no encontrada");
 
+        if (AtlasHelper.IsNotStringEmpty(dto.Shelf)) dto.Shelf = AtlasHelper.NormalizeUpper(dto.Shelf);
+        if (AtlasHelper.IsNotStringEmpty(dto.Column)) dto.Column = AtlasHelper.NormalizeUpper(dto.Column);
+        if (AtlasHelper.IsNotStringEmpty(dto.Aisle)) dto.Aisle = AtlasHelper.NormalizeUpper(dto.Aisle);
+
         var existsLocation = await _context.Locations.AnyAsync(
             x => x.Column.Equals(dto.Column) &&
             x.Shelf.Equals(dto.Shelf) &&
@@ -97,11 +102,11 @@ public class LocationService : ILocationService
         if (existsLocation)
             throw new BadRequestException($"Ya existe la localizacion introducida");
 
-        location.Aisle = !string.IsNullOrEmpty(dto.Aisle) ? dto.Aisle.ToUpper() : location.Aisle.ToUpper();
-        location.Column = !string.IsNullOrEmpty(dto.Column) ? dto.Column.ToUpper() : location.Column.ToUpper();
-        location.Shelf = !string.IsNullOrEmpty(dto.Shelf) ? dto.Shelf.ToUpper() : location.Shelf.ToUpper();
+        location.Aisle = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Aisle, location.Aisle);
+        location.Column = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Column, location.Column);
+        location.Shelf = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Shelf, location.Shelf);
 
-        location.LimitOfBooks = dto.LimitOfBooks.HasValue ? dto.LimitOfBooks.Value : location.LimitOfBooks;
+        location.LimitOfBooks = AtlasHelper.GetOrExistingIntNullable(dto.LimitOfBooks, location.LimitOfBooks);
 
         location.UpdatedAt = DateTime.UtcNow;
 

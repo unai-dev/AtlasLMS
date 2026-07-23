@@ -6,6 +6,7 @@ using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
+using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -50,7 +51,7 @@ public class BookService : IBookService
         if (bookExists)
             throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
 
-        if (dto.LocationID.HasValue)
+        if (AtlasHelper.IsNotNullableInteger(dto.LocationID))
         {
             var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == dto.LocationID)
                 ?? throw new NotFoundException($"La localizacion '{dto.LocationID}' no existe");
@@ -67,7 +68,7 @@ public class BookService : IBookService
         if (!authorExists)
             throw new NotFoundException($"El autor con ID {dto.AuthorID} no existe");
 
-        if (dto.PublicationAt > DateTime.UtcNow)
+        if (AtlasHelper.IsDateGreater(dto.PublicationAt))
             throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser igual a la actual");
 
         var book = _mapper.Map<Book>(dto);
@@ -81,47 +82,45 @@ public class BookService : IBookService
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El libro con ID {ID} no existe");
 
-        if (dto.AuthorID.HasValue)
+        if (AtlasHelper.IsNotNullableInteger(dto.AuthorID))
         {
             var authorExists = await _context.Authors.AnyAsync(x => x.ID == dto.AuthorID);
             if (!authorExists)
                 throw new NotFoundException($"El autor con el ID {dto.AuthorID} no existe");
         }
 
-        if (dto.CategoryID.HasValue)
+        if (AtlasHelper.IsNotNullableInteger(dto.CategoryID))
         {
             var categoryExists = await _context.Categories.AnyAsync(x => x.ID == dto.CategoryID);
             if (!categoryExists)
                 throw new NotFoundException($"La categoria con el ID {dto.CategoryID} no existe");
         }
 
-        if (dto.LocationID.HasValue)
+        if (AtlasHelper.IsNotNullableInteger(dto.LocationID))
         {
-            var locationExists = await _context.Locations.AnyAsync(x => x.ID == dto.LocationID.Value);
+            var locationExists = await _context.Locations.AnyAsync(x => x.ID == dto.LocationID);
             if (!locationExists)
-                throw new NotFoundException($"La localizacion con el ID {dto.LocationID.Value} no existe");
+                throw new NotFoundException($"La localizacion con el ID {dto.LocationID} no existe");
         }
 
-        if (!string.IsNullOrEmpty(dto.ISBN))
+        if (AtlasHelper.IsNotStringEmpty(dto.ISBN))
         {
-            var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN));
+            var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN) && x.ID != ID);
             if (bookExists)
                 throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
         }
 
-        if (dto.PublicationAt.HasValue && dto.PublicationAt > DateTime.UtcNow)
-            throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser igual a la actual");
+        if (AtlasHelper.IsNotNullAndFutureDate(dto.PublicationAt))
+            throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser mayor a la actual");
 
-        book.Title = !string.IsNullOrEmpty(dto.Title) ? dto.Title : book.Title;
-        book.ISBN = !string.IsNullOrEmpty(dto.ISBN) ? dto.ISBN : book.ISBN;
-        book.Synopsis = !string.IsNullOrEmpty(dto.Synopsis) ? dto.Synopsis : book.Synopsis;
-
-        book.Stock = dto.Stock.HasValue ? dto.Stock.Value : book.Stock;
-        book.PublicationAt = dto.PublicationAt.HasValue ? dto.PublicationAt.Value : book.PublicationAt;
-
-        book.AuthorID = dto.AuthorID.HasValue ? dto.AuthorID.Value : book.AuthorID;
-        book.CategoryID = dto.CategoryID.HasValue ? dto.CategoryID.Value : book.CategoryID;
-        book.LocationID = dto.LocationID.HasValue ? dto.LocationID.Value : book.LocationID;
+        book.Title = AtlasHelper.GetOrFallbackStr(dto.Title, book.Title);
+        book.ISBN = AtlasHelper.GetOrFallbackStr(dto.ISBN, book.ISBN);
+        book.Synopsis = AtlasHelper.GetOrFallbackStr(dto.Synopsis, book.Synopsis);
+        book.Stock = AtlasHelper.ResolveNullableInt(dto.Stock, book.Stock);
+        book.PublicationAt = AtlasHelper.GetOrExistingDate(dto.PublicationAt, book.PublicationAt);
+        book.AuthorID = AtlasHelper.GetOrExistingIntNullable(dto.AuthorID, book.AuthorID);
+        book.CategoryID = AtlasHelper.GetOrExistingIntNullable(dto.CategoryID, book.CategoryID);
+        book.LocationID = AtlasHelper.ResolveNullableInt(dto.LocationID, book.LocationID);
 
         book.UpdatedAt = DateTime.UtcNow;
 

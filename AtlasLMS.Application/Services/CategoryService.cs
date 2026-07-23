@@ -5,6 +5,7 @@ using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
+using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -55,8 +56,10 @@ public class CategoryService : ICategoryService
         var category = await _context.Categories.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"Categoria con ID {ID} no existe");
 
-        category.Name = !string.IsNullOrEmpty(dto.Name) ? dto.Name : category.Name;
+        category.Name = AtlasHelper.GetOrFallbackStr(dto.Name, category.Name);
+
         category.UpdatedAt = DateTime.UtcNow;
+
         await _context.SaveChangesAsync();
         return _mapper.Map<CategoryReadDto>(category);
     }
