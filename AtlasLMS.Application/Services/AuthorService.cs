@@ -6,6 +6,7 @@ using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
+using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -49,9 +50,9 @@ public class AuthorService : IAuthorService
     public async Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto)
     {
         var authorExists = await _context.Authors
-            .AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
+            .AnyAsync(x => AtlasHelper.IsEqualsStr(x.FirstName, dto.FirstName) && AtlasHelper.IsEqualsStr(x.LastName, dto.LastName));
         if (authorExists)
-            throw new BadRequestException($"El autor {dto.FirstName.Concat(" " + dto.LastName)} ya existe");
+            throw new BadRequestException($"El autor {dto.FirstName} {dto.LastName} ya existe");
 
         var author = _mapper.Map<Author>(dto);
         _context.Add(author);
@@ -65,16 +66,16 @@ public class AuthorService : IAuthorService
         var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El autor con ID {ID} no existe");
 
-        if (!string.IsNullOrEmpty(dto.FirstName) && !!string.IsNullOrEmpty(dto.LastName))
+        if (AtlasHelper.AreNotStringsEmpty(dto.FirstName, dto.LastName))
         {
             var authorWithNameExists = await _context.Authors
-                .AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
+                .AnyAsync(x => AtlasHelper.IsEqualsStr(x.FirstName, dto.FirstName) && AtlasHelper.IsEqualsStr(x.LastName, dto.LastName));
             if (authorWithNameExists)
-                throw new BadRequestException($"El autor {dto.FirstName.Concat(" " + dto.LastName)} ya existe");
+                throw new BadRequestException($"El autor {dto.FirstName} {dto.LastName} ya existe");
         }
 
-        author.FirstName = !string.IsNullOrEmpty(dto.FirstName) ? dto.FirstName : author.FirstName;
-        author.LastName = !string.IsNullOrEmpty(dto.LastName) ? dto.LastName : author.LastName;
+        author.FirstName = AtlasHelper.GetOrFallbackStr(dto.FirstName, author.FirstName);
+        author.LastName = AtlasHelper.GetOrFallbackStr(dto.LastName, author.LastName);
         author.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();
