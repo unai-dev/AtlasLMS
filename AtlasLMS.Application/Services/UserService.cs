@@ -5,6 +5,7 @@ using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
+using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -57,21 +58,21 @@ public class UserService : IUserService
     public async Task<UserReadDto> CreateUserAsync(UserCreateDto dto)
     {
         var existsEmail = await _userManager.FindByEmailAsync(dto.Email);
-        if (existsEmail != null)
+        if (existsEmail is not null)
             throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
 
         var existsCIF = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF));
         if (existsCIF)
             throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
 
-        if (!string.IsNullOrEmpty(dto.UserName))
+        if (AtlasHelper.IsNotStringEmpty(dto.UserName))
         {
             var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName));
             if (existsUsername)
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
         }
 
-        dto.UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : dto.Email.Split("@")[0];
+        dto.UserName = AtlasHelper.GetOrFallbackStr(dto.UserName, AtlasHelper.GetEmailUserPart(dto.Email));
         var user = _mapper.Map<User>(dto);
         await _userManager.CreateAsync(user, dto.Password);
         return _mapper.Map<UserReadDto>(user);
@@ -82,32 +83,32 @@ public class UserService : IUserService
         var user = await _userManager.FindByIdAsync(ID)
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
 
-        if (!string.IsNullOrEmpty(dto.Email))
+        if (AtlasHelper.IsNotStringEmpty(dto.Email))
         {
-            var existsEmail = await _userManager.FindByEmailAsync(dto.Email);
-            if (existsEmail != null && existsEmail.Id != ID)
+            var existsEmail = await _userManager.FindByEmailAsync(dto.Email!);
+            if (existsEmail is not null && existsEmail.Id != ID)
                 throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
         }
 
-        if (!string.IsNullOrEmpty(dto.CIF))
+        if (AtlasHelper.IsNotStringEmpty(dto.CIF))
         {
             var existsCIF = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF) && x.Id != ID);
             if (existsCIF)
                 throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
         }
 
-        if (!string.IsNullOrEmpty(dto.UserName))
+        if (AtlasHelper.IsNotStringEmpty(dto.UserName))
         {
             var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName) && x.Id != ID);
             if (existsUsername)
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
         }
 
-        user.Email = !string.IsNullOrEmpty(dto.Email) ? dto.Email : user.Email;
-        user.CIF = !string.IsNullOrEmpty(dto.CIF) ? dto.CIF : user.CIF;
-        user.UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : user.UserName;
-        user.NormalizedEmail = user.Email?.Normalize();
-        user.NormalizedUserName = user.UserName?.Normalize();
+        user.Email = AtlasHelper.GetOrFallbackStr(dto.Email, user.Email);
+        user.CIF = AtlasHelper.GetOrFallbackStr(dto.CIF, user.CIF);
+        user.UserName = AtlasHelper.GetOrFallbackStr(dto.UserName, user.UserName);
+        user.NormalizedEmail = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Email, user.Email);
+        user.NormalizedUserName = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.UserName, user.UserName);
 
         user.UpdatedAt = DateTime.UtcNow;
 
