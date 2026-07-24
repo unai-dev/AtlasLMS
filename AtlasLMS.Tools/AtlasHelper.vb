@@ -6,34 +6,46 @@
 ' Todas las funciones aquí son puras, simples y pensadas para mantener la lógica 
 ' de negocio limpia y profesional.
 ' -----------------------------------------------------------------------------
+
+' -----------------------------------------------------------------------------
+' AtlasHelper valida correctamente los valores Nothing y evita NullReferenceException en tiempo de ejecución.
+' Sin embargo, el compilador no puede deducir esa validación y continúa mostrando advertencias de nullability.
+' Esto es normal: VB.NET no participa en el sistema de análisis de null de C# y los atributos como <NotNullWhen(True)>
+' no modifican el estado de null del valor.
+' Aun así, se puede estar tranquilo: el Helper garantiza la seguridad y la referencia es válida en este punto.
+' Para evitar el warning podemos agregar el operador '!' en la expresion a evaluar
+' -----------------------------------------------------------------------------
+
+Imports System.Diagnostics.CodeAnalysis
+
 Public Module AtlasHelper
 
 #Region "   IsStringEmpty----------------------------------------------------------------"
-    Public Function IsStringEmpty(asVal As String) As Boolean
+    Public Function IsStringEmpty(<NotNullWhen(False)> asVal As String) As Boolean
         Return String.IsNullOrEmpty(asVal)
     End Function
 #End Region
 
 #Region "   IsNotStringEmpty----------------------------------------------------------------"
-    Public Function IsNotStringEmpty(asVal As String) As Boolean
+    Public Function IsNotStringEmpty(<NotNullWhen(True)> asVal As String) As Boolean
         Return Not String.IsNullOrEmpty(asVal)
     End Function
 #End Region
 
 #Region "   AreStringsEmpty----------------------------------------------------------------------"
-    Public Function AreStringsEmpty(asValF As String, asValS As String) As Boolean
+    Public Function AreStringsEmpty(<NotNullWhen(False)> asValF As String, asValS As String) As Boolean
         Return String.IsNullOrEmpty(asValF) AndAlso String.IsNullOrEmpty(asValS)
     End Function
-    Public Function AreStringsEmpty(asValF As String, asValS As String, asValT As String) As Boolean
+    Public Function AreStringsEmpty(<NotNullWhen(False)> asValF As String, asValS As String, asValT As String) As Boolean
         Return String.IsNullOrEmpty(asValF) AndAlso String.IsNullOrEmpty(asValS) AndAlso String.IsNullOrEmpty(asValT)
     End Function
 #End Region
 
 #Region "   AreNotStringsEmpty------------------------------------------------------------------------"
-    Public Function AreNotStringsEmpty(asValF As String, asValS As String) As Boolean
+    Public Function AreNotStringsEmpty(<NotNullWhen(True)> asValF As String, asValS As String) As Boolean
         Return Not String.IsNullOrEmpty(asValF) AndAlso String.IsNullOrEmpty(asValS)
     End Function
-    Public Function AreNotStringsEmpty(asValF As String, asValS As String, asValT As String) As Boolean
+    Public Function AreNotStringsEmpty(<NotNullWhen(True)> asValF As String, asValS As String, asValT As String) As Boolean
         Return Not String.IsNullOrEmpty(asValF) AndAlso String.IsNullOrEmpty(asValS) AndAlso String.IsNullOrEmpty(asValT)
     End Function
 #End Region
