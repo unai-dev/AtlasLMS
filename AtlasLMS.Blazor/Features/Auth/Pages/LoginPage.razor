@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@inject IAuthService AuthService
 
 <AtlasAuthForm ButtonCaption="Iniciar Sesión" User=@loginUser OnSubmit=@HandleLogin CurrentPost=@currentPost />
 
@@ -8,10 +9,17 @@
 
     private async Task HandleLogin()
     {
+        if (loginUser is null) return;
         currentPost = true;
+
         Console.WriteLine($"Iniciando sesión......");
-        Console.WriteLine($"{loginUser!.Email} && {loginUser.Password}");
-        await Task.Delay(2000);
+
+        var result = await AuthService.LoginAsync(loginUser);
+
+        if (AtlasHelper.IsStringEmpty(result!.Token)) return;
+
+        Console.WriteLine(result.Token);
+
         currentPost = false;
     }
 }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AtlasLMS.Shared\AtlasLMS.Shared.csproj" />
+    <ProjectReference Include="..\AtlasLMS.Tools\AtlasLMS.Tools.vbproj" />
   </ItemGroup>
 
 </Project>
