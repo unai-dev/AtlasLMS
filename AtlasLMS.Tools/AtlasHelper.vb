@@ -174,4 +174,10 @@ Public Module AtlasHelper
     End Function
 #End Region
 
+#Region "   GetEmailUserPart--------------------------------------------------------"
+    Public Function GetEmailUserPart(asEmail As String) As String
+        Return asEmail.Split("@")(0)
+    End Function
+#End Region
+
 End Module
