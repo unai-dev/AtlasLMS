@@ -4,7 +4,6 @@ using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.Enums;
 using AtlasLMS.Tools;
 
 using AutoMapper;

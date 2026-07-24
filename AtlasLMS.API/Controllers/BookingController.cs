@@ -1,6 +1,6 @@
 ﻿using AtlasLMS.Application.Services;
+using AtlasLMS.Domain.Entities;
 using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.Enums;
 
 using Microsoft.AspNetCore.Mvc;
 

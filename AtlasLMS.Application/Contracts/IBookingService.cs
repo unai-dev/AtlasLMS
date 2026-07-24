@@ -1,6 +1,6 @@
-﻿using AtlasLMS.Shared.DTOs.Create;
+﻿using AtlasLMS.Domain.Entities;
+using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.Enums;
 
 namespace AtlasLMS.Application.Contracts
 {
