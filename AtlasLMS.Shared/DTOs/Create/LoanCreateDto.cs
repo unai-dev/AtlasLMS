@@ -10,6 +10,7 @@ public class LoanCreateDto
     //
     //
     //
-    public int BookID { get; set; }
+    [Required]
     public string UserID { get; set; } = string.Empty;
+    public int BookID { get; set; }
 }
