@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace AtlasLMS.Shared.DTOs.Create;
 
 public class LoanCreateDto

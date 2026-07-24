@@ -1,10 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace AtlasLMS.Shared.DTOs.Update;
 
 public class BookUpdateDto
 {
+    [StringLength(55)]
     public string? Title { get; set; }
+    [StringLength(13)]
     public string? ISBN { get; set; }
     public int? Stock { get; set; }
+    [StringLength(255)]
     public string? Synopsis { get; set; }
     public DateTime? PublicationAt { get; set; }
     //Related properties
