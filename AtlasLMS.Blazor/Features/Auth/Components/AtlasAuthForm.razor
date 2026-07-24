@@ -3,32 +3,22 @@
         <AtlasHeader />
         <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
             <EditForm EditContext="@editContext" class="card shadow-lg p-4" OnValidSubmit="@HandleValidSubmit">
-                <h3 class="text-center mb-4 text-primary">Bienvenido a AtlasLMS</h3>
+                <DataAnnotationsValidator />
+                <h3 class="text-center mb-4 text-primary fw-semibold">Bienvenido a AtlasLMS</h3>
 
                 <AtlasTxtInput Label="Email"
                                PlaceHolder="unai@gmail.com"
                                Type="email"
                                @bind-Value="@User.Email" />
 
-                <AtlasTxtInput Label="Contraseña"
-                               PlaceHolder="················"
-                               Type="password"
-                               @bind-Value="@User.Password" />
+                <AtlasPwdInput @bind-Value="@User.Password" />
 
                 <div class="text-end mb-2">
                     <a href="#" class="text-decoration-none text-primary small">¿Olvidaste tu contraseña?</a>
                 </div>
 
                 <button class="btn btn-primary w-100 rounded-4" disabled=@CurrentPost>
-                    @if (CurrentPost)
-                    {
-                        <text>Enviando...</text>
-                    }
-                    else
-                    {
-                        @ButtonCaption
-                    }
-
+                    @( CurrentPost ? "Enviando..." : ButtonCaption)
                 </button>
                 <footer class="text-center mt-3 text-muted small">
                     © 2026 AtlasLMS - Software de Gestión de Librerías
@@ -41,9 +31,9 @@
 @code {
     #region     Parameters--------------------------------------------
     [Parameter, EditorRequired] public LoginDto User { get; set; }
+    [Parameter, EditorRequired] public EventCallback OnSubmit { get; set; }
     [Parameter, EditorRequired] public bool CurrentPost { get; set; }
     [Parameter, EditorRequired] public string ButtonCaption { get; set; }
-    [Parameter, EditorRequired] public EventCallback OnSubmit { get; set; }
     #endregion
 
     private EditContext? editContext;
@@ -55,7 +45,7 @@
 
     private async Task HandleValidSubmit()
     {
-        if (editContext != null && editContext.Validate())
+        if (editContext is not null && editContext.Validate())
             await OnSubmit.InvokeAsync();
     }
 }

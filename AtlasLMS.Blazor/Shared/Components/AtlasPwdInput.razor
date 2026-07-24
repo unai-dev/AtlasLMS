@@ -1,0 +1,36 @@
+﻿<div class="mb-3">
+    <label class="form-label">Contraseña</label>
+
+    <div class="position-relative">
+        <InputText type=@(hidePassword ? "password" : "text")
+                   class="form-control"
+                   placeholder=·························
+                   Value="@Value"
+                   ValueChanged="@ValueChanged"
+                   ValueExpression="@ValueExpression" />
+
+        <i @onclick="@TogglePassword"
+           class="@(hidePassword ? "bi bi-eye-fill" : "bi bi-eye-slash-fill")
+            position-absolute top-50 translate-middle-y"
+           style="right: 12px; cursor: pointer; font-size: 1.2rem;">
+        </i>
+    </div>
+
+    <ValidationMessage For="@ValueExpression" />
+</div>
+
+
+@code {
+    #region     Parameters-----------------------------------------------
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public Expression<Func<string>> ValueExpression { get; set; } = null!;
+    [Parameter] public string Value { get; set; } = null!;
+    #endregion
+
+    private bool hidePassword = true;
+
+    private void TogglePassword()
+    {
+        hidePassword = !hidePassword;
+    }
+}
