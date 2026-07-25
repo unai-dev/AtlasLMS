@@ -1,5 +1,6 @@
 ﻿@page "/login"
 @inject IAuthService AuthService
+@inject ILocalStorageService LocalStorage
 
 <AtlasAuthForm ButtonCaption="Iniciar Sesión" User=@loginUser OnSubmit=@HandleLogin CurrentPost=@currentPost />
 
@@ -7,18 +8,20 @@
     private LoginDto? loginUser = new();
     private bool currentPost;
 
+
     private async Task HandleLogin()
     {
-        if (loginUser is null) return;
-        currentPost = true;
+        if (loginUser is null)
+            return;
 
-        Console.WriteLine($"Iniciando sesión......");
+        currentPost = true;
 
         var result = await AuthService.LoginAsync(loginUser);
 
-        if (AtlasHelper.IsStringEmpty(result!.Token)) return;
+        if (AtlasHelper.IsStringEmpty(result!.Token))
+            return;
 
-        Console.WriteLine(result.Token);
+        await LocalStorage.SetItemAsync("token", result.Token);
 
         currentPost = false;
     }
