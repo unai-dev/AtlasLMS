@@ -1,0 +1,30 @@
+﻿@page "/"
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager Navigation
+
+
+<PageTitle>Inicio</PageTitle>
+<h1>Home</h1>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var result = await LocalStorage.GetItemAsync("token");
+
+            if (AtlasHelper.IsStringEmpty(result))
+            {
+                Navigation.NavigateTo("/login");
+                return;
+            }
+            return;
+        } 
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error verificando autenticacion");
+            Console.WriteLine(ex);
+        }
+    }
+}

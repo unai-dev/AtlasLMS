@@ -2,7 +2,7 @@
 {
     public interface ILocalStorageService
     {
-        Task GetItemAsync(string key);
+        Task<string?> GetItemAsync(string key);
         Task SetItemAsync(string key, string value);
     }
 }

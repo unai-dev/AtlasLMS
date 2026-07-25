@@ -15,10 +15,10 @@ public class LocalStorageService : ILocalStorageService
         _jS = jS;
     }
 
-    public async Task GetItemAsync(string key)
+    public async Task<string?> GetItemAsync(string key)
     {
         key = AtlasHelper.NormalizeUpper(key);
-        await _jS.InvokeVoidAsync("localStorage.getItem", key);
+        return await _jS.InvokeAsync<string?>("localStorage.getItem", key);
     }
 
     public async Task SetItemAsync(string key, string value)

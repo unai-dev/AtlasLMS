@@ -1,6 +1,8 @@
 ﻿@page "/login"
+@layout AuthLayout
 @inject IAuthService AuthService
 @inject ILocalStorageService LocalStorage
+@inject NavigationManager Navigation
 
 <AtlasAuthForm ButtonCaption="Iniciar Sesión" User=@loginUser OnSubmit=@HandleLogin CurrentPost=@currentPost />
 
@@ -16,12 +18,14 @@
 
         currentPost = true;
 
+
         var result = await AuthService.LoginAsync(loginUser);
 
         if (AtlasHelper.IsStringEmpty(result!.Token))
             return;
 
         await LocalStorage.SetItemAsync("token", result.Token);
+        Navigation.NavigateTo("/");
 
         currentPost = false;
     }
