@@ -8,8 +8,8 @@ public class BookingCreateDto
 {
     [Required]
     public DateTime StartTime { get; set; }
-    [Required]
     public DateTime PickupDeadline { get; set; }
+    public int LifeTime { get; set; }
     public EBookingStatus Status { get; set; }
 
     //Related properties

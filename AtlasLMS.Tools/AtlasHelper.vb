@@ -192,4 +192,14 @@ Public Module AtlasHelper
     End Function
 #End Region
 
+#Region "   GetOrFallbackInt-------------------------------------------------------------------"
+    Public Function GetOrFallbackInt(aiPrimary As Integer, aiFallback As Integer) As Integer
+        If aiPrimary = 0 Then
+            Return aiFallback
+        Else
+            Return aiPrimary
+        End If
+    End Function
+#End Region
+
 End Module

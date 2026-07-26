@@ -1,45 +1,53 @@
-﻿using AtlasLMS.Application.Services;
+﻿using AtlasLMS.Application.Contracts;
 using AtlasLMS.Domain.Entities;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
+using AtlasLMS.Shared.DTOs.Read;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AtlasLMS.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/bookings")]
+[Authorize]
 public class BookingController : ControllerBase
 {
-    private readonly BookingService _bookingService;
+    private readonly IBookingService _bookingService;
 
-    public BookingController(BookingService bookingService)
+    public BookingController(IBookingService bookingService)
     {
         _bookingService = bookingService;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll() =>
-        Ok(await _bookingService.GetBookingsAsync());
+    public async Task<ActionResult<IEnumerable<BookingReadDto>>> GetAll([FromQuery] EBookingStatus? status)
+    {
+        if (status is not null)
+            return Ok(await _bookingService.GetBookingsByStatusAsync(status));
+
+        return Ok(await _bookingService.GetBookingsAsync());
+    }
 
     [HttpGet("user/{userID}")]
-    public async Task<IActionResult> GetByUser(string userID) =>
+    public async Task<ActionResult<IEnumerable<BookingReadDto>>> GetByUser(string userID) =>
         Ok(await _bookingService.GetBookingsByUserAsync(userID));
 
-
-    [HttpGet("status/{status}")]
-    public async Task<IActionResult> GetByStatus(EBookingStatus status) =>
-        Ok(await _bookingService.GetBookingsByStatusAsync(status));
-
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> Get(int id) =>
+    public async Task<ActionResult<BookingReadDto>> Get(int id) =>
         Ok(await _bookingService.GetBookingAsync(id));
 
     [HttpGet("book/{bookID:int}")]
-    public async Task<IActionResult> GetByBook(int bookID) =>
+    public async Task<ActionResult<IEnumerable<BookingReadDto>>> GetByBook(int bookID) =>
         Ok(await _bookingService.GetBookingByBookAsync(bookID));
 
+    [HttpGet("detail/{ID:int}")]
+    public async Task<ActionResult<BookingDetailDto>> GetDetail(int ID) =>
+        Ok(await _bookingService.GetBookingDetailAsync(ID));
+
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] BookingCreateDto dto)
+    public async Task<ActionResult<BookingReadDto>> Create([FromBody] BookingCreateDto dto)
     {
         var booking = await _bookingService.CreateBookingAsync(dto);
         return CreatedAtAction(nameof(Get), new { id = booking.ID }, booking);
