@@ -65,3 +65,17 @@ CREATE OR ALTER VIEW [dbo].[vwg_Users] AS
 	LEFT JOIN Bookings AS B ON U.Id = B.UserID
 GO
 	
+CREATE OR ALTER VIEW [dbo].[vw_Bookings] AS
+	SELECT B.*
+
+	,U.UserName AS [UserName]
+	,U.Email AS  [UserEmail]
+	,U.CIF AS [UserCIF]
+
+	,BO.ISBN AS [BookISBN]
+	,BO.Title AS [BookTitle]
+
+	FROM Bookings AS B
+	INNER JOIN AspNetUsers AS U ON B.UserID = U.Id
+	INNER JOIN Books AS BO ON B.BookID = BO.ID
+GO
