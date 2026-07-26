@@ -1,4 +1,5 @@
 ﻿using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Application.Contracts;
@@ -12,4 +13,5 @@ public interface ILoanService
     Task<IEnumerable<LoanReadDto>> GetLoansAsync();
     Task<IEnumerable<LoanReadDto>> GetLoansByDueDateAsync(DateTime? limitDueDate);
     Task<IEnumerable<LoanReadDto>> GetLoansByUserAsync(string userID);
+    Task<LoanDetailDto> GetLoanDetailAsync(int ID);
 }

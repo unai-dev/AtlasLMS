@@ -45,6 +45,11 @@ public class LoanController : ControllerBase
     public async Task<ActionResult<LoanReadDto>> GetByBook([FromRoute] int bookID) =>
         Ok(await _loanService.GetLoanByBookAsync(bookID));
 
+    [HttpGet]
+    [Route("detail/{ID:int}")]
+    public async Task<ActionResult<LoanReadDto>> GetDetail([FromRoute] int ID) =>
+        Ok(await _loanService.GetLoanDetailAsync(ID));
+
     [HttpPost]
     public async Task<ActionResult<LoanReadDto>> Post([FromBody] LoanCreateDto dto)
     {

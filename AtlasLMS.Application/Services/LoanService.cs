@@ -3,6 +3,7 @@ using AtlasLMS.Data;
 using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 
 using AutoMapper;
@@ -70,6 +71,13 @@ public class LoanService : ILoanService
         var loan = await _context.Loans.FirstOrDefaultAsync(x => x.BookID == bookID)
             ?? throw new NotFoundException($"No se han encontrado prestamos por el libro indicado");
         return _mapper.Map<LoanReadDto>(loan);
+    }
+
+    public async Task<LoanDetailDto> GetLoanDetailAsync(int ID)
+    {
+        var loan = await _context.Loans.Include(x => x.User).Include(x => x.Book).FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"Prestamo con ID {ID} no encontrado");
+        return _mapper.Map<LoanDetailDto>(loan);
     }
 
     public async Task<LoanReadDto> CreateLoanAsync(LoanCreateDto dto)
