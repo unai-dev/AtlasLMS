@@ -2,23 +2,31 @@
     <div class="row h-100">
         <AtlasHeader />
         <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
-            <EditForm EditContext="@editContext" class="card shadow-lg p-4" OnValidSubmit="@HandleValidSubmit">
+            <EditForm EditContext="@editContext" class="card shadow-lg p-4" OnValidSubmit="HandleValidSubmit">
                 <DataAnnotationsValidator />
                 <h3 class="text-center mb-4 text-primary fw-semibold">Bienvenido a AtlasLMS</h3>
 
-                <AtlasTxtInput Label="Email"
-                               PlaceHolder="unai@gmail.com"
-                               Type="email"
-                               @bind-Value="@User.Email" />
+                <label class="form-label">Email</label>
+                <InputText type="email" @bind-Value="@User.Email" placeholder="unai@gmail.com" class="form-control" />
 
-                <AtlasPwdInput @bind-Value="@User.Password" />
+                <label class="form-label">Contraseña</label>
+                <div class="position-relative">
+                    <InputText type="@(hidePassword ? "password" : "text")" @bind-Value="@User.Password" placeholder="·············" class="form-control" />
+
+                    <i @onclick="TooglePassword"
+                       class="@(hidePassword ? "bi bi-eye-fill" : "bi bi-eye-slash-fill")
+                        position-absolute top-50 translate-middle-y"
+                       style="right: 12px; cursor: pointer; font-size: 1.2rem;">
+                    </i>
+
+                </div>
 
                 <div class="text-end mb-2">
                     <a href="#" class="text-decoration-none text-primary small">¿Olvidaste tu contraseña?</a>
                 </div>
 
                 <button class="btn btn-primary w-100 rounded-4" disabled=@CurrentPost>
-                    @( CurrentPost ? "Enviando..." : ButtonCaption)
+                    @(CurrentPost ? "Iniciando Sesión..." : "Iniciar Sesión")
                 </button>
                 <footer class="text-center mt-3 text-muted small">
                     © 2026 AtlasLMS - Software de Gestión de Librerías
@@ -33,19 +41,18 @@
     [Parameter, EditorRequired] public LoginDto User { get; set; }
     [Parameter, EditorRequired] public EventCallback OnSubmit { get; set; }
     [Parameter, EditorRequired] public bool CurrentPost { get; set; }
-    [Parameter, EditorRequired] public string ButtonCaption { get; set; }
     #endregion
 
     private EditContext? editContext;
+    private bool hidePassword = true;
 
-    protected override void OnInitialized()
-    {
-        editContext = new EditContext(User);
-    }
+    protected override void OnInitialized() => editContext = new EditContext(User);
+    private void TooglePassword() => hidePassword = !hidePassword;
 
     private async Task HandleValidSubmit()
     {
         if (editContext is not null && editContext.Validate())
             await OnSubmit.InvokeAsync();
     }
+
 }

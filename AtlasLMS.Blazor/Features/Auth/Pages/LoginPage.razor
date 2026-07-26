@@ -4,10 +4,10 @@
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager Navigation
 
-<AtlasAuthForm ButtonCaption="Iniciar Sesión" User=@loginUser OnSubmit=@HandleLogin CurrentPost=@currentPost />
+<AtlasAuthForm User=@loginUser OnSubmit=@HandleLogin CurrentPost=@currentPost />
 
 @code {
-    private LoginDto? loginUser = new();
+    private LoginDto? loginUser = new LoginDto();
     private bool currentPost;
 
 
