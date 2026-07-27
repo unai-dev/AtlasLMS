@@ -1,24 +1,40 @@
-﻿<nav class="sidebar">
-    <ul class="menu">
-        <li>
-            <NavLink href="/" class="nav-item" activeClass="active">
-                <i class="bi bi-house text-warning"></i>
-                <span>Inicio</span>
-            </NavLink>
-        </li>
+﻿<nav class="sidebar @(hidden ? "collapsed" : "")">
+    <div class="sidebar-header">
+        <button class="menu-toggle bg-transparent border-0 text-white ms-2 mt-2" @onclick="ToogleHidden">
+            <i class="bi bi-list fs-3"></i>
+        </button>
+    </div>
+    
+    <div class="sidebar-content">
+        <ul class="menu">
+            <li>
+                <NavLink href="/" class="nav-item" activeClass="active">
+                    <i class="bi bi-house text-warning fs-4"></i>
+                    <span class="@(hidden ? "d-none": "d-block")">Inicio</span>
+                </NavLink>
+            </li>
 
-        <li>
-            <NavLink href="/reservations" class="nav-item" activeClass="active">
-                <i class="bi bi-calendar text-success"></i>
-                <span>Reservas</span>
-            </NavLink>
-        </li>
+            <li>
+                <NavLink href="/reservations" class="nav-item" activeClass="active">
+                    <i class="bi bi-calendar text-success fs-4"></i>
+                    <span class="@(hidden ? "d-none" : "d-block")">Reservas</span>
+                </NavLink>
+            </li>
 
-        <li>
-            <NavLink href="/settings" class="nav-item" activeClass="active">
-                <i class="bi bi-gear text-info"></i>
-                <span>Configuración</span>
-            </NavLink>
-        </li>
-    </ul>
+            <li>
+                <NavLink href="/settings" class="nav-item" activeClass="active">
+                    <i class="bi bi-gear text-info fs-4"></i>
+                    <span class="@(hidden ? "d-none" : "d-block")">Configuración</span>
+                </NavLink>
+            </li>
+        </ul>
+    </div>
+
 </nav>
+
+
+@code {
+    private bool hidden = false;
+
+    private void ToogleHidden() => hidden = !hidden;
+}

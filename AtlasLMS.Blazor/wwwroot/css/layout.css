@@ -5,14 +5,28 @@
 }
 
 .sidebar {
-    width: 240px;
-    background: #0d47a1;
-    color: white;
-    padding: 20px 0;
+    position: relative;
+    background-color: #0B4EA2;
+    height: 100vh;
+    width: 260px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    transition: width 0.3s ease;
 }
+    .sidebar.collapsed {
+        width: 70px;
+    }
+
+.sidebar-header {
+    flex-shrink: 0;
+    padding: 0.5rem;
+}
+
+.sidebar-content {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
 
 .menu {
     list-style: none;
@@ -21,10 +35,11 @@
 }
 
     .menu li {
-        padding: 10px 0;
+        padding: 20px, 0;
         text-align: center;
         font-size: 1.4rem;
         cursor: pointer;
+        margin: 5px
     }
 
         .menu li:hover {
