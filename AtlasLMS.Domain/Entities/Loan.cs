@@ -9,6 +9,7 @@ public class Loan : BaseEntity
     public DateTime StartDate { get; set; }
     public int LifeTime { get; set; }
     public DateTime DueDate { get; set; }
+    public ELoanStatus Status { get; set; }
 
     // Related Properties
     //
@@ -21,4 +22,11 @@ public class Loan : BaseEntity
     [ForeignKey("UserID")]
     public required string UserID { get; set; }
     public User? User { get; set; }
+}
+
+public enum ELoanStatus
+{
+    Cancelled = 0,
+    Expired = 1,
+    Active = 2,
 }
