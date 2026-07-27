@@ -22,11 +22,5 @@ public class BookingProfile : Profile
             .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.User, opt => opt.Ignore())
             .ForMember(dest => dest.Book, opt => opt.Ignore());
-
-        // UpdateDto -> Booking
-        CreateMap<BookingUpdateDto, Booking>()
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.User, opt => opt.Ignore())
-            .ForMember(dest => dest.Book, opt => opt.Ignore());
     }
 }

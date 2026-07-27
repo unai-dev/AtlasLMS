@@ -26,10 +26,5 @@ public class LoanProfile : Profile
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.Book, opt => opt.Ignore());
-
-        // UpdateDto -> Loan
-        CreateMap<LoanUpdateDto, Loan>()
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.Book, opt => opt.Ignore());
     }
 }
