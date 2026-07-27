@@ -8,7 +8,6 @@ public class Booking : BaseEntity
 {
     public DateTime StartTime { get; set; }
     public DateTime PickupDeadline { get; set; }
-    public int LifeTime { get; set; }
     public EBookingStatus Status { get; set; }
 
     // Related Properties
