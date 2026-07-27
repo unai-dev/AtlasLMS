@@ -99,6 +99,11 @@ public class BookingService : IBookingService
         if ((activeBookings + activeLoans) >= book.Stock)
             throw new BadRequestException($"No hay ejemplares suficientes para el libro {dto.BookID}");
 
+        var userBookingWithBook = await _context.Bookings
+            .AnyAsync(x => x.BookID == dto.BookID && x.PickupDeadline > dto.StartTime && x.UserID == dto.UserID && x.Status == EBookingStatus.Active);
+        if (userBookingWithBook)
+            throw new BadRequestException($"El libro {dto.BookID} ya esta reservado por el mismo usuario {dto.UserID}");
+
         var booking = _mapper.Map<Booking>(dto);
         booking.PickupDeadline = booking.StartTime.AddDays(3);
 
