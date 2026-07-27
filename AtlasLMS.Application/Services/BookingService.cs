@@ -85,6 +85,8 @@ public class BookingService : IBookingService
         var userExists = await _userManager.FindByIdAsync(dto.UserID)
             ?? throw new NotFoundException($"Usuario con ID {dto.UserID} no existe");
 
+        //Si el usuario ha superado el limite de reservas(2) lanzamos un badrequest
+        //Filtramos por userID y por el estado de la reserva(activo)
         var totalBookingsUser = await _context.Bookings.CountAsync(x => x.UserID == dto.UserID && x.Status == EBookingStatus.Active);
         if (totalBookingsUser >= 2)
             throw new BadRequestException($"Lo sentimos. El usuario {dto.UserID} ha superado el limite de reservas activas");
@@ -92,6 +94,7 @@ public class BookingService : IBookingService
         if (AtlasHelper.IsAnyDatePast(dto.StartTime))
             throw new BadRequestException($"La fecha de inicio no puede ser menor a la fecha actual");
 
+        //Validamos stock, si la suma de reservas y prestamos activos da el total, lanzamos badrequest
         var activeBookings = await _context.Bookings
             .CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > dto.StartTime);
         var activeLoans = await _context.Loans
@@ -99,12 +102,15 @@ public class BookingService : IBookingService
         if ((activeBookings + activeLoans) >= book.Stock)
             throw new BadRequestException($"No hay ejemplares suficientes para el libro {dto.BookID}");
 
+        //Si el usuario ya ha reservado el libro en el periodo de fecha indicado, lanzamos badrequest
+        //Filtramos por bookID, userID, rango de fecha(fecha final de la reserva mayor a fecha de comienzo) y estado(activo)
         var userBookingWithBook = await _context.Bookings
             .AnyAsync(x => x.BookID == dto.BookID && x.PickupDeadline > dto.StartTime && x.UserID == dto.UserID && x.Status == EBookingStatus.Active);
         if (userBookingWithBook)
             throw new BadRequestException($"El libro {dto.BookID} ya esta reservado por el mismo usuario {dto.UserID}");
 
         var booking = _mapper.Map<Booking>(dto);
+        //Agregamos los dias que el usuario tiene para recoger el libro(3)
         booking.PickupDeadline = booking.StartTime.AddDays(3);
 
         _context.Add(booking);

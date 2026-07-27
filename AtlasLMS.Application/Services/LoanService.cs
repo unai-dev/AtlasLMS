@@ -99,26 +99,32 @@ public class LoanService : ILoanService
         if (!userExists)
             throw new NotFoundException($"El usuario {dto.UserID} no existe");
 
+        //Si el usuario ha superado el limite de prestamos(3), lanzamos badrequest
+        //Filtramos por userID y estado de prestamo(activo)
         var totalUserLoans = await _context.Loans.CountAsync(x => x.UserID == dto.UserID && x.Status == ELoanStatus.Active);
         if (totalUserLoans >= 3)
             throw new BadRequestException($"Lo sentimos. El usuario {dto.UserID} ha superado el limite de prestamos activos");
 
+        //Si la suma de prestamos y reservas activas da el total de stock del libro, lanzamos badrequest
         var activeLoans = await _context.Loans.CountAsync(x => x.BookID == dto.BookID && x.DueDate > DateTime.UtcNow);
         var activeBookings = await _context.Bookings.CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > DateTime.UtcNow);
         if ((activeBookings + activeLoans) >= book.Stock)
             throw new BadRequestException($"No hay ejemplares para el libro {dto.BookID}");
 
+        //Si el usuario ya consta de un prestamo con el mismo libro y la fecha final es mayor a la de comienzo, lanzamos badrequest
         var loansUserWithBook = await _context.Loans
             .AnyAsync(x => x.BookID == dto.BookID && x.UserID == dto.UserID && x.DueDate > DateTime.UtcNow && x.Status == ELoanStatus.Active);
         if (loansUserWithBook)
             throw new BadRequestException($"El libro {dto.BookID} ya esta siendo prestado al mismo usuario {dto.UserID}");
-
+        //Si el tiempo de vida del prestamo es menor a 7 o mayor a 30, lanzamos badrequest
         if (dto.LifeTime < 7 || dto.LifeTime > 30)
             throw new BadRequestException($"La duracion no puede ser menor a 7 dias, tampoco mayor a 30 dias");
 
         var loan = _mapper.Map<Loan>(dto);
 
+        //Fecha de comienzo del prestamo(actual)
         loan.StartDate = DateTime.UtcNow;
+        //Fecha limite => fecha de comienzo le agregamos los dias del tiempo de vida del prestamo
         loan.DueDate = loan.StartDate.AddDays(loan.LifeTime);
 
         _context.Add(loan);

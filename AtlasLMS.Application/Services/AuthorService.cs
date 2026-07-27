@@ -49,6 +49,7 @@ public class AuthorService : IAuthorService
 
     public async Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto)
     {
+        //Validamos que el usuario con el mismo nombre no exista
         var authorExists = await _context.Authors
             .AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
         if (authorExists)
@@ -66,6 +67,7 @@ public class AuthorService : IAuthorService
         var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El autor con ID {ID} no existe");
 
+        //Validamos que el usuario con el mismo nombre no exista
         if (AtlasHelper.AreNotStringsEmpty(dto.FirstName, dto.LastName))
         {
             var authorWithNameExists = await _context.Authors
