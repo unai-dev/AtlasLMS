@@ -202,4 +202,21 @@ Public Module AtlasHelper
     End Function
 #End Region
 
+#Region "   IsNullableDate--------------------------------------------------------------"
+    Public Function IsNullableDate(adDate As DateTime?) As Boolean
+        Return Not adDate.HasValue
+    End Function
+#End Region
+
+#Region "   IsNotNullableDate--------------------------------------------------------------"
+    Public Function IsNotNullableDate(adDate As DateTime?) As Boolean
+        Return adDate.HasValue
+    End Function
+#End Region
+
+#Region "   IsPassDate-------------------------------------------------------------------------"
+    Public Function IsPassDate(adDate As DateTime) As Boolean
+        Return adDate < DateTime.UtcNow
+    End Function
+#End Region
 End Module
