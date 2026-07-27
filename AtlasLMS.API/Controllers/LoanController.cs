@@ -1,4 +1,5 @@
 using AtlasLMS.Application.Contracts;
+using AtlasLMS.Domain.Entities;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
 
@@ -20,12 +21,13 @@ public class LoanController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<LoanReadDto>>> Get([FromQuery] DateTime? limitDueDate)
+    public async Task<ActionResult<IEnumerable<LoanReadDto>>> Get([FromQuery] DateTime? limitDueDate, [FromQuery] ELoanStatus? status)
     {
         if (limitDueDate.HasValue)
-        {
             return Ok(await _loanService.GetLoansByDueDateAsync(limitDueDate));
-        }
+
+        if (status.HasValue)
+            return Ok(await _loanService.GetLoansByStatusAsync(status));
 
         return Ok(await _loanService.GetLoansAsync());
     }

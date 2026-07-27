@@ -32,6 +32,16 @@ public class LoanService : ILoanService
         return _mapper.Map<IEnumerable<LoanReadDto>>(loans);
     }
 
+    public async Task<IEnumerable<LoanReadDto>> GetLoansByStatusAsync(ELoanStatus? status)
+    {
+        var query = _context.Loans.AsQueryable();
+
+        var filteredLoans = query.Where(x => x.Status == status);
+        var loans = await filteredLoans.ToListAsync();
+
+        return _mapper.Map<IEnumerable<LoanReadDto>>(loans);
+    }
+
     public async Task<IEnumerable<LoanReadDto>> GetLoansByUserAsync(string userID)
     {
         var userExists = await _userManager.Users.AnyAsync(x => x.Id.Equals(userID));
@@ -97,6 +107,12 @@ public class LoanService : ILoanService
         var activeBookings = await _context.Bookings.CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > DateTime.UtcNow);
         if ((activeBookings + activeLoans) >= book.Stock)
             throw new BadRequestException($"No hay ejemplares para el libro {dto.BookID}");
+
+        var loansUserWithBook = await _context.Loans
+            .AnyAsync(x => x.BookID == dto.BookID && x.UserID == dto.UserID && x.DueDate > DateTime.UtcNow && x.Status == ELoanStatus.Active);
+        if (loansUserWithBook)
+            throw new BadRequestException($"El libro {dto.BookID} ya esta siendo prestado al mismo usuario {dto.UserID}");
+
         if (dto.LifeTime < 7 || dto.LifeTime > 30)
             throw new BadRequestException($"La duracion no puede ser menor a 7 dias, tampoco mayor a 30 dias");
 
