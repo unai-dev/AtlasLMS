@@ -89,6 +89,10 @@ public class LoanService : ILoanService
         if (!userExists)
             throw new NotFoundException($"El usuario {dto.UserID} no existe");
 
+        var totalUserLoans = await _context.Loans.CountAsync(x => x.UserID == dto.UserID);
+        if (totalUserLoans >= 3)
+            throw new BadRequestException($"Lo sentimos. El usuario {dto.UserID} ha superado el limite de prestamos activos");
+
         var activeLoans = await _context.Loans.CountAsync(x => x.BookID == dto.BookID && x.DueDate > DateTime.UtcNow);
         var activeBookings = await _context.Bookings.CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > DateTime.UtcNow);
         if ((activeBookings + activeLoans) >= book.Stock)

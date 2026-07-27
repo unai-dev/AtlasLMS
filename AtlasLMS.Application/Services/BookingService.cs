@@ -85,6 +85,10 @@ public class BookingService : IBookingService
         var userExists = await _userManager.FindByIdAsync(dto.UserID)
             ?? throw new NotFoundException($"Usuario con ID {dto.UserID} no existe");
 
+        var totalBookingsUser = await _context.Bookings.CountAsync(x => x.UserID == dto.UserID && x.Status == EBookingStatus.Active);
+        if (totalBookingsUser >= 2)
+            throw new BadRequestException($"Lo sentimos. El usuario {dto.UserID} ha superado el limite de reservas activas");
+
         if (AtlasHelper.IsAnyDatePast(dto.StartTime))
             throw new BadRequestException($"La fecha de inicio no puede ser menor a la fecha actual");
 
