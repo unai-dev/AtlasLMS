@@ -96,7 +96,7 @@ public class BookingService : IBookingService
             throw new BadRequestException($"No hay ejemplares suficientes para el libro {dto.BookID}");
 
         var booking = _mapper.Map<Booking>(dto);
-        booking.PickupDeadline = booking.StartTime.AddDays(booking.LifeTime);
+        booking.PickupDeadline = booking.StartTime.AddDays(2);
 
         _context.Add(booking);
         await _context.SaveChangesAsync();

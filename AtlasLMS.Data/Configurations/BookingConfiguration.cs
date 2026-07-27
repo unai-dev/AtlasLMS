@@ -18,8 +18,5 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         builder.Property(x => x.PickupDeadline)
             .IsRequired();
-
-        builder.Property(x => x.LifeTime)
-            .IsRequired();
     }
 }

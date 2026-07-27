@@ -8,7 +8,6 @@ public class BookingDetailDto
     public DateTime StartTime { get; set; }
     public DateTime PickupDeadline { get; set; }
     public EBookingStatus Status { get; set; }
-    public int LifeTime { get; set; }
 
     // Related Properties
     //
