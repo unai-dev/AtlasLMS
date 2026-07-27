@@ -79,9 +79,8 @@ public class BookingService : IBookingService
 
     public async Task<BookingReadDto> CreateBookingAsync(BookingCreateDto dto)
     {
-        var bookExists = await _context.Books.AnyAsync(x => x.ID == dto.BookID);
-        if (!bookExists)
-            throw new NotFoundException($"El libro con ID {dto.BookID} no existe");
+        var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == dto.BookID)
+            ?? throw new NotFoundException($"El libro con ID {dto.BookID} no existe");
 
         var userExists = await _userManager.FindByIdAsync(dto.UserID)
             ?? throw new NotFoundException($"Usuario con ID {dto.UserID} no existe");
@@ -89,10 +88,12 @@ public class BookingService : IBookingService
         if (AtlasHelper.IsAnyDatePast(dto.StartTime))
             throw new BadRequestException($"La fecha de inicio no puede ser menor a la fecha actual");
 
-        var bookIsReserved = await _context.Bookings
-            .AnyAsync(x => x.BookID == dto.BookID && x.PickupDeadline > dto.StartTime);
-        if (bookIsReserved)
-            throw new BadRequestException($"El libro ya esta reservado por otro usuario en el rango de fecha indicado {dto.StartTime} ");
+        var activeBookings = await _context.Bookings
+            .CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > dto.StartTime);
+        var activeLoans = await _context.Loans
+            .CountAsync(x => x.BookID == dto.BookID && x.DueDate > dto.StartTime);
+        if ((activeBookings + activeLoans) >= book.Stock)
+            throw new BadRequestException($"No hay ejemplares suficientes para el libro {dto.BookID}");
 
         var booking = _mapper.Map<Booking>(dto);
         booking.PickupDeadline = booking.StartTime.AddDays(booking.LifeTime);
