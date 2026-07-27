@@ -84,16 +84,17 @@ public class LoanService : ILoanService
     {
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == dto.BookID)
             ?? throw new NotFoundException($"El libro con ID {dto.BookID} no existe");
-
-        var activeLoans = await _context.Loans.CountAsync(x => x.BookID == dto.BookID && x.DueDate > DateTime.UtcNow);
-        var activeBookings = await _context.Bookings.CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > DateTime.UtcNow);
-
-        if ((activeBookings + activeLoans) >= book.Stock)
-            throw new BadRequestException($"No hay ejemplares para el libro {dto.BookID}");
-
+        
         var userExists = await _userManager.Users.AnyAsync(x => x.Id.Equals(dto.UserID));
         if (!userExists)
             throw new NotFoundException($"El usuario {dto.UserID} no existe");
+
+        var activeLoans = await _context.Loans.CountAsync(x => x.BookID == dto.BookID && x.DueDate > DateTime.UtcNow);
+        var activeBookings = await _context.Bookings.CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > DateTime.UtcNow);
+        if ((activeBookings + activeLoans) >= book.Stock)
+            throw new BadRequestException($"No hay ejemplares para el libro {dto.BookID}");
+        if (dto.LifeTime < 7 || dto.LifeTime > 30)
+            throw new BadRequestException($"La duracion no puede ser menor a 7 dias, tampoco mayor a 30 dias");
 
         var loan = _mapper.Map<Loan>(dto);
 
