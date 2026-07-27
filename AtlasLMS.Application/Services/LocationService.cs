@@ -68,10 +68,12 @@ public class LocationService : ILocationService
 
     public async Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto)
     {
+        //Normalizamos para guardar unicamente en mayusculas
         dto.Shelf = AtlasHelper.NormalizeUpper(dto.Shelf.ToUpper());
         dto.Column = AtlasHelper.NormalizeUpper(dto.Column.ToUpper());
         dto.Aisle = AtlasHelper.NormalizeUpper(dto.Aisle.ToUpper());
 
+        //Si la localizacion concatenando, pasillo, columna y estante existe, lanzamos badrequest
         var existsLocation = await _context.Locations.AnyAsync(
             x => x.Column.Equals(dto.Column) &&
             x.Shelf.Equals(dto.Shelf) &&
@@ -90,10 +92,12 @@ public class LocationService : ILocationService
         var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"Ubicaion con ID {ID} no encontrada");
 
+        //Normalizamos para guardar unicamente en mayusculas
         if (AtlasHelper.IsNotStringEmpty(dto.Shelf)) dto.Shelf = AtlasHelper.NormalizeUpper(dto.Shelf);
         if (AtlasHelper.IsNotStringEmpty(dto.Column)) dto.Column = AtlasHelper.NormalizeUpper(dto.Column);
         if (AtlasHelper.IsNotStringEmpty(dto.Aisle)) dto.Aisle = AtlasHelper.NormalizeUpper(dto.Aisle);
 
+        //Si la localizacion concatenando, pasillo, columna y estante existe, lanzamos badrequest
         var existsLocation = await _context.Locations.AnyAsync(
             x => x.Column.Equals(dto.Column) &&
             x.Shelf.Equals(dto.Shelf) &&
@@ -102,6 +106,7 @@ public class LocationService : ILocationService
         if (existsLocation)
             throw new BadRequestException($"Ya existe la localizacion introducida");
 
+        //En el caso que no venga la informacion en el DTO guardamos el valor anterior
         location.Aisle = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Aisle, location.Aisle);
         location.Column = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Column, location.Column);
         location.Shelf = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Shelf, location.Shelf);

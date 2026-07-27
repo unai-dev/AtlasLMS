@@ -56,6 +56,7 @@ public class CategoryService : ICategoryService
         var category = await _context.Categories.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"Categoria con ID {ID} no existe");
 
+        //En el caso que no venga la informacion en el DTO, guardamos el valor anterior
         category.Name = AtlasHelper.GetOrFallbackStr(dto.Name, category.Name);
 
         category.UpdatedAt = DateTime.UtcNow;
