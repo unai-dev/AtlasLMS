@@ -82,17 +82,14 @@ public class LoanService : ILoanService
 
     public async Task<LoanReadDto> CreateLoanAsync(LoanCreateDto dto)
     {
-        var bookExists = await _context.Books.AnyAsync(x => x.ID == dto.BookID);
-        if (!bookExists)
-            throw new NotFoundException($"El libro con ID {dto.BookID} no existe");
+        var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == dto.BookID)
+            ?? throw new NotFoundException($"El libro con ID {dto.BookID} no existe");
 
-        var isOnLoan = await _context.Loans.AnyAsync(x => x.BookID == dto.BookID && x.DueDate > DateTime.UtcNow);
-        if (isOnLoan)
-            throw new BadRequestException($"El libro con ID {dto.BookID} ya esta siendo prestado a otro usuario");
+        var activeLoans = await _context.Loans.CountAsync(x => x.BookID == dto.BookID && x.DueDate > DateTime.UtcNow);
+        var activeBookings = await _context.Bookings.CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > DateTime.UtcNow);
 
-        var isBooking = await _context.Bookings.AnyAsync(x => x.BookID == dto.BookID && x.PickupDeadline > DateTime.UtcNow);
-        if (isBooking)
-            throw new BadRequestException($"El libro {dto.BookID} esta reservado por un usuario");
+        if ((activeBookings + activeLoans) >= book.Stock)
+            throw new BadRequestException($"No hay ejemplares para el libro {dto.BookID}");
 
         var userExists = await _userManager.Users.AnyAsync(x => x.Id.Equals(dto.UserID));
         if (!userExists)
