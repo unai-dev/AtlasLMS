@@ -1,6 +1,8 @@
 using AtlasLMS.Blazor;
 using AtlasLMS.Blazor.Features.Auth.Contracts;
 using AtlasLMS.Blazor.Features.Auth.Services;
+using AtlasLMS.Blazor.Features.Authors.Contracts;
+using AtlasLMS.Blazor.Features.Authors.Services;
 using AtlasLMS.Blazor.Features.Users.Contracts;
 using AtlasLMS.Blazor.Features.Users.Services;
 using AtlasLMS.Blazor.Shared.Contracts;
@@ -20,6 +22,7 @@ builder.Services.AddBlazorBootstrap();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:6600/api/") });
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
 
 await builder.Build().RunAsync();

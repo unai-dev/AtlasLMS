@@ -1,0 +1,22 @@
+﻿<tr>
+    <td>
+        <div class="rounded-circle @(Author.IsActive ? "bg-success" : "bg-secondary") text-white d-flex justify-content-center align-items-center"
+             style="width: 40px; height: 40px;">
+            @(Author.FirstName.First().ToString().ToUpper())
+        </div>
+    </td>
+
+    <td>@Author.FirstName</td>
+    <td>@Author.LastName</td>
+    <td>
+        <span class="badge @(Author.IsActive ? "bg-success" : "bg-secondary")">@(Author.IsActive ? "Activo" : "Inactivo")</span>
+    </td>
+    <td>@Author.CreatedAt.ToString("d")</td>
+    <td>
+        <AtlasGridActions />
+    </td>
+</tr>
+
+@code {
+    [Parameter, EditorRequired] public AuthorReadDto Author { get; set; }
+}

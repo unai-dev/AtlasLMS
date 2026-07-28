@@ -4,14 +4,13 @@ using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AtlasLMS.API.Controllers;
 
 [ApiController]
 [Route("api/authors")]
-[Authorize]
+//[Authorize]
 public class AuthorController : ControllerBase
 {
     private readonly IAuthorService _authorService;

@@ -1,0 +1,85 @@
+﻿@page "/authors"
+@inject IAuthorService AuthorService
+@inject ToastService ToastService
+
+<PageTitle>Autores</PageTitle>
+
+<div class="container mt-4">
+
+    <AtlasGridHeader Title="Gestión de Autores"
+                     InputPlaceholder="Buscar por nombre" ButtonCaption="Nuevo autor" />
+
+    <div class="row">
+
+        <!-- FILTROS -->
+        <AuthorFilters />
+
+        <!-- TABLA -->
+        <div class="col-9">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Estado</th>
+                                <th>Fecha alta</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        @if (isLoading)
+                        {
+                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Primary" Size="SpinnerSize.Large" />
+                        }
+                        else
+                        {
+                            <tbody>
+                                @if (authors?.Count > 0)
+                                {
+                                    @foreach (var author in authors)
+                                    {
+                                        <AuthorItem Author="@author" />
+                                    }
+                                }
+                            </tbody>
+                        }
+
+                    </table>
+
+                    <Pagination TotalPages="8" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+@code {
+    private List<AuthorReadDto>? authors;
+    private bool isLoading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            isLoading = true;
+            authors = (await AuthorService.GetAuthorsAsync()).ToList();
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Autores cargados correctamente"));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error interno al consultar los usuarios");
+            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al cargar autores"));
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}
