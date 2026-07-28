@@ -1,9 +1,27 @@
 ﻿@inherits LayoutComponentBase
 
+<header class="app-header shadow-sm py-2 px-3 d-flex align-items-center justify-content-between">
+    <div class="flex-grow-1 text-center">
+        <h3 class="text-white fs-6 m-0">Atlas</h3>
+    </div>
+</header>
+
+<style>
+    .app-header {
+        background-color: #0B4EA2;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        z-index: 1000;
+        border-bottom: 1px solid #e0e0e0;
+    }
+</style>
+
 <div class="layout">
     <SideBar />
-
-    <main class="content">
+    <main class="content mt-5">
         @Body
     </main>
 </div>

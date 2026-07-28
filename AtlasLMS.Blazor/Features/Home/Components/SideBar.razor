@@ -1,7 +1,7 @@
-﻿<nav class="sidebar @(hidden ? "collapsed" : "")">
+﻿<nav class="sidebar @(hidden ? "collapsed" : "") fixed-top mt-5">
     <div class="sidebar-header">
-        <button class="menu-toggle bg-transparent border-0 text-white ms-2 mt-2" @onclick="ToogleHidden">
-            <i class="bi bi-list fs-3"></i>
+        <button class="navbar-toggle btn btn-link  text-white position-fixed top-0 start-0 mt-2 ms-2" @onclick="ToogleHidden">
+            <i class="bi bi-list fs-4"></i>
         </button>
     </div>
     
@@ -18,6 +18,13 @@
                 <NavLink href="/reservations" class="nav-item" activeClass="active">
                     <i class="bi bi-calendar text-success fs-4"></i>
                     <span class="@(hidden ? "d-none" : "d-block")">Reservas</span>
+                </NavLink>
+            </li>
+            
+            <li>
+                <NavLink href="/users" class="nav-item" activeClass="active">
+                    <i class="bi bi-people text-primary fs-4"></i>
+                    <span class="@(hidden ? "d-none" : "d-block")">Usuarios</span>
                 </NavLink>
             </li>
 
