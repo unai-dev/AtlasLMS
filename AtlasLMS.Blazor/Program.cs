@@ -16,6 +16,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 // =======================================
 // ================ SERVICES =============
 // =======================================
+builder.Services.AddBlazorBootstrap();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:6600/api/") });
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();

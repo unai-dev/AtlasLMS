@@ -3,6 +3,7 @@
 @inject IAuthService AuthService
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager Navigation
+@inject ToastService ToastService
 
 <AtlasAuthForm User=@loginUser OnSubmit=@HandleLogin CurrentPost=@currentPost />
 
@@ -13,11 +14,10 @@
 
     private async Task HandleLogin()
     {
-        if (loginUser is null)
-            return;
-
         try
         {
+            if (loginUser is null)
+                return;
             currentPost = true;
             var result = await AuthService.LoginAsync(loginUser);
 
@@ -31,8 +31,8 @@
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            ToastService.Notify(new(ToastType.Danger, "Error", $"{ex.Message}"));
             currentPost = false;
         }
-
     }
 }
