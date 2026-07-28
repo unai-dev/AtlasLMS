@@ -85,6 +85,7 @@ public class UserService : IUserService
         var user = await _userManager.FindByIdAsync(ID)
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
 
+        //Si el Email ya consta en nuestra base de datos, lanzamos badrequest
         if (AtlasHelper.IsNotStringEmpty(dto.Email))
         {
             var existsEmail = await _userManager.FindByEmailAsync(dto.Email!);
@@ -92,6 +93,7 @@ public class UserService : IUserService
                 throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
         }
 
+        //Si el CIF ya consta en nuestra base de datos, lanzamos badrequest
         if (AtlasHelper.IsNotStringEmpty(dto.CIF))
         {
             var existsCIF = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF) && x.Id != ID);

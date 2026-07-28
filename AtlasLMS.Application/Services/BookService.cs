@@ -51,12 +51,15 @@ public class BookService : IBookService
         if (bookExists)
             throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
 
+        //Validamos si la localizacion existe
+        //Si existe, validamos que el limite no haya sido alcanzado el total libros permitidos
         if (AtlasHelper.IsNotNullableInteger(dto.LocationID))
         {
             var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == dto.LocationID)
                 ?? throw new NotFoundException($"La localizacion '{dto.LocationID}' no existe");
-            var totalBooksByLocation = await _context.Books.Where(x => x.LocationID == dto.LocationID).ToListAsync();
-            if (location.LimitOfBooks == totalBooksByLocation.Count)
+
+            var totalBooksByLocation = await _context.Books.CountAsync(x => x.LocationID == dto.LocationID);
+            if (location.LimitOfBooks == totalBooksByLocation)
                 throw new BadRequestException($"La localizacion no permite mas libros. Ya excede del limite");
         }
 
@@ -68,8 +71,9 @@ public class BookService : IBookService
         if (!authorExists)
             throw new NotFoundException($"El autor con ID {dto.AuthorID} no existe");
 
+        //Si la fecha es mayor a la fecha actual, lanzamos badrequest
         if (AtlasHelper.IsDateGreater(dto.PublicationAt))
-            throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser igual a la actual");
+            throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser mayor a la actual");
 
         var book = _mapper.Map<Book>(dto);
         _context.Add(book);
@@ -82,6 +86,7 @@ public class BookService : IBookService
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El libro con ID {ID} no existe");
 
+        //Si el autor no existe, lanzamos badrequest
         if (AtlasHelper.IsNotNullableInteger(dto.AuthorID))
         {
             var authorExists = await _context.Authors.AnyAsync(x => x.ID == dto.AuthorID);
@@ -89,6 +94,7 @@ public class BookService : IBookService
                 throw new NotFoundException($"El autor con el ID {dto.AuthorID} no existe");
         }
 
+        //Si la categoria no existe, lanzamos badrequest
         if (AtlasHelper.IsNotNullableInteger(dto.CategoryID))
         {
             var categoryExists = await _context.Categories.AnyAsync(x => x.ID == dto.CategoryID);
@@ -96,6 +102,7 @@ public class BookService : IBookService
                 throw new NotFoundException($"La categoria con el ID {dto.CategoryID} no existe");
         }
 
+        //Si la localizacion no existe, lanzamos badrequest
         if (AtlasHelper.IsNotNullableInteger(dto.LocationID))
         {
             var locationExists = await _context.Locations.AnyAsync(x => x.ID == dto.LocationID);
@@ -103,6 +110,7 @@ public class BookService : IBookService
                 throw new NotFoundException($"La localizacion con el ID {dto.LocationID} no existe");
         }
 
+        //Si el ISBN ya es ocupado por otro ejemplar, lanzamos badrequest
         if (AtlasHelper.IsNotStringEmpty(dto.ISBN))
         {
             var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN) && x.ID != ID);
@@ -110,9 +118,11 @@ public class BookService : IBookService
                 throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
         }
 
+        //Si la fecha es mayor a la actual, lanzamos badrequest
         if (AtlasHelper.IsNotNullAndFutureDate(dto.PublicationAt))
             throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser mayor a la actual");
 
+        //Si el DTO no contiene la informacion, guardamos el valor anterior
         book.Title = AtlasHelper.GetOrFallbackStr(dto.Title, book.Title);
         book.ISBN = AtlasHelper.GetOrFallbackStr(dto.ISBN, book.ISBN);
         book.Synopsis = AtlasHelper.GetOrFallbackStr(dto.Synopsis, book.Synopsis);

@@ -32,10 +32,12 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponse> Register(UserCreateDto dto)
     {
+        //Si el email ya consta en la base de datos, lanzamos badrequest
         var emailUnique = await _userManager.FindByEmailAsync(dto.Email);
         if (emailUnique is not null)
             throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
 
+        //Si el username ya consta en la base de datos, lanzamos badrequest
         if (AtlasHelper.IsNotStringEmpty(dto.UserName))
         {
             var userNameUnique = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName));
@@ -43,6 +45,7 @@ public class AuthService : IAuthService
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta en uso");
         }
 
+        //Si el CIF ya consta en la base de datos, lanzamos badrequest
         var cifUnique = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF));
         if (cifUnique)
             throw new BadRequestException($"El CIF {dto.CIF} ya esta en uso");
@@ -62,6 +65,7 @@ public class AuthService : IAuthService
     {
         var user = await _userManager.FindByEmailAsync(dto.Email)
             ?? throw new NotFoundException($"El usuario {dto.Email} no existe");
+        //Verificamos credenciales
         var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
 
         if (!result.Succeeded)
