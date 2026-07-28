@@ -12,6 +12,7 @@ public class AtlasDbContext : IdentityDbContext<User>
     {
 
     }
+    //Hacemos inmutables los DbSets
     public DbSet<Book> Books => Set<Book>();
     public DbSet<Author> Authors => Set<Author>();
     public DbSet<Category> Categories => Set<Category>();
@@ -22,7 +23,7 @@ public class AtlasDbContext : IdentityDbContext<User>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
+        //Aplicamos configuraciones de entidad
         builder.ApplyConfiguration(new BookConfiguration());
         builder.ApplyConfiguration(new AuthorConfiguration());
         builder.ApplyConfiguration(new CategoryConfiguration());

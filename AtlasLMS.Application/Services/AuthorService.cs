@@ -75,7 +75,7 @@ public class AuthorService : IAuthorService
             if (authorWithNameExists)
                 throw new BadRequestException($"El autor {dto.FirstName} {dto.LastName} ya existe");
         }
-
+        //Si el DTO no tiene la informacion, guardamos el valor anterior
         author.FirstName = AtlasHelper.GetOrFallbackStr(dto.FirstName, author.FirstName);
         author.LastName = AtlasHelper.GetOrFallbackStr(dto.LastName, author.LastName);
         author.UpdatedAt = DateTime.UtcNow;

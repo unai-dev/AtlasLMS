@@ -65,6 +65,7 @@ public class UserService : IUserService
         if (existsCIF)
             throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
 
+        //Si existe un usuario con el mismo nickname, lanzamos badrequest
         if (AtlasHelper.IsNotStringEmpty(dto.UserName))
         {
             var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName));
@@ -72,6 +73,7 @@ public class UserService : IUserService
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
         }
 
+        //Si el DTO no contiene el nombre de usuario, guardamos la primera parte del email(unai@gmail.com) => unai
         dto.UserName = AtlasHelper.GetOrFallbackStr(dto.UserName, AtlasHelper.GetEmailUserPart(dto.Email));
         var user = _mapper.Map<User>(dto);
         await _userManager.CreateAsync(user, dto.Password);
@@ -97,6 +99,7 @@ public class UserService : IUserService
                 throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
         }
 
+        //Si existe un usuario con el mismo nickname, lanzamos badrequest
         if (AtlasHelper.IsNotStringEmpty(dto.UserName))
         {
             var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName) && x.Id != ID);
@@ -104,6 +107,7 @@ public class UserService : IUserService
                 throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
         }
 
+        //Si el DTO no tiene la informacion, guardamos el valor anterior
         user.Email = AtlasHelper.GetOrFallbackStr(dto.Email, user.Email);
         user.CIF = AtlasHelper.GetOrFallbackStr(dto.CIF, user.CIF);
         user.UserName = AtlasHelper.GetOrFallbackStr(dto.UserName, user.UserName);
