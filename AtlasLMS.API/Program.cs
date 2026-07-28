@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 // =========== BASE CONFIGURATION ========
 // =======================================
 builder.Services.AddControllers();
-
+builder.Services.AddSwaggerGen();
 // =======================================
 // =============== DB CONTEXT ============
 // =======================================
@@ -78,6 +78,11 @@ builder.Services.AddCors(policy =>
 // =========== INITIALIZE APP ============
 // =======================================
 var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // =======================================
 // =============== MIDDLEWARES ===========
