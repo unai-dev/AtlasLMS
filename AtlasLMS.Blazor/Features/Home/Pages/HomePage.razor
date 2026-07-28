@@ -2,9 +2,11 @@
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager Navigation
 
-
 <PageTitle>Inicio</PageTitle>
-<h1>Home</h1>
+
+<div class="mx-5">
+    <h1>Home</h1>
+</div>
 
 @code {
 
@@ -20,7 +22,7 @@
                 return;
             }
             return;
-        } 
+        }
         catch (Exception ex)
         {
             Console.WriteLine("Error verificando autenticacion");

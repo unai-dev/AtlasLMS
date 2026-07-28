@@ -5,6 +5,8 @@
 @inject NavigationManager Navigation
 @inject ToastService ToastService
 
+<PageTitle>Iniciar Sesión</PageTitle>
+
 <AtlasAuthForm User=@loginUser OnSubmit=@HandleLogin CurrentPost=@currentPost />
 
 @code {
@@ -31,7 +33,10 @@
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
-            ToastService.Notify(new(ToastType.Danger, "Error", $"{ex.Message}"));
+            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al iniciar sesión"));
+        }
+        finally
+        {
             currentPost = false;
         }
     }
