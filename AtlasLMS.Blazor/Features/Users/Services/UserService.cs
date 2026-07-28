@@ -15,5 +15,5 @@ public class UserService : IUserService
     }
 
     public async Task<IEnumerable<UserReadDto>> GetUsersAsync() =>
-        await _http.GetFromJsonAsync<IEnumerable<UserReadDto>>("/users") ?? [];
+        await _http.GetFromJsonAsync<IEnumerable<UserReadDto>>("users") ?? [];
 }

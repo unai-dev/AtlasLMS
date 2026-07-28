@@ -72,21 +72,26 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-
-                        <tbody>
-                            @if (users?.Count > 0)
-                            {
-                                @foreach (var user in users)
+                        @if (isLoading)
+                        {
+                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Primary" Size="SpinnerSize.Large" />
+                        }
+                        else
+                        {
+                            <tbody>
+                                @if (users?.Count > 0)
                                 {
-                                    <UserItem User="@user" />
+                                    @foreach (var user in users)
+                                    {
+                                        <UserItem User="@user" />
+                                    }
                                 }
-                            }
-                        </tbody>
+                            </tbody>
+                        }
+
                     </table>
 
-                    <!-- PAGINACIÓN -->
-                    <AtlasGridPagination />
-
+                    <Pagination TotalPages="8" />
                 </div>
             </div>
         </div>
@@ -98,17 +103,23 @@
 
 @code {
     private List<UserReadDto>? users;
+    private bool isLoading = false;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            isLoading = true;
             users = (await UserService.GetUsersAsync()).ToList();
         }
         catch (Exception ex)
         {
             Console.WriteLine("Error interno al consultar los usuarios");
             Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
 }
