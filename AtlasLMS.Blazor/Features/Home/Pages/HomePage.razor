@@ -1,20 +1,23 @@
 ﻿@page "/"
 @inject ILocalStorageService LocalStorage
+@inject IUserService UserService
 @inject NavigationManager Navigation
 
 <PageTitle>Inicio</PageTitle>
 
-<div class="mx-5">
-    <h1>Home</h1>
+<div class="container mt-4">
+    <WelcomeCard User="@user"/>
 </div>
 
 @code {
+    private UserReadDto? user;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             var result = await LocalStorage.GetItemAsync("token");
+            user = await UserService.GetMe();
 
             if (AtlasHelper.IsStringEmpty(result))
             {

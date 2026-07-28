@@ -9,6 +9,7 @@ using AtlasLMS.Tools;
 
 using AutoMapper;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,11 +19,13 @@ public class UserService : IUserService
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _accessor;
 
-    public UserService(UserManager<User> userManager, IMapper mapper)
+    public UserService(UserManager<User> userManager, IMapper mapper, IHttpContextAccessor accessor)
     {
         _userManager = userManager;
         _mapper = mapper;
+        _accessor = accessor;
     }
 
     public async Task<IEnumerable<UserReadDto>> GetUsersAsync()
@@ -35,6 +38,15 @@ public class UserService : IUserService
     {
         var user = await _userManager.FindByIdAsync(ID)
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
+        return _mapper.Map<UserReadDto>(user);
+    }
+
+    public async Task<UserReadDto> GetMe()
+    {
+        var claim = _accessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "email")
+            ?? throw new BadRequestException("Error al claim de  usuario");
+
+        var user = await _userManager.FindByEmailAsync(claim.Value);
         return _mapper.Map<UserReadDto>(user);
     }
 

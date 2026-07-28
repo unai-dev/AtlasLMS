@@ -5,5 +5,6 @@ namespace AtlasLMS.Blazor.Features.Users.Contracts
     public interface IUserService
     {
         Task<IEnumerable<UserReadDto>> GetUsersAsync();
+        Task<UserReadDto?> GetMe();
     }
 }

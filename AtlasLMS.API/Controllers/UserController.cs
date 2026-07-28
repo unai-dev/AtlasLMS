@@ -24,6 +24,11 @@ public class UserController : ControllerBase
         Ok(await _userService.GetUsersAsync());
 
     [HttpGet]
+    [Route("me")]
+    public async Task<ActionResult<UserReadDto>> GetMe() =>
+        Ok(await _userService.GetMe());
+
+    [HttpGet]
     [Route("{ID}")]
     public async Task<ActionResult<UserReadDto>> Get([FromRoute] string ID) =>
         Ok(await _userService.GetUserAsync(ID));
