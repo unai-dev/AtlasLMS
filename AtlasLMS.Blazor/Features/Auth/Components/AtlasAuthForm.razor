@@ -1,43 +1,42 @@
-﻿<div class="atlas-auth-page">
-    <div class="row h-100">
-        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center text-white screen-left">
-            <div class="text-center">
-                <img src="/assets//img//logo.png" alt="AtlasLMS Logo">
+﻿<div class="atlas-auth-page d-flex justify-content-center align-items-center">
+
+    <div class="card shadow-lg p-5 auth-card">
+        <EditForm EditContext="@editContext" OnValidSubmit="HandleValidSubmit">
+
+            <DataAnnotationsValidator />
+
+            <h3 class="text-center mb-4 text-primary">¡Bienvenido a AtlasLMS!</h3>
+
+            <label class="form-label">Email</label>
+            <InputText type="email" @bind-Value="@User.Email" placeholder="unai@gmail.com" class="form-control mb-3" />
+
+            <label class="form-label">Contraseña</label>
+            <div class="position-relative mb-3">
+                <InputText type="@(hidePassword ? "password" : "text")"
+                           @bind-Value="@User.Password"
+                           placeholder="·············"  
+                           class="form-control" />
+
+                <i @onclick="TooglePassword"
+                   class="@(hidePassword ? "bi bi-eye-fill" : "bi bi-eye-slash-fill") position-absolute top-50 translate-middle-y"
+                   style="right: 12px; cursor: pointer; font-size: 1.2rem;">
+                </i>
             </div>
-        </div>
-        <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
-            <EditForm EditContext="@editContext" class="card shadow-lg p-4" OnValidSubmit="HandleValidSubmit">
-                <DataAnnotationsValidator />
-                <h3 class="text-center mb-4 text-primary fw-semibold">Bienvenido a AtlasLMS</h3>
 
-                <label class="form-label">Email</label>
-                <InputText type="email" @bind-Value="@User.Email" placeholder="unai@gmail.com" class="form-control" />
+            <div class="text-end mb-1">
+                <a href="#" class="text-decoration-none text-primary small">¿Olvidaste tu contraseña?</a>
+            </div>
 
-                <label class="form-label">Contraseña</label>
-                <div class="position-relative">
-                    <InputText type="@(hidePassword ? "password" : "text")" @bind-Value="@User.Password" placeholder="·············" class="form-control" />
+            <button class="btn btn-primary w-100" disabled="@CurrentPost">
+                @(CurrentPost ? "Iniciando Sesión..." : "Iniciar Sesión")
+            </button>
 
-                    <i @onclick="TooglePassword"
-                       class="@(hidePassword ? "bi bi-eye-fill" : "bi bi-eye-slash-fill")
-                        position-absolute top-50 translate-middle-y"
-                       style="right: 12px; cursor: pointer; font-size: 1.2rem;">
-                    </i>
-
-                </div>
-
-                <div class="text-end mb-2">
-                    <a href="#" class="text-decoration-none text-primary small">¿Olvidaste tu contraseña?</a>
-                </div>
-
-                <button class="btn btn-primary w-100 rounded-4" disabled=@CurrentPost>
-                    @(CurrentPost ? "Iniciando Sesión..." : "Iniciar Sesión")
-                </button>
-                <footer class="text-center mt-3 text-muted small">
-                    © 2026 AtlasLMS - Software de Gestión de Librerías
-                </footer>
-            </EditForm>
-        </div>
+            <footer class="text-center mt-3 text-muted small">
+                © 2026 AtlasLMS - Software de Gestión de Librerías
+            </footer>
+        </EditForm>
     </div>
+
 </div>
 
 @code {

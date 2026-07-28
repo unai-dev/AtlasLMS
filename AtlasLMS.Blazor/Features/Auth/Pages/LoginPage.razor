@@ -16,17 +16,23 @@
         if (loginUser is null)
             return;
 
-        currentPost = true;
+        try
+        {
+            currentPost = true;
+            var result = await AuthService.LoginAsync(loginUser);
 
+            if (AtlasHelper.IsStringEmpty(result!.Token))
+                return;
 
-        var result = await AuthService.LoginAsync(loginUser);
+            await LocalStorage.SetItemAsync("token", result.Token);
+            Navigation.NavigateTo("/");
 
-        if (AtlasHelper.IsStringEmpty(result!.Token))
-            return;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            currentPost = false;
+        }
 
-        await LocalStorage.SetItemAsync("token", result.Token);
-        Navigation.NavigateTo("/");
-
-        currentPost = false;
     }
 }

@@ -1,4 +1,11 @@
 ﻿.atlas-auth-page {
     height: 100vh;
-    overflow: hidden;
+    width: 100%;
+    background-image: url('/assets/img/bg-login.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.auth-card {
+    width: 600px;
 }
