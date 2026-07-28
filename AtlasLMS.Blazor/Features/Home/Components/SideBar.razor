@@ -1,6 +1,6 @@
 ﻿<nav class="sidebar @(hidden ? "collapsed" : "") fixed-top mt-5">
     <div class="sidebar-header">
-        <button class="navbar-toggle btn btn-link  text-white position-fixed top-0 start-0 mt-2 ms-2" @onclick="ToogleHidden">
+        <button class="navbar-toggle btn btn-link text-white position-fixed top-0 start-0 mt-2 ms-2" @onclick="ToogleHidden">
             <i class="bi bi-list fs-4"></i>
         </button>
     </div>
@@ -9,28 +9,28 @@
         <ul class="menu">
             <li>
                 <NavLink href="/" class="nav-item" activeClass="active">
-                    <i class="bi bi-house text-warning fs-4"></i>
+                    <i class="bi bi-house-fill text-warning fs-4"></i>
                     <span class="@(hidden ? "d-none": "d-block")">Inicio</span>
                 </NavLink>
             </li>
 
             <li>
                 <NavLink href="/reservations" class="nav-item" activeClass="active">
-                    <i class="bi bi-calendar text-success fs-4"></i>
+                    <i class="bi bi-calendar-fill text-success fs-4"></i>
                     <span class="@(hidden ? "d-none" : "d-block")">Reservas</span>
                 </NavLink>
             </li>
             
             <li>
                 <NavLink href="/users" class="nav-item" activeClass="active">
-                    <i class="bi bi-people text-primary fs-4"></i>
+                    <i class="bi bi-people-fill text-primary fs-4"></i>
                     <span class="@(hidden ? "d-none" : "d-block")">Usuarios</span>
                 </NavLink>
             </li>
 
             <li>
                 <NavLink href="/settings" class="nav-item" activeClass="active">
-                    <i class="bi bi-gear text-info fs-4"></i>
+                    <i class="bi bi-gear-fill text-muted fs-4"></i>
                     <span class="@(hidden ? "d-none" : "d-block")">Configuración</span>
                 </NavLink>
             </li>
