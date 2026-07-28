@@ -1,9 +1,12 @@
-using AtlasLMS.Domain.Exceptions;
 using System.Net;
 using System.Text.Json;
 
-namespace AtlasLMS.API.Middlewares;
+using AtlasLMS.Domain.Exceptions;
 
+namespace AtlasLMS.API.Middlewares;
+/// <summary>
+/// Middleware global para centralizar el manejo de excepciones
+/// </summary>
 public class CustomExceptionMiddleware
 {
     private readonly RequestDelegate _next;
@@ -37,11 +40,7 @@ public class CustomExceptionMiddleware
             _ => HttpStatusCode.InternalServerError,
         };
 
-        var response = new MiddlewareExceptionResponse
-        {
-            Message = ex.Message,
-            StatusCode = statusCode,
-        };
+        var response = new MiddlewareExceptionResponse(false, statusCode, ex.Message);
 
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)statusCode;
