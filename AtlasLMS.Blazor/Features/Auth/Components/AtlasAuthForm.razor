@@ -1,11 +1,11 @@
 ﻿<div class="atlas-auth-page d-flex justify-content-center align-items-center">
 
-    <div class="card shadow-lg p-5 auth-card">
+    <div class="card shadow-lg p-5 auth-card bg-opacity-75 bg-white rounded-5">
         <EditForm EditContext="@editContext" OnValidSubmit="HandleValidSubmit">
 
             <DataAnnotationsValidator />
 
-            <h3 class="text-center mb-4 text-primary">¡Bienvenido a AtlasLMS!</h3>
+            <h3 class="text-center mb-4 text-danger">¡Bienvenido a AtlasLMS!</h3>
 
             <label class="form-label">Email</label>
             <InputText type="email" @bind-Value="@User.Email" placeholder="unai@gmail.com" class="form-control mb-3" />
@@ -14,10 +14,10 @@
             <PasswordInput @bind-Value="@User.Password" />
 
             <div class="text-end mb-1">
-                <a href="#" class="text-decoration-none text-primary small">¿Olvidaste tu contraseña?</a>
+                <a href="#" class="text-decoration-none text-danger small">¿Olvidaste tu contraseña?</a>
             </div>
 
-            <button class="btn btn-primary w-100" disabled="@CurrentPost">
+            <button class="btn btn-danger w-100" disabled="@CurrentPost">
                 @(CurrentPost ? "Iniciando Sesión..." : "Iniciar Sesión")
             </button>
 

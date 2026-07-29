@@ -32,7 +32,7 @@
                         </thead>
                         @if (isLoading)
                         {
-                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Primary" Size="SpinnerSize.Large" />
+                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Danger" Size="SpinnerSize.Large" />
                         }
                         else
                         {
@@ -49,7 +49,7 @@
 
                     </table>
 
-                    <Pagination TotalPages="8" />
+                    <AtlasGridPagination/>
                 </div>
             </div>
         </div>
