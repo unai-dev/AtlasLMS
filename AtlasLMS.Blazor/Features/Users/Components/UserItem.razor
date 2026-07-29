@@ -16,10 +16,17 @@
     </td>
     <td>@User.CreatedAt.ToString("d")</td>
     <td>
-        <AtlasGridActions />
+        <AtlasGridActions TID="string"
+                          ID="@User.ID"
+                          OnDelete="() => OnDelete.InvokeAsync(User.ID)"
+                          OnView="() => OnView.InvokeAsync(User.ID)"
+                          OnEdit="() => OnEdit.InvokeAsync(User.ID)" />
     </td>
 </tr>
 
 @code {
     [Parameter, EditorRequired] public UserReadDto User { get; set; }
+    [Parameter] public EventCallback<string> OnView { get; set; }
+    [Parameter] public EventCallback<string> OnEdit { get; set; }
+    [Parameter] public EventCallback<string> OnDelete { get; set; }
 }

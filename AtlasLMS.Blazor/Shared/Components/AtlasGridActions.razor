@@ -1,4 +1,6 @@
-﻿<button class="btn btn-sm btn-outline-secondary me-1" @onclick="() => OnView.InvokeAsync(ID)">
+﻿@typeparam TID
+
+<button class="btn btn-sm btn-outline-secondary me-1" @onclick="() => OnView.InvokeAsync(ID)">
     <Icon Name="IconName.Eye" />
 </button>
 <button class="btn btn-sm btn-outline-primary me-1" @onclick="() => OnEdit.InvokeAsync(ID)">
@@ -10,9 +12,9 @@
 
 @code {
     #region Parameters-----------------------------------------
-    [Parameter] public int ID { get; set; }
-    [Parameter] public EventCallback<int> OnDelete { get; set; }
-    [Parameter] public EventCallback<int> OnView { get; set; }
-    [Parameter] public EventCallback<int> OnEdit { get; set; }
+    [Parameter] public TID? ID { get; set; }
+    [Parameter] public EventCallback<TID> OnDelete { get; set; }
+    [Parameter] public EventCallback<TID> OnView { get; set; }
+    [Parameter] public EventCallback<TID> OnEdit { get; set; }
     #endregion
 }

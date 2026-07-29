@@ -13,7 +13,8 @@
     </td>
     <td>@Author.CreatedAt.ToString("d")</td>
     <td>
-        <AtlasGridActions ID="@Author.ID"
+        <AtlasGridActions TID="int"
+                          ID="@Author.ID"
                           OnView="() => OnView.InvokeAsync(Author.ID)"
                           OnEdit="() => OnEdit.InvokeAsync(Author.ID)"
                           OnDelete="() => OnDelete.InvokeAsync(Author.ID)" />
