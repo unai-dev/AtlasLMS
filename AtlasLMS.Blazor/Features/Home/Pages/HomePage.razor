@@ -1,12 +1,13 @@
 ﻿@page "/"
 @inject ILocalStorageService LocalStorage
+@inject ToastService ToastService
 @inject IUserService UserService
 @inject NavigationManager Navigation
 
 <PageTitle>Inicio</PageTitle>
 
 <div class="container mt-4">
-    <WelcomeCard User="@user" />
+    <WelcomeCard User="@user" IsLoading="@isLoading"/>
 </div>
 
 @code {
@@ -31,6 +32,7 @@
         }
         catch (Exception ex)
         {
+            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Verificando autenticacion"));
             Console.WriteLine("Error verificando autenticacion");
             Console.WriteLine(ex);
         }
