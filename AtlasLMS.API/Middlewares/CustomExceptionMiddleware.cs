@@ -2,6 +2,7 @@ using System.Net;
 using System.Text.Json;
 
 using AtlasLMS.Domain.Exceptions;
+using AtlasLMS.Shared.Responses;
 
 namespace AtlasLMS.API.Middlewares;
 /// <summary>

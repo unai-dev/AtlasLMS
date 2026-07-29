@@ -16,6 +16,6 @@ public class LocationService : ILocationService
 
     public async Task<IEnumerable<LocationReadDto>> GetLocationsAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<LocationReadDto>>("locations") ?? [];
-    public async Task DeleteLocationAsync(int ID) =>
+    public async Task<HttpResponseMessage> DeleteLocationAsync(int ID) =>
         await _http.DeleteAsync($"locations/{ID}");
 }
