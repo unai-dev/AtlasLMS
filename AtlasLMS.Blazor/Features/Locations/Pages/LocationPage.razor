@@ -81,7 +81,7 @@
         catch (Exception ex)
         {
             Console.WriteLine("Error interno al eliminar una localización");
-            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al eliminar localización"));
+            ToastService.Notify(new(ToastType.Danger, "¡Error!", ex.Message));
             Console.WriteLine(ex.Message);
         }
     }
