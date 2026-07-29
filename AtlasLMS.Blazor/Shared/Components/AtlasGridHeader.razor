@@ -2,10 +2,9 @@
     <h2 class="fw-semibold">@Title</h2>
 
     <div class="d-flex gap-2">
-        <input class="form-control" style="width: 260px;" placeholder="@InputPlaceholder" />
 
-        <button class="btn btn-primary">
-            <Icon Name="IconName.PatchPlus"/>
+        <button class="btn btn-success">
+            <Icon Name="IconName.Plus"/>
             @ButtonCaption
         </button>
     </div>
@@ -15,7 +14,6 @@
     #region Parameters-----------------------------------------------------------
     [Parameter] public string ButtonCaption { get; set; } = "Nuevo";
     [Parameter, EditorRequired] public string Title { get; set; }
-    [Parameter, EditorRequired] public string InputPlaceholder { get; set; }
     #endregion
 
 }

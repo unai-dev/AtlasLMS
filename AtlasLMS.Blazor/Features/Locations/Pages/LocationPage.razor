@@ -6,13 +6,12 @@
 
 <div class="container mt-4">
 
-    <AtlasGridHeader Title="Gestión de Ubicaciones"
-                     InputPlaceholder="Buscar por pasillo, columna o estante..." ButtonCaption="Nueva ubicación" />
+    <AtlasGridHeader Title="Gestión de Ubicaciones" ButtonCaption="Nueva ubicación" />
 
     <div class="row">
 
         <!-- FILTROS -->
-        <LocationFilters/>
+        <LocationFilters />
 
         <!-- TABLA -->
         <div class="col-9">
@@ -43,7 +42,7 @@
                                     @foreach (var location in locations)
                                     {
                                         <LocationItem Location="@location"
-                                                    OnDelete="() => HandleDeleteLocation(location.ID)" />
+                                                      OnDelete="() => HandleDeleteLocation(location.ID)" />
                                     }
                                 }
                             </tbody>

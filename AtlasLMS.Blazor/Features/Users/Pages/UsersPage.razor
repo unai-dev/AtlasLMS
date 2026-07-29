@@ -6,8 +6,7 @@
 
 <div class="container mt-4">
 
-    <AtlasGridHeader Title="Gestión de Usuarios"
-                     InputPlaceholder="Buscar por nombre, email o rol..." ButtonCaption="Nuevo usuario" />
+    <AtlasGridHeader Title="Gestión de Usuarios" ButtonCaption="Nuevo usuario" />
 
     <div class="row">
 
@@ -42,7 +41,7 @@
                                 {
                                     @foreach (var user in users)
                                     {
-                                        <UserItem User="@user" />
+                                        <UserItem User="@user" OnDelete="() => HandleDeleteUser(user.ID)" />
                                     }
                                 }
                             </tbody>
@@ -110,4 +109,5 @@
         }
     }
     #endregion
+
 }
