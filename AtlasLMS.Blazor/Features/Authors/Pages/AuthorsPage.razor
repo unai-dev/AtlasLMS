@@ -41,21 +41,20 @@
                                 {
                                     @foreach (var author in authors)
                                     {
-                                        <AuthorItem Author="@author" />
+                                        <AuthorItem Author="@author"
+                                                    OnDelete="() => HandleDeleteAuthor(author.ID)" />
                                     }
                                 }
                             </tbody>
                         }
-
                     </table>
 
-                    <AtlasGridPagination/>
+                    <AtlasGridPagination />
                 </div>
             </div>
         </div>
 
     </div>
-
 </div>
 
 
@@ -63,7 +62,34 @@
     private List<AuthorReadDto>? authors;
     private bool isLoading = false;
 
+    #region OnInitialized----------------------------------------------------------------
     protected override async Task OnInitializedAsync()
+    {
+        await RefreshAuthors();
+    }
+    #endregion
+
+    #region ButtonActions----------------------------------------------------------------
+    private async Task HandleDeleteAuthor(int ID)
+    {
+        try
+        {
+            await AuthorService.DeleteAuthorAsync(ID);
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Autor eliminado con exito"));
+            await RefreshAuthors();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error interno al eliminar un usuario");
+            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al eliminar usuario"));
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    #endregion
+
+    #region Methods----------------------------------------------------------------------
+    private async Task RefreshAuthors()
     {
         try
         {
@@ -82,4 +108,5 @@
             isLoading = false;
         }
     }
+    #endregion
 }

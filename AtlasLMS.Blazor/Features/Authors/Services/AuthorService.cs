@@ -16,4 +16,6 @@ public class AuthorService : IAuthorService
 
     public async Task<IEnumerable<AuthorReadDto>> GetAuthorsAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<AuthorReadDto>>("authors") ?? [];
+    public async Task DeleteAuthorAsync(int ID) =>
+        await _http.DeleteAsync($"authors/{ID}");
 }

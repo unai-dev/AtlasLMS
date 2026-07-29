@@ -13,10 +13,18 @@
     </td>
     <td>@Author.CreatedAt.ToString("d")</td>
     <td>
-        <AtlasGridActions />
+        <AtlasGridActions ID="@Author.ID"
+                          OnView="() => OnView.InvokeAsync(Author.ID)"
+                          OnEdit="() => OnEdit.InvokeAsync(Author.ID)"
+                          OnDelete="() => OnDelete.InvokeAsync(Author.ID)" />
     </td>
 </tr>
 
 @code {
+    #region Parameters-----------------------------------------------------
     [Parameter, EditorRequired] public AuthorReadDto Author { get; set; }
+    [Parameter] public EventCallback<int> OnView { get; set; }
+    [Parameter] public EventCallback<int> OnEdit { get; set; }
+    [Parameter] public EventCallback<int> OnDelete { get; set; }
+    #endregion
 }
