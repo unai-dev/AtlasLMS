@@ -1,0 +1,26 @@
+﻿<tr>
+    <td>@Location.Aisle.Concat($"/{Location.Column}/{Location.Shelf}")</td>
+    <td>@Location.Aisle</td>
+    <td>@Location.Column</td>
+    <td>@Location.Shelf</td>
+    <td>
+        <span class="badge @(Location.IsActive ? "bg-success" : "bg-secondary")">@(Location.IsActive ? "Activa" : "Inactiva")</span>
+    </td>
+    <td>@Location.CreatedAt.ToString("d")</td>
+    <td>
+        <AtlasGridActions TID="int"
+                          ID="@Location.ID"
+                          OnView="() => OnView.InvokeAsync(Location.ID)"
+                          OnEdit="() => OnEdit.InvokeAsync(Location.ID)"
+                          OnDelete="() => OnDelete.InvokeAsync(Location.ID)" />
+    </td>
+</tr>
+
+@code {
+    #region Parameters-----------------------------------------------------
+    [Parameter, EditorRequired] public LocationReadDto Location { get; set; }
+    [Parameter] public EventCallback<int> OnView { get; set; }
+    [Parameter] public EventCallback<int> OnEdit { get; set; }
+    [Parameter] public EventCallback<int> OnDelete { get; set; }
+    #endregion
+}

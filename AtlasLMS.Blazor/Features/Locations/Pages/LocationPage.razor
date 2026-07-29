@@ -1,0 +1,114 @@
+﻿@page "/locations"
+@inject ILocationService LocationService
+@inject ToastService ToastService
+
+<PageTitle>Ubicaciones</PageTitle>
+
+<div class="container mt-4">
+
+    <AtlasGridHeader Title="Gestión de Ubicaciones"
+                     InputPlaceholder="Buscar por pasillo, columna o estante..." ButtonCaption="Nueva ubicación" />
+
+    <div class="row">
+
+        <!-- FILTROS -->
+        <LocationFilters/>
+
+        <!-- TABLA -->
+        <div class="col-9">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Ubicación</th>
+                                <th>Pasillo</th>
+                                <th>Columna</th>
+                                <th>Estante</th>
+                                <th>Estado</th>
+                                <th>Fecha alta</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        @if (isLoading)
+                        {
+                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Danger" Size="SpinnerSize.Large" />
+                        }
+                        else
+                        {
+                            <tbody>
+                                @if (locations?.Count > 0)
+                                {
+                                    @foreach (var location in locations)
+                                    {
+                                        <LocationItem Location="@location"
+                                                    OnDelete="() => HandleDeleteLocation(location.ID)" />
+                                    }
+                                }
+                            </tbody>
+                        }
+                    </table>
+
+                    <AtlasGridPagination />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@code {
+    private List<LocationReadDto>? locations;
+    private bool isLoading = false;
+
+    #region OnInitialized----------------------------------------------------------------
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshLocations();
+    }
+    #endregion
+
+    #region ButtonActions----------------------------------------------------------------
+    private async Task HandleDeleteLocation(int ID)
+    {
+        try
+        {
+            await LocationService.DeleteLocationAsync(ID);
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Localización eliminada con exito"));
+            await RefreshLocations();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error interno al eliminar una localización");
+            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al eliminar localización"));
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    #endregion
+
+    #region Methods----------------------------------------------------------------------
+    private async Task RefreshLocations()
+    {
+        try
+        {
+            isLoading = true;
+            locations = (await LocationService.GetLocationsAsync()).ToList();
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Localizaciones cargadas correctamente"));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error interno al consultar localizaciones");
+            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al cargar localizaciones"));
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+    #endregion
+
+}
