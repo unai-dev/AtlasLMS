@@ -1,24 +1,33 @@
-﻿<Card Class="shadow-sm border-0 atlas-welcome-card">
-    <CardBody>
+﻿@if (IsLoading)
+{
+    <Spinner Type="SpinnerType.Dots" Size="SpinnerSize.Large" Color="SpinnerColor.Primary" />
+}
+else
+{
+    <Card Class="shadow-sm border-0 atlas-welcome-card">
+        <CardBody>
 
-        <div class="row align-items-center">
-            <div class="col">
-                <h3 class="fw-bold text-primary mb-1">Bienvenido, @User.UserName 👋</h3>
-                <p class="text-muted mb-2">
-                    Fecha de alta: @User.CreatedAt.ToString("d")
-                </p>
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="fw-bold text-primary mb-1">Bienvenido, @User.UserName</h3>
+                    <p class="text-muted mb-2">
+                        Fecha de alta: @User.CreatedAt.ToString("d")
+                    </p>
 
-                <Badge Color="BadgeColor.Primary" Class="me-2">@User.IsActive</Badge>
+                    <Badge Color="BadgeColor.Primary" Class="me-2">@User.IsActive</Badge>
+                </div>
+
+                <div class="col-auto text-end">
+                    <Icon Name="IconName.BookHalf" class="display-4 text-primary" />
+                </div>
             </div>
 
-            <div class="col-auto text-end">
-                <Icon Name="IconName.BookHalf" class="display-4 text-primary" />
-            </div>
-        </div>
+        </CardBody>
+    </Card>
+}
 
-    </CardBody>
-</Card>
 
 @code {
+    [Parameter, EditorRequired] public bool IsLoading { get; set; }
     [Parameter, EditorRequired] public UserReadDto User { get; set; }
 }

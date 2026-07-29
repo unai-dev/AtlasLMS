@@ -6,30 +6,37 @@
 <PageTitle>Inicio</PageTitle>
 
 <div class="container mt-4">
-    <WelcomeCard User="@user"/>
+    <WelcomeCard User="@user" />
 </div>
 
 @code {
     private UserReadDto? user;
-
+    private bool isLoading = false;
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            isLoading = true;
             var result = await LocalStorage.GetItemAsync("token");
-            user = await UserService.GetMe();
 
             if (AtlasHelper.IsStringEmpty(result))
             {
                 Navigation.NavigateTo("/login");
                 return;
             }
-            return;
+            user = await UserService.GetMe();
+
+            if (user is null)
+                return;
         }
         catch (Exception ex)
         {
             Console.WriteLine("Error verificando autenticacion");
             Console.WriteLine(ex);
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
 }

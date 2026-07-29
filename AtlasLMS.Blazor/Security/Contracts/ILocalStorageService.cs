@@ -1,4 +1,4 @@
-﻿namespace AtlasLMS.Blazor.Shared.Contracts
+﻿namespace AtlasLMS.Blazor.Security.Contracts
 {
     public interface ILocalStorageService
     {

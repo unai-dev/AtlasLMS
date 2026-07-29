@@ -1,9 +1,9 @@
-﻿using AtlasLMS.Blazor.Shared.Contracts;
+﻿using AtlasLMS.Blazor.Security.Contracts;
 using AtlasLMS.Tools;
 
 using Microsoft.JSInterop;
 
-namespace AtlasLMS.Blazor.Shared.Services;
+namespace AtlasLMS.Blazor.Security.Services;
 
 
 public class LocalStorageService : ILocalStorageService
