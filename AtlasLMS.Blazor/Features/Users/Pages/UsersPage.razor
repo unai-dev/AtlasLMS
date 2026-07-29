@@ -64,7 +64,33 @@
     private List<UserReadDto>? users;
     private bool isLoading = false;
 
+    #region OnInitialized----------------------------------------------------------
     protected override async Task OnInitializedAsync()
+    {
+        await RefreshUsers();
+    }
+    #endregion
+
+    #region ButtonActions----------------------------------------------------------
+    private async Task HandleDeleteUser(string ID)
+    {
+        try
+        {
+            await UserService.DeleteUserAsync(ID);
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Usuario eliminado correctamente"));
+            await RefreshUsers();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error interno al eliminar un usuario");
+            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al eliminar usuario"));
+            Console.WriteLine(ex.Message);
+        }
+    }
+    #endregion
+
+    #region Methods----------------------------------------------------------------------
+    private async Task RefreshUsers()
     {
         try
         {
@@ -83,4 +109,5 @@
             isLoading = false;
         }
     }
+    #endregion
 }

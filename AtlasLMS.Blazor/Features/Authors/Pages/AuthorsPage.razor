@@ -80,8 +80,8 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error interno al eliminar un usuario");
-            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al eliminar usuario"));
+            Console.WriteLine("Error interno al eliminar un autor");
+            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al eliminar autor"));
             Console.WriteLine(ex.Message);
         }
     }
@@ -99,7 +99,7 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error interno al consultar los usuarios");
+            Console.WriteLine("Error interno al consultar los autores");
             ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al cargar autores"));
             Console.WriteLine(ex.Message);
         }

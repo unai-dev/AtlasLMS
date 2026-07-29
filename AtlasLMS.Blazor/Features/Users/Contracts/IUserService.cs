@@ -6,5 +6,6 @@ namespace AtlasLMS.Blazor.Features.Users.Contracts
     {
         Task<IEnumerable<UserReadDto>> GetUsersAsync();
         Task<UserReadDto?> GetMe();
+        Task DeleteUserAsync(string ID);
     }
 }
