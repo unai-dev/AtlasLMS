@@ -1,12 +1,11 @@
-﻿@if (IsLoading)
-{
-    <Spinner Type="SpinnerType.Dots" Size="SpinnerSize.Large" Color="SpinnerColor.Primary" />
-}
-else if (User is not null)
-{
-    <Card Class="shadow-sm border-0 atlas-welcome-card">
-        <CardBody>
-
+﻿<Card Class="shadow-sm border-0 rounded-2 atlas-welcome-card">
+    <CardBody>
+        @if (IsLoading)
+        {
+            <Spinner Type="SpinnerType.Dots" Size="SpinnerSize.Large" Color="SpinnerColor.Primary" />
+        }
+        else if (User is not null)
+        {
             <div class="row align-items-center">
                 <div class="col">
                     <h3 class="fw-bold text-primary mb-1">Bienvenido, @User.UserName</h3>
@@ -21,10 +20,14 @@ else if (User is not null)
                     <Icon Name="IconName.BookHalf" class="display-4 text-primary" />
                 </div>
             </div>
+        }
+        else
+        {
+            <h1>Datos no disponibles</h1>
+        }
+    </CardBody>
+</Card>
 
-        </CardBody>
-    </Card>
-}
 
 @code {
     #region Parameters---------------------------------------------------------------
