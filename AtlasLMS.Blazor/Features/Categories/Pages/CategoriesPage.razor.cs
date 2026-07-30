@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
-using AtlasLMS.Blazor.Features.Authors.Services;
 using AtlasLMS.Blazor.Features.Categories.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.Responses;
@@ -17,7 +16,7 @@ public partial class CategoriesPage
     [Inject] public required ToastService ToastService { get; set; }
     [Inject] public required ICategoryService CategoryService { get; set; }
 
-    private List<CategoryReadDto>? categories;
+    private List<CategoryReadDto> categories = new List<CategoryReadDto>();
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------

@@ -1,16 +1,22 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using AtlasLMS.Blazor.Features.Users.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
+using Microsoft.AspNetCore.Components;
+
 namespace AtlasLMS.Blazor.Features.Users.Pages;
 
 public partial class UsersPage
 {
-    private List<UserReadDto>? users;
+    [Inject] public required IUserService UserService { get; set; }
+    [Inject] public required ToastService ToastService { get; set; }
+
+    private List<UserReadDto> users = new List<UserReadDto>();
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------

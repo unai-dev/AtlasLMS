@@ -1,6 +1,4 @@
 ﻿@page "/locations"
-@inject ILocationService LocationService
-@inject ToastService ToastService
 
 <PageTitle>Ubicaciones</PageTitle>
 
@@ -8,51 +6,43 @@
 
     <AtlasGridHeader Title="Gestión de Ubicaciones" ButtonCaption="Nueva ubicación" />
 
-    <div class="row">
+    <div class="col-9 w-100">
+        <div class="card shadow-sm">
+            <div class="card-body">
 
-        <!-- FILTROS -->
-        <LocationFilters />
-
-        <!-- TABLA -->
-        <div class="col-9">
-            <div class="card shadow-sm">
-                <div class="card-body">
-
-                    <table class="table align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Ubicación</th>
-                                <th>Pasillo</th>
-                                <th>Columna</th>
-                                <th>Estante</th>
-                                <th>Estado</th>
-                                <th>Fecha alta</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        @if (isLoading)
-                        {
-                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Danger" Size="SpinnerSize.Large" />
-                        }
-                        else
-                        {
-                            <tbody>
-                                @if (locations?.Count > 0)
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Ubicación</th>
+                            <th>Pasillo</th>
+                            <th>Columna</th>
+                            <th>Estante</th>
+                            <th>Estado</th>
+                            <th>Fecha alta</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    @if (isLoading)
+                    {
+                        <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Danger" Size="SpinnerSize.Large" />
+                    }
+                    else
+                    {
+                        <tbody>
+                            @if (locations?.Count > 0)
+                            {
+                                @foreach (var location in locations)
                                 {
-                                    @foreach (var location in locations)
-                                    {
-                                        <LocationItem Location="@location"
-                                                      OnDelete="() => HandleDeleteLocation(location.ID)" />
-                                    }
+                                    <LocationItem Location="@location"
+                                                  OnDelete="() => HandleDeleteLocation(location.ID)" />
                                 }
-                            </tbody>
-                        }
-                    </table>
+                            }
+                        </tbody>
+                    }
+                </table>
 
-                    <AtlasGridPagination />
-                </div>
+                <AtlasGridPagination />
             </div>
         </div>
-
     </div>
 </div>

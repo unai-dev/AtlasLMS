@@ -1,6 +1,4 @@
 ﻿@page "/users"
-@inject IUserService UserService
-@inject ToastService ToastService
 
 <PageTitle>Usuarios</PageTitle>
 
@@ -8,49 +6,38 @@
 
     <AtlasGridHeader Title="Gestión de Usuarios" ButtonCaption="Nuevo usuario" />
 
-    <div class="row">
+    <div class="col-9 w-100">
+        <div class="card shadow-sm">
+            <div class="card-body">
 
-        <!-- FILTROS -->
-        <UserFilters />
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Avatar</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Fecha alta</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    @if (isLoading)
+                    {
+                        <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Primary" Size="SpinnerSize.Large" />
+                    }
+                    else
+                    {
+                        <tbody>
+                            @foreach (var user in users)
+                            {
+                                <UserItem User="@user" OnDelete="() => HandleDeleteUser(user.ID)" />
+                            }
+                        </tbody>
+                    }
 
-        <!-- TABLA -->
-        <div class="col-9">
-            <div class="card shadow-sm">
-                <div class="card-body">
-
-                    <table class="table align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Avatar</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Rol</th>
-                                <th>Estado</th>
-                                <th>Fecha alta</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        @if (isLoading)
-                        {
-                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Primary" Size="SpinnerSize.Large" />
-                        }
-                        else
-                        {
-                            <tbody>
-                                @if (users?.Count > 0)
-                                {
-                                    @foreach (var user in users)
-                                    {
-                                        <UserItem User="@user" OnDelete="() => HandleDeleteUser(user.ID)" />
-                                    }
-                                }
-                            </tbody>
-                        }
-
-                    </table>
-
-                    <AtlasGridPagination />
-                </div>
+                </table>
+                <AtlasGridPagination />
             </div>
         </div>
     </div>

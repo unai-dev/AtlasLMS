@@ -1,15 +1,21 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using AtlasLMS.Blazor.Features.Locations.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
+using Microsoft.AspNetCore.Components;
+
 namespace AtlasLMS.Blazor.Features.Locations.Pages;
 
 public partial class LocationsPage
 {
+    [Inject] public required ILocationService LocationService { get; set; }
+    [Inject] public required ToastService ToastService { get; set; }
+
     private List<LocationReadDto>? locations;
     private bool isLoading = false;
 

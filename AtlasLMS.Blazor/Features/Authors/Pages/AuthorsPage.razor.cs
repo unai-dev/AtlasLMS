@@ -1,16 +1,22 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using AtlasLMS.Blazor.Features.Authors.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
+using Microsoft.AspNetCore.Components;
+
 namespace AtlasLMS.Blazor.Features.Authors.Pages;
 
 public partial class AuthorsPage
 {
-    private List<AuthorReadDto>? authors;
+    [Inject] public required IAuthorService AuthorService { get; set; }
+    [Inject] public required ToastService ToastService { get; set; }
+
+    private List<AuthorReadDto> authors = new List<AuthorReadDto>();
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
