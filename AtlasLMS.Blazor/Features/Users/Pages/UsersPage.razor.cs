@@ -17,6 +17,7 @@ public partial class UsersPage
     [Inject] public required ToastService ToastService { get; set; }
 
     private List<UserReadDto> users = new List<UserReadDto>();
+    private ConfirmDialog? dialog;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------
@@ -29,14 +30,19 @@ public partial class UsersPage
     #region ButtonActions----------------------------------------------------------
     private async Task HandleDeleteUser(string ID)
     {
-        var response = await UserService.DeleteUserAsync(ID);
-        if (response.IsSuccessStatusCode)
+        var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
+        if (confirm)
         {
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Usuario eliminado correctamente"));
-            await RefreshUsers();
-            return;
+            var response = await UserService.DeleteUserAsync(ID);
+            if (response.IsSuccessStatusCode)
+            {
+                ToastService.Notify(new(ToastType.Success, "¡Listo!", "Usuario eliminado correctamente"));
+                await RefreshUsers();
+                return;
+            }
+            await SwitchExceptionMessage(response);
         }
-        await SwitchExceptionMessage(response);
+        return;
     }
     #endregion
 

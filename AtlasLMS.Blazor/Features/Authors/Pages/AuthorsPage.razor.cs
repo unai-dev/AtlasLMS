@@ -17,6 +17,7 @@ public partial class AuthorsPage
     [Inject] public required ToastService ToastService { get; set; }
 
     private List<AuthorReadDto> authors = new List<AuthorReadDto>();
+    private ConfirmDialog? dialog;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
@@ -29,15 +30,20 @@ public partial class AuthorsPage
     #region ButtonActions----------------------------------------------------------------
     private async Task HandleDeleteAuthor(int ID)
     {
-        var response = await AuthorService.DeleteAuthorAsync(ID);
-        if (response.IsSuccessStatusCode)
+        var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
+        if (confirm)
         {
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Autor eliminado con exito"));
-            await RefreshAuthors();
-            return;
-        }
+            var response = await AuthorService.DeleteAuthorAsync(ID);
+            if (response.IsSuccessStatusCode)
+            {
+                ToastService.Notify(new(ToastType.Success, "¡Listo!", "Autor eliminado con exito"));
+                await RefreshAuthors();
+                return;
+            }
 
-        await SwitchExceptionMessage(response);
+            await SwitchExceptionMessage(response);
+        }
+        return;
     }
     #endregion
 

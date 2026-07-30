@@ -17,6 +17,7 @@ public partial class LocationsPage
     [Inject] public required ToastService ToastService { get; set; }
 
     private List<LocationReadDto>? locations;
+    private ConfirmDialog? dialog;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
@@ -29,16 +30,20 @@ public partial class LocationsPage
     #region ButtonActions----------------------------------------------------------------
     private async Task HandleDeleteLocation(int ID)
     {
-        var response = await LocationService.DeleteLocationAsync(ID);
-        if (response.IsSuccessStatusCode)
+        var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
+        if (confirm)
         {
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Ubicación eliminada con exito"));
-            await RefreshLocations();
-            return;
+            var response = await LocationService.DeleteLocationAsync(ID);
+            if (response.IsSuccessStatusCode)
+            {
+                ToastService.Notify(new(ToastType.Success, "¡Listo!", "Ubicación eliminada con exito"));
+                await RefreshLocations();
+                return;
+            }
+            await SwitchExceptionMessage(response);
         }
-        await SwitchExceptionMessage(response);
+        return;
     }
-
     #endregion
 
     #region Methods----------------------------------------------------------------------

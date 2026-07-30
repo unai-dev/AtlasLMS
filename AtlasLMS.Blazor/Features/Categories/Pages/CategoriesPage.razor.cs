@@ -17,6 +17,7 @@ public partial class CategoriesPage
     [Inject] public required ICategoryService CategoryService { get; set; }
 
     private List<CategoryReadDto> categories = new List<CategoryReadDto>();
+    private ConfirmDialog? dialog;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
@@ -29,15 +30,20 @@ public partial class CategoriesPage
     #region ButtonActions----------------------------------------------------------------
     private async Task HandleDeleteCategory(int ID)
     {
-        var response = await CategoryService.DeleteCategoryAsync(ID);
-        if (response.IsSuccessStatusCode)
+        var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
+        if (confirm)
         {
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Categoría eliminada con exito"));
-            await RefreshCategories();
-            return;
-        }
+            var response = await CategoryService.DeleteCategoryAsync(ID);
+            if (response.IsSuccessStatusCode)
+            {
+                ToastService.Notify(new(ToastType.Success, "¡Listo!", "Categoría eliminada con exito"));
+                await RefreshCategories();
+                return;
+            }
 
-        await SwitchExceptionMessage(response);
+            await SwitchExceptionMessage(response);
+        }
+        return;
     }
     #endregion
 

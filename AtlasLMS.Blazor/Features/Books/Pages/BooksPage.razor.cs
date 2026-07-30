@@ -17,6 +17,7 @@ public partial class BooksPage
     [Inject] public required ToastService ToastService { get; set; }
 
     private List<BookReadDto> books = new List<BookReadDto>();
+    private ConfirmDialog? dialog;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
@@ -29,15 +30,20 @@ public partial class BooksPage
     #region ButtonActions----------------------------------------------------------------
     private async Task HandleDeleteBook(int ID)
     {
-        var response = await BookService.DeleteBookAsync(ID);
-        if (response.IsSuccessStatusCode)
+        var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
+        if (confirm)
         {
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Libro eliminado con exito"));
-            await RefreshBooks();
-            return;
-        }
+            var response = await BookService.DeleteBookAsync(ID);
+            if (response.IsSuccessStatusCode)
+            {
+                ToastService.Notify(new(ToastType.Success, "¡Listo!", "Libro eliminado con exito"));
+                await RefreshBooks();
+                return;
+            }
 
-        await SwitchExceptionMessage(response);
+            await SwitchExceptionMessage(response);
+        }
+        return;
     }
     #endregion
 

@@ -17,6 +17,7 @@ public partial class BookingsPage
     [Inject] public required ToastService ToastService { get; set; }
 
     private List<BookingReadDto> bookings = new List<BookingReadDto>();
+    private ConfirmDialog? dialog;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
@@ -29,15 +30,20 @@ public partial class BookingsPage
     #region ButtonActions----------------------------------------------------------------
     private async Task HandleDeleteBooking(int ID)
     {
-        var response = await BookingService.DeleteBookingAsync(ID);
-        if (response.IsSuccessStatusCode)
+        var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
+        if (confirm)
         {
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Reserva eliminada con exito"));
-            await RefreshBookings();
-            return;
-        }
+            var response = await BookingService.DeleteBookingAsync(ID);
+            if (response.IsSuccessStatusCode)
+            {
+                ToastService.Notify(new(ToastType.Success, "¡Listo!", "Reserva eliminada con exito"));
+                await RefreshBookings();
+                return;
+            }
 
-        await SwitchExceptionMessage(response);
+            await SwitchExceptionMessage(response);
+        }
+        return;
     }
     #endregion
 
