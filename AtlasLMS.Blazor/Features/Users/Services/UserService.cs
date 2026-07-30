@@ -16,8 +16,10 @@ public class UserService : IUserService
 
     public async Task<IEnumerable<UserReadDto>> GetUsersAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<UserReadDto>>("users") ?? [];
+
     public async Task<UserReadDto?> GetMe() =>
         await _http.GetFromJsonAsync<UserReadDto>("users/me");
-    public async Task DeleteUserAsync(string ID) =>
+
+    public async Task<HttpResponseMessage> DeleteUserAsync(string ID) =>
         await _http.DeleteAsync($"users/{ID}");
 }

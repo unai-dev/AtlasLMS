@@ -1,5 +1,4 @@
 ﻿@page "/locations"
-@using System.Net
 @inject ILocationService LocationService
 @inject ToastService ToastService
 
@@ -76,7 +75,7 @@
         var response = await LocationService.DeleteLocationAsync(ID);
         if (response.IsSuccessStatusCode)
         {
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Localización eliminada con exito"));
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Ubicación eliminada con exito"));
             await RefreshLocations();
             return;
         }
@@ -94,11 +93,11 @@
 
         if (locations.Count == 0)
         {
-            ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay localizaciones a cargar"));
+            ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay ubicaciones disponibles"));
             return;
         }
 
-        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Localizaciones cargadas correctamente"));
+        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Ubicaciones cargadas correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)

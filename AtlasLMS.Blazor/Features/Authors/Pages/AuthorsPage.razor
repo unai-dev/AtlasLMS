@@ -71,40 +71,48 @@
     #region ButtonActions----------------------------------------------------------------
     private async Task HandleDeleteAuthor(int ID)
     {
-        try
+        var response = await AuthorService.DeleteAuthorAsync(ID);
+        if (response.IsSuccessStatusCode)
         {
-            await AuthorService.DeleteAuthorAsync(ID);
             ToastService.Notify(new(ToastType.Success, "¡Listo!", "Autor eliminado con exito"));
             await RefreshAuthors();
+            return;
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error interno al eliminar un autor");
-            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al eliminar autor"));
-            Console.WriteLine(ex.Message);
-        }
-    }
 
+        await SwitchExceptionMessage(response);
+    }
     #endregion
 
     #region Methods----------------------------------------------------------------------
     private async Task RefreshAuthors()
     {
-        try
+        isLoading = true;
+        authors = (await AuthorService.GetAuthorsAsync()).ToList();
+        isLoading = false;
+        if (authors.Count == 0)
         {
-            isLoading = true;
-            authors = (await AuthorService.GetAuthorsAsync()).ToList();
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Autores cargados correctamente"));
+            ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay autores disponibles"));
+            return;
         }
-        catch (Exception ex)
+        ToastService.Notify(new(ToastType.Success, "¡Info!", "Autores cargados correctamente"));
+    }
+
+    private async Task SwitchExceptionMessage(HttpResponseMessage response)
+    {
+
+        var exceptionResponse = await response.Content.ReadFromJsonAsync<MiddlewareExceptionResponse>();
+        if (exceptionResponse is null) return;
+        switch (response.StatusCode)
         {
-            Console.WriteLine("Error interno al consultar los autores");
-            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al cargar autores"));
-            Console.WriteLine(ex.Message);
-        }
-        finally
-        {
-            isLoading = false;
+            case HttpStatusCode.NotFound:
+                ToastService.Notify(new(ToastType.Success, "¡Error!", exceptionResponse.Message));
+                break;
+            case HttpStatusCode.BadRequest:
+                ToastService.Notify(new(ToastType.Success, "¡Error!", exceptionResponse.Message));
+                break;
+            default:
+                ToastService.Notify(new(ToastType.Success, "¡Error!", exceptionResponse.Message));
+                break;
         }
     }
     #endregion

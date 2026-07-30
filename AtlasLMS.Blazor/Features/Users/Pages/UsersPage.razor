@@ -73,39 +73,52 @@
     #region ButtonActions----------------------------------------------------------
     private async Task HandleDeleteUser(string ID)
     {
-        try
+        var response = await UserService.DeleteUserAsync(ID);
+        if (response.IsSuccessStatusCode)
         {
-            await UserService.DeleteUserAsync(ID);
             ToastService.Notify(new(ToastType.Success, "¡Listo!", "Usuario eliminado correctamente"));
             await RefreshUsers();
+            return;
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error interno al eliminar un usuario");
-            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al eliminar usuario"));
-            Console.WriteLine(ex.Message);
-        }
+        await SwitchExceptionMessage(response);
     }
     #endregion
 
     #region Methods----------------------------------------------------------------------
     private async Task RefreshUsers()
     {
-        try
+        isLoading = true;
+        users = (await UserService.GetUsersAsync()).ToList();
+        isLoading = false;
+
+        //Validacion inecesaria
+        //No tiene sentido valorar si es que hay usuarios en el sistema o no
+        //Minimo siempre hay un usuario
+        //La mantenemos por control temporal
+        if (users.Count > 0)
         {
-            isLoading = true;
-            users = (await UserService.GetUsersAsync()).ToList();
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Usuarios cargados correctamente"));
+            ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay usuarios disponibles en el sistema"));
+
+            return;
         }
-        catch (Exception ex)
+        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Usuarios cargados correctamente"));
+    }
+
+    private async Task SwitchExceptionMessage(HttpResponseMessage response)
+    {
+        var exceptionResponse = await response.Content.ReadFromJsonAsync<MiddlewareExceptionResponse>();
+        if (exceptionResponse is null) return;
+        switch (response.StatusCode)
         {
-            Console.WriteLine("Error interno al consultar los usuarios");
-            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al cargar usuarios"));
-            Console.WriteLine(ex.Message);
-        }
-        finally
-        {
-            isLoading = false;
+            case HttpStatusCode.NotFound:
+                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
+                break;
+            case HttpStatusCode.BadRequest:
+                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
+                break;
+            default:
+                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
+                break;
         }
     }
     #endregion
