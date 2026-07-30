@@ -15,12 +15,3 @@
                           OnDelete="() => OnDelete.InvokeAsync(Location.ID)" />
     </td>
 </tr>
-
-@code {
-    #region Parameters-----------------------------------------------------
-    [Parameter, EditorRequired] public LocationReadDto Location { get; set; }
-    [Parameter] public EventCallback<int> OnView { get; set; }
-    [Parameter] public EventCallback<int> OnEdit { get; set; }
-    [Parameter] public EventCallback<int> OnDelete { get; set; }
-    #endregion
-}

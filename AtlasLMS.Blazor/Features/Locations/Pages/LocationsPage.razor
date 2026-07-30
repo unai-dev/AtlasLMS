@@ -1,17 +1,17 @@
-﻿@page "/users"
-@inject IUserService UserService
+﻿@page "/locations"
+@inject ILocationService LocationService
 @inject ToastService ToastService
 
-<PageTitle>Usuarios</PageTitle>
+<PageTitle>Ubicaciones</PageTitle>
 
 <div class="container mt-4">
 
-    <AtlasGridHeader Title="Gestión de Usuarios" ButtonCaption="Nuevo usuario" />
+    <AtlasGridHeader Title="Gestión de Ubicaciones" ButtonCaption="Nueva ubicación" />
 
     <div class="row">
 
         <!-- FILTROS -->
-        <UserFilters />
+        <LocationFilters />
 
         <!-- TABLA -->
         <div class="col-9">
@@ -21,10 +21,10 @@
                     <table class="table align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>Avatar</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Rol</th>
+                                <th>Ubicación</th>
+                                <th>Pasillo</th>
+                                <th>Columna</th>
+                                <th>Estante</th>
                                 <th>Estado</th>
                                 <th>Fecha alta</th>
                                 <th>Acciones</th>
@@ -32,26 +32,27 @@
                         </thead>
                         @if (isLoading)
                         {
-                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Primary" Size="SpinnerSize.Large" />
+                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Danger" Size="SpinnerSize.Large" />
                         }
                         else
                         {
                             <tbody>
-                                @if (users?.Count > 0)
+                                @if (locations?.Count > 0)
                                 {
-                                    @foreach (var user in users)
+                                    @foreach (var location in locations)
                                     {
-                                        <UserItem User="@user" OnDelete="() => HandleDeleteUser(user.ID)" />
+                                        <LocationItem Location="@location"
+                                                      OnDelete="() => HandleDeleteLocation(location.ID)" />
                                     }
                                 }
                             </tbody>
                         }
-
                     </table>
 
                     <AtlasGridPagination />
                 </div>
             </div>
         </div>
+
     </div>
 </div>

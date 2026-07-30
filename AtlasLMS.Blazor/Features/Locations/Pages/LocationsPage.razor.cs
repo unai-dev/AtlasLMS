@@ -1,64 +1,15 @@
-﻿@page "/locations"
-@inject ILocationService LocationService
-@inject ToastService ToastService
+﻿using System.Net;
+using System.Net.Http.Json;
 
-<PageTitle>Ubicaciones</PageTitle>
+using AtlasLMS.Shared.DTOs.Read;
+using AtlasLMS.Shared.Responses;
 
-<div class="container mt-4">
+using BlazorBootstrap;
 
-    <AtlasGridHeader Title="Gestión de Ubicaciones" ButtonCaption="Nueva ubicación" />
+namespace AtlasLMS.Blazor.Features.Locations.Pages;
 
-    <div class="row">
-
-        <!-- FILTROS -->
-        <LocationFilters />
-
-        <!-- TABLA -->
-        <div class="col-9">
-            <div class="card shadow-sm">
-                <div class="card-body">
-
-                    <table class="table align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Ubicación</th>
-                                <th>Pasillo</th>
-                                <th>Columna</th>
-                                <th>Estante</th>
-                                <th>Estado</th>
-                                <th>Fecha alta</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        @if (isLoading)
-                        {
-                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Danger" Size="SpinnerSize.Large" />
-                        }
-                        else
-                        {
-                            <tbody>
-                                @if (locations?.Count > 0)
-                                {
-                                    @foreach (var location in locations)
-                                    {
-                                        <LocationItem Location="@location"
-                                                      OnDelete="() => HandleDeleteLocation(location.ID)" />
-                                    }
-                                }
-                            </tbody>
-                        }
-                    </table>
-
-                    <AtlasGridPagination />
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-@code {
+public partial class LocationsPage
+{
     private List<LocationReadDto>? locations;
     private bool isLoading = false;
 
@@ -119,5 +70,4 @@
         }
     }
     #endregion
-
 }
