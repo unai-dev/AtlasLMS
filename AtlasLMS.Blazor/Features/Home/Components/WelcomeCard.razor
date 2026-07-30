@@ -1,32 +1,46 @@
-﻿<Card Class="shadow-sm border-0 rounded-2 atlas-welcome-card">
-    <CardBody>
+﻿<Card Class="shadow-sm border-0 rounded-3 atlas-welcome-card bg-light">
+    <CardBody Class="p-4">
         @if (IsLoading)
         {
-            <Spinner Type="SpinnerType.Dots" Size="SpinnerSize.Large" Color="SpinnerColor.Primary" />
+            <div class="d-flex justify-content-center align-items-center" style="height: 120px;">
+                <Spinner Type="SpinnerType.Dots" Size="SpinnerSize.Large" Color="SpinnerColor.Primary" />
+            </div>
         }
         else if (User is not null)
         {
-            <div class="row align-items-center">
-                <div class="col">
-                    <h3 class="fw-bold text-primary mb-1">Bienvenido, @User.UserName</h3>
-                    <p class="text-muted mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="fw-semibold text-primary mb-1">
+                        Bienvenido, <span class="text-dark">@User.UserName</span>
+                    </h4>
+                    <p class="text-muted mb-2 small">
                         Fecha de alta: @User.CreatedAt.ToString("d")
                     </p>
 
-                    <Badge Color="BadgeColor.Primary" Class="me-2">@User.IsActive</Badge>
+                    <Badge Color="BadgeColor.Success" Class="px-3 py-2">
+                        @(User.IsActive ? "Activo" : "Inactivo")
+                    </Badge>
                 </div>
 
-                <div class="col-auto text-end">
-                    <Icon Name="IconName.BookHalf" class="display-4 text-primary" />
+                <div class="text-end">
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width:64px; height:64px;">
+                        <span class="fw-bold text-primary fs-4">
+                            @(User.UserName?.FirstOrDefault().ToString().ToUpper())
+                        </span>
+                    </div>
                 </div>
             </div>
         }
         else
         {
-            <h1>Datos no disponibles</h1>
+            <div class="text-center py-4">
+                <Icon Name="IconName.ExclamationTriangle" Class="display-6 text-warning mb-2" />
+                <p class="text-muted">Datos no disponibles</p>
+            </div>
         }
     </CardBody>
 </Card>
+
 
 
 @code {

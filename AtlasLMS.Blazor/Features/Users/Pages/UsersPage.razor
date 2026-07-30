@@ -95,7 +95,7 @@
         //No tiene sentido valorar si es que hay usuarios en el sistema o no
         //Minimo siempre hay un usuario
         //La mantenemos por control temporal
-        if (users.Count > 0)
+        if (users.Count == 0)
         {
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay usuarios disponibles en el sistema"));
 
