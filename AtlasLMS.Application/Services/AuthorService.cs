@@ -88,7 +88,9 @@ public class AuthorService : IAuthorService
     {
         var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID) ??
             throw new NotFoundException($"Autor con ID {ID} no encontrado");
-
+        var authorHaveAnyBook = await _context.Books.AnyAsync(x => x.AuthorID == ID);
+        if (authorHaveAnyBook)
+            throw new BadRequestException($"El autor no puede ser eliminado. Tiene libros asignados");
         _context.Remove(author);
         await _context.SaveChangesAsync();
     }
