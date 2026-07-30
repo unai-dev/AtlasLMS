@@ -1,0 +1,15 @@
+﻿<tr>
+    <td>@Category.Name</td>
+    <td>
+        <span class="badge @(Category.IsActive ? "bg-success" : "bg-secondary")">@(Category.IsActive ? "Activo" : "Inactivo")</span>
+    </td>
+    <td>@Category.CreatedAt.ToString("d")</td>
+    <td>
+        <AtlasGridActions TID="int"
+                          ID="@Category.ID"
+                          OnView="() => OnView.InvokeAsync(Category.ID)"
+                          OnEdit="() => OnEdit.InvokeAsync(Category.ID)"
+                          OnDelete="() => OnDelete.InvokeAsync(Category.ID)" />
+    </td>
+</tr>
+

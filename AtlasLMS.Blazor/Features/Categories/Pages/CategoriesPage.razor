@@ -1,0 +1,48 @@
+﻿@page "/categories"
+
+<PageTitle>Categorias</PageTitle>
+
+<div class="container mt-4">
+
+    <AtlasGridHeader Title="Gestión de Categorias" ButtonCaption="Nueva categoría" />
+
+    <div class="row">
+
+        <!-- TABLA -->
+        <div class="col-9">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Estado</th>
+                                <th>Fecha alta</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        @if (isLoading)
+                        {
+                            <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Danger" Size="SpinnerSize.Large" />
+                        }
+                        else
+                        {
+                            <tbody>
+                                @if (categories?.Count > 0)
+                                {
+                                    @foreach (var category in categories)
+                                    {
+                                        <CategoryItem Category="@category"
+                                                      OnDelete="() => HandleDeleteCategory(category.ID)" />
+                                    }
+                                }
+                            </tbody>
+                        }
+                    </table>
+                    <AtlasGridPagination />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

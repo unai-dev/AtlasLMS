@@ -1,33 +1,40 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using AtlasLMS.Blazor.Features.Authors.Services;
+using AtlasLMS.Blazor.Features.Categories.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
-namespace AtlasLMS.Blazor.Features.Authors.Pages;
+using Microsoft.AspNetCore.Components;
 
-public partial class AuthorsPage
+namespace AtlasLMS.Blazor.Features.Categories.Pages;
+
+public partial class CategoriesPage
 {
-    private List<AuthorReadDto>? authors;
+    [Inject] public required ToastService ToastService { get; set; }
+    [Inject] public required ICategoryService CategoryService { get; set; }
+
+    private List<CategoryReadDto>? categories;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
     protected override async Task OnInitializedAsync()
     {
-        await RefreshAuthors();
+        await RefreshCategories();
     }
     #endregion
 
     #region ButtonActions----------------------------------------------------------------
-    private async Task HandleDeleteAuthor(int ID)
+    private async Task HandleDeleteCategory(int ID)
     {
-        var response = await AuthorService.DeleteAuthorAsync(ID);
+        var response = await CategoryService.DeleteCategoryAsync(ID);
         if (response.IsSuccessStatusCode)
         {
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Autor eliminado con exito"));
-            await RefreshAuthors();
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Categoría eliminada con exito"));
+            await RefreshCategories();
             return;
         }
 
@@ -36,17 +43,17 @@ public partial class AuthorsPage
     #endregion
 
     #region Methods----------------------------------------------------------------------
-    private async Task RefreshAuthors()
+    private async Task RefreshCategories()
     {
         isLoading = true;
-        authors = (await AuthorService.GetAuthorsAsync()).ToList();
+        categories = (await CategoryService.GetCategoriesAsync()).ToList();
         isLoading = false;
-        if (authors.Count == 0)
+        if (categories.Count == 0)
         {
-            ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay autores disponibles"));
+            ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay categorias disponibles"));
             return;
         }
-        ToastService.Notify(new(ToastType.Success, "¡Info!", "Autores cargados correctamente"));
+        ToastService.Notify(new(ToastType.Success, "¡Info!", "Categorias cargadas correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)
