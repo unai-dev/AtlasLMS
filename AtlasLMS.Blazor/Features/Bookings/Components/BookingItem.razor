@@ -1,0 +1,16 @@
+﻿<tr>
+    <td>@Booking.StartTime.ToString("d")</td>
+    <td>@Booking.PickupDeadline.ToString("d")</td>
+    <td>
+        <span class="badge @(Booking.Status == 1 ? "bg-success" : "bg-secondary")">@(Booking.IsActive ? "Activo" : "Inactivo")</span>
+    </td>
+    <td>@Booking.CreatedAt.ToString("d")</td>
+    <td>
+        <AtlasGridActions TID="int"
+                          ID="@Booking.ID"
+                          OnView="() => OnView.InvokeAsync(Booking.ID)"
+                          OnEdit="() => OnEdit.InvokeAsync(Booking.ID)"
+                          OnDelete="() => OnDelete.InvokeAsync(Booking.ID)" />
+    </td>
+</tr>
+

@@ -3,6 +3,8 @@ using AtlasLMS.Blazor.Features.Auth.Contracts;
 using AtlasLMS.Blazor.Features.Auth.Services;
 using AtlasLMS.Blazor.Features.Authors.Contracts;
 using AtlasLMS.Blazor.Features.Authors.Services;
+using AtlasLMS.Blazor.Features.Bookings.Contracts;
+using AtlasLMS.Blazor.Features.Bookings.Services;
 using AtlasLMS.Blazor.Features.Books.Contracts;
 using AtlasLMS.Blazor.Features.Books.Services;
 using AtlasLMS.Blazor.Features.Categories.Contracts;
@@ -40,6 +42,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
 

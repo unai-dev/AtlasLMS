@@ -1,0 +1,43 @@
+﻿@page "/bookings"
+
+<PageTitle>Reservas</PageTitle>
+<div class="container mt-4">
+
+    <AtlasGridHeader Title="Gestión de Reservas" ButtonCaption="Nueva reserva" />
+
+    <div class="col-9 w-100">
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <table class="table table-striped table-bordered table-responsive">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Fecha de inicio</th>
+                            <th>Fecha de recogida</th>
+                            <th>Estado</th>
+                            <th>Fecha alta</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    @if (isLoading)
+                    {
+                        <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Danger" Size="SpinnerSize.Large" />
+                    }
+                    else
+                    {
+                        <tbody>
+                            @foreach (var booking in bookings)
+                            {
+                                <BookingItem Booking="@booking"
+                                             OnDelete="() => HandleDeleteAuthor(booking.ID)" />
+                            }
+                        </tbody>
+                    }
+                </table>
+
+                <AtlasGridPagination />
+            </div>
+        </div>
+
+    </div>
+</div>
