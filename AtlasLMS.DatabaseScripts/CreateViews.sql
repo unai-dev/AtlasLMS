@@ -4,10 +4,9 @@ CREATE OR ALTER VIEW [dbo].[vw_Authors] AS
 	--Related
 	,B.Title AS [BookTitle]
 	,B.ISBN AS [BookISBN]
-	,B.ID AS [BookID]
 
 	FROM Authors AS A
-	INNER JOIN Books AS B ON A.ID = B.AuthorID
+	LEFT JOIN Books AS B ON A.ID = B.AuthorID
 GO
 
 CREATE OR ALTER VIEW [dbo].[vw_Books] AS
