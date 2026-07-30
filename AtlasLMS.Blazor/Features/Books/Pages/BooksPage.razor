@@ -1,0 +1,46 @@
+﻿@page "/books"
+
+<PageTitle>Libros</PageTitle>
+
+<div class="container mt-4">
+
+    <AtlasGridHeader Title="Gestión de Libros" ButtonCaption="Nuevo libro" />
+
+    <div class="col-9 w-100">
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <table class="table table-striped table-responsive table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Título</th>
+                            <th>ISBN</th>
+                            <th>Stock</th>
+                            <th>Fecha de publicación</th>
+                            <th>Estado</th>
+                            <th>Fecha alta</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    @if (isLoading)
+                    {
+                        <Spinner Type="SpinnerType.Dots" Color="SpinnerColor.Danger" Size="SpinnerSize.Large" />
+                    }
+                    else
+                    {
+                        <tbody>
+                            @foreach (var book in books)
+                            {
+                                <BookItem Book="@book"
+                                          OnDelete="() => HandleDeleteBook(book.ID)" />
+                            }
+                        </tbody>
+                    }
+                </table>
+
+                <AtlasGridPagination />
+            </div>
+        </div>
+
+    </div>
+</div>

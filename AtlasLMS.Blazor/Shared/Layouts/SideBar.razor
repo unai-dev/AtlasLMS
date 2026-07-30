@@ -29,7 +29,7 @@
             </li>
             <li>
                 <NavLink href="/authors" class="nav-item" activeClass="active">
-                    <Icon Name="IconName.Feather" Color="IconColor.Danger" Size="IconSize.x4" />
+                    <Icon Name="IconName.Feather" Color="IconColor.Primary" Size="IconSize.x4" />
                     <span class="@(hidden ? "d-none" : "d-block")">Autores</span>
                 </NavLink>
             </li>
@@ -41,8 +41,14 @@
             </li>
             <li>
                 <NavLink href="/categories" class="nav-item" activeClass="active">
-                    <Icon Name="IconName.ListNested" Color="IconColor.Success" Size="IconSize.x4" />
+                    <Icon Name="IconName.List" Color="IconColor.Success" Size="IconSize.x4" />
                     <span class="@(hidden ? "d-none" : "d-block")">Categorias</span>
+                </NavLink>
+            </li>
+            <li>
+                <NavLink href="/books" class="nav-item" activeClass="active">
+                    <Icon Name="IconName.BookFill" Color="IconColor.Primary" Size="IconSize.x4" />
+                    <span class="@(hidden ? "d-none" : "d-block")">Libros</span>
                 </NavLink>
             </li>
         </ul>

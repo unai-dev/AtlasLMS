@@ -1,0 +1,17 @@
+﻿<tr>
+    <td>@Book.Title</td>
+    <td>@Book.ISBN</td>
+    <td class="@(Book.Stock < 5 ? "text-danger" : "text-success")">@Book.Stock</td>
+    <td>@Book.PublicationAt.ToString("d")</td>
+    <td>
+        <span class="badge @(Book.IsActive ? "bg-success" : "bg-secondary")">@(Book.IsActive ? "Activo" : "Inactivo")</span>
+    </td>
+    <td>@Book.CreatedAt.ToString("d")</td>
+    <td>
+        <AtlasGridActions TID="int"
+                          ID="@Book.ID"
+                          OnView="() => OnView.InvokeAsync(Book.ID)"
+                          OnEdit="() => OnEdit.InvokeAsync(Book.ID)"
+                          OnDelete="() => OnDelete.InvokeAsync(Book.ID)" />
+    </td>
+</tr>
