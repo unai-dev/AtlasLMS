@@ -1,0 +1,16 @@
+﻿<tr>
+    <td>@Loan.StartDate.ToString("d")</td>
+    <td>@Loan.DueDate.ToString("d")</td>
+    <td>
+        <span class="badge @(Loan.Status == 1 ? "bg-success" : "bg-secondary")">@(Loan.IsActive ? "Activo" : "Inactivo")</span>
+    </td>
+    <td>@Loan.CreatedAt.ToString("d")</td>
+    <td>
+        <AtlasGridActions TID="int"
+                          ID="@Loan.ID"
+                          OnView="() => OnView.InvokeAsync(Loan.ID)"
+                          OnEdit="() => OnEdit.InvokeAsync(Loan.ID)"
+                          OnDelete="() => OnDelete.InvokeAsync(Loan.ID)" />
+    </td>
+</tr>
+

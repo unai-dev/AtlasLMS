@@ -52,7 +52,7 @@ public partial class AuthorsPage
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay autores disponibles"));
             return;
         }
-        ToastService.Notify(new(ToastType.Success, "¡Info!", "Autores cargados correctamente"));
+        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Autores cargados correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)

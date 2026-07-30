@@ -1,9 +1,9 @@
-﻿@page "/bookings"
+﻿@page "/loans"
 
-<PageTitle>Reservas</PageTitle>
+<PageTitle>Prestamos</PageTitle>
 <div class="container mt-4">
 
-    <AtlasGridHeader Title="Gestión de Reservas" ButtonCaption="Nueva reserva" />
+    <AtlasGridHeader Title="Gestión de Prestamos" ButtonCaption="Nuevo prestamo" />
 
     <div class="col-9 w-100">
         <div class="card shadow-sm">
@@ -13,7 +13,7 @@
                     <thead class="table-light">
                         <tr>
                             <th>Fecha de inicio</th>
-                            <th>Fecha de recogida</th>
+                            <th>Fecha de entrega</th>
                             <th>Estado</th>
                             <th>Fecha alta</th>
                             <th>Acciones</th>
@@ -26,10 +26,10 @@
                     else
                     {
                         <tbody>
-                            @foreach (var booking in bookings)
+                            @foreach (var loan in loans)
                             {
-                                <BookingItem Booking="@booking"
-                                             OnDelete="() => HandleDeleteBooking(booking.ID)" />
+                                <LoanItem Loan="@loan"
+                                          OnDelete="() => HandleDeleteLoan(loan.ID)" />
                             }
                         </tbody>
                     }

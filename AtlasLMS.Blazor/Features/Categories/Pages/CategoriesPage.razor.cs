@@ -52,7 +52,7 @@ public partial class CategoriesPage
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay categorias disponibles"));
             return;
         }
-        ToastService.Notify(new(ToastType.Success, "¡Info!", "Categorias cargadas correctamente"));
+        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Categorias cargadas correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)

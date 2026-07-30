@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
-using AtlasLMS.Blazor.Features.Bookings.Contracts;
+using AtlasLMS.Blazor.Features.Loans.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.Responses;
 
@@ -9,31 +9,31 @@ using BlazorBootstrap;
 
 using Microsoft.AspNetCore.Components;
 
-namespace AtlasLMS.Blazor.Features.Bookings.Pages;
+namespace AtlasLMS.Blazor.Features.Loans.Pages;
 
-public partial class BookingsPage
+public partial class LoansPage
 {
-    [Inject] public required IBookingService BookingService { get; set; }
+    [Inject] public required ILoanService LoanService { get; set; }
     [Inject] public required ToastService ToastService { get; set; }
 
-    private List<BookingReadDto> bookings = new List<BookingReadDto>();
+    private List<LoanReadDto> loans = new List<LoanReadDto>();
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
     protected override async Task OnInitializedAsync()
     {
-        await RefreshBookings();
+        await RefreshLoans();
     }
     #endregion
 
     #region ButtonActions----------------------------------------------------------------
-    private async Task HandleDeleteBooking(int ID)
+    private async Task HandleDeleteLoan(int ID)
     {
-        var response = await BookingService.DeleteBookingAsync(ID);
+        var response = await LoanService.DeleteLoanAsync(ID);
         if (response.IsSuccessStatusCode)
         {
-            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Reserva eliminada con exito"));
-            await RefreshBookings();
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Prestamo eliminado con exito"));
+            await RefreshLoans();
             return;
         }
 
@@ -42,17 +42,17 @@ public partial class BookingsPage
     #endregion
 
     #region Methods----------------------------------------------------------------------
-    private async Task RefreshBookings()
+    private async Task RefreshLoans()
     {
         isLoading = true;
-        bookings = (await BookingService.GetBookingsAsync()).ToList();
+        loans = (await LoanService.GetLoansAsync()).ToList();
         isLoading = false;
-        if (bookings.Count == 0)
+        if (loans.Count == 0)
         {
-            ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay reservas disponibles"));
+            ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay prestamos disponibles"));
             return;
         }
-        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Reservas cargadas correctamente"));
+        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Prestamos cargados correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)
