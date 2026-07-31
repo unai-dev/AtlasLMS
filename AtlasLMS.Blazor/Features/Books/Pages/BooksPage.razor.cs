@@ -17,7 +17,7 @@ public partial class BooksPage
     [Inject] public required ToastService ToastService { get; set; }
 
     private List<BookReadDto> books = new List<BookReadDto>();
-    private ConfirmDialog? dialog;
+    private ConfirmDialog dialog = default!;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
@@ -40,7 +40,6 @@ public partial class BooksPage
                 await RefreshBooks();
                 return;
             }
-
             await SwitchExceptionMessage(response);
         }
         return;

@@ -18,5 +18,5 @@ public class BookService : IBookService
         await _http.GetFromJsonAsync<IEnumerable<BookReadDto>>("books") ?? [];
 
     public async Task<HttpResponseMessage> DeleteBookAsync(int ID) =>
-        await _http.DeleteAsync($"/users/{ID}");
+        await _http.DeleteAsync($"books/{ID}");
 }
