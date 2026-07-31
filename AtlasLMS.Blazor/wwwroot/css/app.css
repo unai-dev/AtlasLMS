@@ -1,5 +1,6 @@
 html, body {
     background-color: #FAF0E6;
+    overflow: hidden;
 }
 
 h1:focus {
