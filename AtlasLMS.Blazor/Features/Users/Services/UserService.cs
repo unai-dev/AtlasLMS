@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 
 using AtlasLMS.Blazor.Features.Users.Contracts;
+using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Blazor.Features.Users.Services;
@@ -20,6 +21,11 @@ public class UserService : IUserService
     public async Task<UserReadDto?> GetMe() =>
         await _http.GetFromJsonAsync<UserReadDto>("users/me");
 
+    public async Task<UserReadDto?> CreateUserAsync(UserCreateDto dto)
+    {
+        var response = await _http.PostAsJsonAsync("users", dto);
+        return await response.Content.ReadFromJsonAsync<UserReadDto>();
+    }
     public async Task<HttpResponseMessage> DeleteUserAsync(string ID) =>
         await _http.DeleteAsync($"users/{ID}");
 }

@@ -11,6 +11,7 @@ public partial class AtlasForm<TModel>
     [Parameter, EditorRequired] public EventCallback OnCancel { get; set; }
     [Parameter, EditorRequired] public RenderFragment ChildContent { get; set; }
     [Parameter, EditorRequired] public string CaptionMaintenance { get; set; }
+    [Parameter, EditorRequired] public bool CurrentPost { get; set; }
     #endregion
 
     private EditContext? editContext;

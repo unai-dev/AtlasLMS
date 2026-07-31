@@ -1,4 +1,5 @@
-﻿using AtlasLMS.Shared.DTOs.Read;
+﻿using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Blazor.Features.Users.Contracts
 {
@@ -6,6 +7,7 @@ namespace AtlasLMS.Blazor.Features.Users.Contracts
     {
         Task<IEnumerable<UserReadDto>> GetUsersAsync();
         Task<UserReadDto?> GetMe();
+        Task<UserReadDto?> CreateUserAsync(UserCreateDto dto);
         Task<HttpResponseMessage> DeleteUserAsync(string ID);
     }
 }
