@@ -122,6 +122,9 @@ public class BookingService : IBookingService
     {
         var booking = await _context.Bookings.FirstOrDefaultAsync(x => x.ID == bookingID)
             ?? throw new NotFoundException($"La reserva con ID {bookingID} no existe");
+        var bookingHasAnyBook = await _context.Bookings.AnyAsync(x => x.BookID == booking.BookID && x.Status == EBookingStatus.Active);
+        if (bookingHasAnyBook)
+            throw new BadRequestException($"El libro esta siendo reservado a un o varios usuario/s. La/s reserva/s se encuentra/n de forma activa");
         _context.Remove(booking);
         await _context.SaveChangesAsync();
     }

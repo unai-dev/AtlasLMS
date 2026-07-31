@@ -29,4 +29,5 @@ public class Book : BaseEntity
     public Location? Location { get; set; }
 
     public List<Booking> Bookings { get; set; } = new List<Booking>();
+    public List<Loan> Loans { get; set; } = new List<Loan>();
 }

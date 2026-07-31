@@ -71,7 +71,7 @@ public partial class BookingsPage
             case HttpStatusCode.NotFound:
             case HttpStatusCode.BadRequest:
             case HttpStatusCode.InternalServerError:
-                ToastService.Notify(new(ToastType.Success, "¡Error!", exceptionResponse.Message));
+                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
                 break;
         }
     }
