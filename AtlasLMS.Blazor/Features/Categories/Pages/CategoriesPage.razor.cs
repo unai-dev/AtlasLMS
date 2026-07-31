@@ -17,7 +17,7 @@ public partial class CategoriesPage
     [Inject] public required ICategoryService CategoryService { get; set; }
 
     private List<CategoryReadDto> categories = new List<CategoryReadDto>();
-    private ConfirmDialog? dialog;
+    private ConfirmDialog dialog = default!;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------

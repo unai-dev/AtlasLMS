@@ -17,7 +17,7 @@ public partial class AuthorsPage
     [Inject] public required ToastService ToastService { get; set; }
 
     private List<AuthorReadDto> authors = new List<AuthorReadDto>();
-    private ConfirmDialog? dialog;
+    private ConfirmDialog dialog = default!;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------

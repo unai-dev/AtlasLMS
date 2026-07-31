@@ -17,7 +17,7 @@ public partial class LocationsPage
     [Inject] public required ToastService ToastService { get; set; }
 
     private List<LocationReadDto>? locations;
-    private ConfirmDialog? dialog;
+    private ConfirmDialog dialog = default!;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------

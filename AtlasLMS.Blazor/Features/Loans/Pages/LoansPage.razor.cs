@@ -17,7 +17,7 @@ public partial class LoansPage
     [Inject] public required ToastService ToastService { get; set; }
 
     private List<LoanReadDto> loans = new List<LoanReadDto>();
-    private ConfirmDialog? dialog;
+    private ConfirmDialog dialog = default!;
     private bool isLoading = false;
 
     #region OnInitialized----------------------------------------------------------------
