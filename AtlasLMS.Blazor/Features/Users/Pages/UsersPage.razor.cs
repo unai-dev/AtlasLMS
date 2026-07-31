@@ -15,6 +15,7 @@ public partial class UsersPage
 {
     [Inject] public required IUserService UserService { get; set; }
     [Inject] public required ToastService ToastService { get; set; }
+    [Inject] public required NavigationManager NavigationService { get; set; }
 
     private List<UserReadDto> users = new List<UserReadDto>();
     private ConfirmDialog dialog = default!;
@@ -28,6 +29,7 @@ public partial class UsersPage
     #endregion
 
     #region ButtonActions----------------------------------------------------------
+    private void HandleNewUser() => NavigationService.NavigateTo("/users/create");
     private async Task HandleDeleteUser(string ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
@@ -44,6 +46,7 @@ public partial class UsersPage
         }
         return;
     }
+
     #endregion
 
     #region Methods----------------------------------------------------------------------
@@ -73,12 +76,8 @@ public partial class UsersPage
         switch (response.StatusCode)
         {
             case HttpStatusCode.NotFound:
-                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
-                break;
             case HttpStatusCode.BadRequest:
-                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
-                break;
-            default:
+            case HttpStatusCode.InternalServerError:
                 ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
                 break;
         }

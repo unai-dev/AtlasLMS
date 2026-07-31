@@ -3,8 +3,8 @@
 
     <div class="d-flex gap-2">
 
-        <button class="btn btn-success">
-            <Icon Name="IconName.Plus"/>
+        <button class="btn btn-success" @onclick="() => OnNew.InvokeAsync()">
+            <Icon Name="IconName.Plus" />
             @ButtonCaption
         </button>
     </div>
@@ -12,8 +12,9 @@
 
 @code {
     #region Parameters-----------------------------------------------------------
-    [Parameter] public string ButtonCaption { get; set; } = "Nuevo";
     [Parameter, EditorRequired] public string Title { get; set; }
+    [Parameter, EditorRequired] public string ButtonCaption { get; set; }
+    [Parameter, EditorRequired] public EventCallback OnNew { get; set; }
     #endregion
 
 }

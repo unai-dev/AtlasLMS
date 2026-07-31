@@ -1,0 +1,22 @@
+﻿@page "/users/create"
+
+<PageTitle>Matenimiento de usuarios</PageTitle>
+<AtlasForm CaptionMaintenance="usuarios"
+           TModel="UserCreateDto"
+           Model="user"
+           OnCancel="HandleCancelUser"
+           OnSave="HandleSaveUser">
+
+    <label class="form-label">Email</label>
+    <InputText type="email" @bind-Value="@user.Email" placeholder="unai@gmail.com" class="form-control mb-3" />
+
+    <label class="form-label">Nombre de usuario</label>
+    <InputText type="text" @bind-Value="@user.UserName" placeholder="unaivl" class="form-control mb-3" />
+
+    <label class="form-label">CIF</label>
+    <InputText type="text" @bind-Value="@user.CIF" placeholder="12345678A" class="form-control mb-3" />
+
+    <label class="form-label">Contraseña</label>
+    <PasswordInput @bind-Value="@user.Password" placeholder="••••••••••••••••" />
+
+</AtlasForm>
