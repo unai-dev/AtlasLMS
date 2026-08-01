@@ -1,0 +1,23 @@
+﻿@page "/locations/create"
+
+<PageTitle>Matenimiento de ubicaciones</PageTitle>
+<AtlasForm TModel="LocationCreateDto"
+           CurrentPost="currentPost"
+           Model="location"
+           CaptionMaintenance="ubicaciones"
+           OnSave="HandleAddLocation"
+           OnCancel="HandleCancel">
+
+    <label class="form-label">Pasillo</label>
+    <InputText type="text" class="form-control mb-3" @bind-Value="location.Aisle" placeholder="Introduce el pasillo" />
+
+    <label class="form-label">Columna</label>
+    <InputText type="text" class="form-control mb-3" @bind-Value="location.Column" placeholder="Introduce la columna" />
+
+    <label class="form-label">Estante</label>
+    <InputText type="text" class="form-control mb-3" @bind-Value="location.Shelf" placeholder="Introduce el estante" />
+
+    <label class="form-label">Límite de libros</label>
+    <InputNumber type="number" class="form-control mb-3" @bind-Value="location.LimitOfBooks" placeholder="Introduce el límite de libros" />
+
+</AtlasForm>

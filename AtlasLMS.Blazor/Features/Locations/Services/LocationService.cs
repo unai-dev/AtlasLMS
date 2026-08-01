@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 
 using AtlasLMS.Blazor.Features.Locations.Contracts;
+using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Blazor.Features.Locations.Services;
@@ -16,6 +17,12 @@ public class LocationService : ILocationService
 
     public async Task<IEnumerable<LocationReadDto>> GetLocationsAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<LocationReadDto>>("locations") ?? [];
+    public async Task<LocationReadDto?> CreateLocationAsync(LocationCreateDto dto)
+    {
+        var response = await _http.PostAsJsonAsync("locations", dto);
+        return await response.Content.ReadFromJsonAsync<LocationReadDto>();
+    }
+
     public async Task<HttpResponseMessage> DeleteLocationAsync(int ID) =>
         await _http.DeleteAsync($"locations/{ID}");
 }

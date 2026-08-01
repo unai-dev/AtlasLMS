@@ -15,6 +15,7 @@ public partial class LocationsPage
 {
     [Inject] public required ILocationService LocationService { get; set; }
     [Inject] public required ToastService ToastService { get; set; }
+    [Inject] public required NavigationManager NavigationService { get; set; }
 
     private List<LocationReadDto>? locations;
     private ConfirmDialog dialog = default!;
@@ -28,6 +29,7 @@ public partial class LocationsPage
     #endregion
 
     #region ButtonActions----------------------------------------------------------------
+    private async Task HandleAddLocation() => NavigationService.NavigateTo($"/locations/create");
     private async Task HandleDeleteLocation(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
