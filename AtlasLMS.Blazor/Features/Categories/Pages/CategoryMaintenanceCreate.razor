@@ -1,0 +1,14 @@
+﻿@page "/categories/create"
+
+<PageTitle>Mantenimiento de Categorías</PageTitle>
+<AtlasForm TModel="CategoryCreateDto"
+           CaptionMaintenance="categorías"
+           CurrentPost="currentPost"
+           Model="category"
+           OnSave="HandleSaveCategory"
+           OnCancel="HandleCancel">
+
+    <label class="form-label">Nombre de la categoría</label>
+    <InputText type="text" @bind-Value="category.Name" class="form-control mb-3" placeholder="Vida..." />
+
+</AtlasForm>

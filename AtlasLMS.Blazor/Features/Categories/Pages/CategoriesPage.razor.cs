@@ -15,6 +15,7 @@ public partial class CategoriesPage
 {
     [Inject] public required ToastService ToastService { get; set; }
     [Inject] public required ICategoryService CategoryService { get; set; }
+    [Inject] public required NavigationManager NavigationService { get; set; }
 
     private List<CategoryReadDto> categories = new List<CategoryReadDto>();
     private ConfirmDialog dialog = default!;
@@ -28,6 +29,7 @@ public partial class CategoriesPage
     #endregion
 
     #region ButtonActions----------------------------------------------------------------
+    private void HandleNewCategory() => NavigationService.NavigateTo("/categories/create");
     private async Task HandleDeleteCategory(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
