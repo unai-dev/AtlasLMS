@@ -15,6 +15,7 @@ public partial class AuthorsPage
 {
     [Inject] public required IAuthorService AuthorService { get; set; }
     [Inject] public required ToastService ToastService { get; set; }
+    [Inject] public required NavigationManager NavigationService { get; set; }
 
     private List<AuthorReadDto> authors = new List<AuthorReadDto>();
     private ConfirmDialog dialog = default!;
@@ -28,6 +29,7 @@ public partial class AuthorsPage
     #endregion
 
     #region ButtonActions----------------------------------------------------------------
+    private void HandleAddAuthor() => NavigationService.NavigateTo("/authors/create");
     private async Task HandleDeleteAuthor(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");

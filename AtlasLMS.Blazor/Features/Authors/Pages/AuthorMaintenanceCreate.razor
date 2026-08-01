@@ -1,0 +1,15 @@
+﻿@page "/authors/create"
+<PageTitle>Mantenimiento de autores</PageTitle>
+<AtlasForm TModel="AuthorCreateDto"
+           CaptionMaintenance="autores"
+           CurrentPost="currentPost"
+           Model="author"
+           OnSave="HandleSaveAuthor"
+           OnCancel="HandleCancel">
+
+    <label class="form-label">Nombre</label>
+    <InputText class="form-control mb-3" type="text" @bind-Value="author.FirstName" placeholder="Introduce el nombre" />
+
+    <label class="form-label">Apellido</label>
+    <InputText class="form-control mb-3" type="text" @bind-Value="author.LastName" placeholder="Introduce el apellido" />
+</AtlasForm>
