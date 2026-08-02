@@ -58,7 +58,6 @@ public partial class LoansPage
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay prestamos disponibles"));
             return;
         }
-        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Prestamos cargados correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)

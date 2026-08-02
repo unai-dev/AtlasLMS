@@ -60,8 +60,6 @@ public partial class LocationsPage
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay ubicaciones disponibles"));
             return;
         }
-
-        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Ubicaciones cargadas correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)

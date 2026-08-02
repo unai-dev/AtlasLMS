@@ -24,6 +24,7 @@ public partial class UsersPage
     #region OnInitialized----------------------------------------------------------
     protected override async Task OnInitializedAsync()
     {
+
         await RefreshUsers();
     }
     #endregion
@@ -55,18 +56,6 @@ public partial class UsersPage
         isLoading = true;
         users = (await UserService.GetUsersAsync()).ToList();
         isLoading = false;
-
-        //Validacion inecesaria
-        //No tiene sentido valorar si es que hay usuarios en el sistema o no
-        //Minimo siempre hay un usuario
-        //La mantenemos por control temporal
-        if (users.Count == 0)
-        {
-            ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay usuarios disponibles en el sistema"));
-
-            return;
-        }
-        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Usuarios cargados correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)

@@ -57,7 +57,6 @@ public partial class BooksPage
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay libros disponibles"));
             return;
         }
-        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Libros cargados correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)

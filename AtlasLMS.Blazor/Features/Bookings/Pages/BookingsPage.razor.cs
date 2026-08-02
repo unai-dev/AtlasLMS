@@ -58,7 +58,6 @@ public partial class BookingsPage
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay reservas disponibles"));
             return;
         }
-        ToastService.Notify(new(ToastType.Success, "¡Listo!", "Reservas cargadas correctamente"));
     }
 
     private async Task SwitchExceptionMessage(HttpResponseMessage response)
