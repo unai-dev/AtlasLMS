@@ -6,7 +6,6 @@ using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
-using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -53,7 +52,7 @@ public class BookService : IBookService
 
         //Validamos si la localizacion existe
         //Si existe, validamos que el limite no haya sido alcanzado el total libros permitidos
-        if (AtlasHelper.IsNotNullableInteger(dto.LocationID))
+        if (dto.LocationID.HasValue)
         {
             var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == dto.LocationID)
                 ?? throw new NotFoundException($"La localizacion '{dto.LocationID}' no existe");
@@ -72,10 +71,11 @@ public class BookService : IBookService
             throw new NotFoundException($"El autor con ID {dto.AuthorID} no existe");
 
         //Si la fecha es mayor a la fecha actual, lanzamos badrequest
-        if (AtlasHelper.IsDateGreater(dto.PublicationAt))
+        if (dto.PublicationAt > DateTime.UtcNow)
             throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser mayor a la actual");
 
         var book = _mapper.Map<Book>(dto);
+
         _context.Add(book);
         await _context.SaveChangesAsync();
         return _mapper.Map<BookReadDto>(book);
@@ -87,7 +87,7 @@ public class BookService : IBookService
             ?? throw new NotFoundException($"El libro con ID {ID} no existe");
 
         //Si el autor no existe, lanzamos badrequest
-        if (AtlasHelper.IsNotNullableInteger(dto.AuthorID))
+        if (dto.AuthorID.HasValue)
         {
             var authorExists = await _context.Authors.AnyAsync(x => x.ID == dto.AuthorID);
             if (!authorExists)
@@ -95,7 +95,7 @@ public class BookService : IBookService
         }
 
         //Si la categoria no existe, lanzamos badrequest
-        if (AtlasHelper.IsNotNullableInteger(dto.CategoryID))
+        if (dto.CategoryID.HasValue)
         {
             var categoryExists = await _context.Categories.AnyAsync(x => x.ID == dto.CategoryID);
             if (!categoryExists)
@@ -103,7 +103,7 @@ public class BookService : IBookService
         }
 
         //Si la localizacion no existe, lanzamos badrequest
-        if (AtlasHelper.IsNotNullableInteger(dto.LocationID))
+        if (dto.LocationID.HasValue)
         {
             var locationExists = await _context.Locations.AnyAsync(x => x.ID == dto.LocationID);
             if (!locationExists)
@@ -111,7 +111,7 @@ public class BookService : IBookService
         }
 
         //Si el ISBN ya es ocupado por otro ejemplar, lanzamos badrequest
-        if (AtlasHelper.IsNotStringEmpty(dto.ISBN))
+        if (!string.IsNullOrEmpty(dto.ISBN))
         {
             var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN) && x.ID != ID);
             if (bookExists)
@@ -119,18 +119,20 @@ public class BookService : IBookService
         }
 
         //Si la fecha es mayor a la actual, lanzamos badrequest
-        if (AtlasHelper.IsNotNullAndFutureDate(dto.PublicationAt))
+        if (dto.PublicationAt.HasValue && dto.PublicationAt > DateTime.UtcNow)
             throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser mayor a la actual");
 
         //Si el DTO no contiene la informacion, guardamos el valor anterior
-        book.Title = AtlasHelper.GetOrFallbackStr(dto.Title, book.Title);
-        book.ISBN = AtlasHelper.GetOrFallbackStr(dto.ISBN, book.ISBN);
-        book.Synopsis = AtlasHelper.GetOrFallbackStr(dto.Synopsis, book.Synopsis);
-        book.Stock = AtlasHelper.ResolveNullableInt(dto.Stock, book.Stock);
-        book.PublicationAt = AtlasHelper.GetOrExistingDate(dto.PublicationAt, book.PublicationAt);
-        book.AuthorID = AtlasHelper.GetOrExistingIntNullable(dto.AuthorID, book.AuthorID);
-        book.CategoryID = AtlasHelper.GetOrExistingIntNullable(dto.CategoryID, book.CategoryID);
-        book.LocationID = AtlasHelper.ResolveNullableInt(dto.LocationID, book.LocationID);
+        book.Title = !string.IsNullOrEmpty(dto.Title) ? dto.Title : book.Title;
+        book.ISBN = !string.IsNullOrEmpty(dto.ISBN) ? dto.ISBN : book.ISBN;
+        book.Synopsis = !string.IsNullOrEmpty(dto.Synopsis) ? dto.Synopsis : book.Synopsis;
+
+        book.Stock = dto.Stock ?? book.Stock;
+        book.PublicationAt = dto.PublicationAt ?? book.PublicationAt;
+
+        book.AuthorID = dto.AuthorID ?? book.AuthorID;
+        book.CategoryID = dto.CategoryID ?? book.CategoryID;
+        book.LocationID = dto.LocationID ?? book.LocationID;
 
         book.UpdatedAt = DateTime.UtcNow;
 
@@ -141,6 +143,7 @@ public class BookService : IBookService
     {
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El libro con ID {ID} no existe");
+
         _context.Remove(book);
         await _context.SaveChangesAsync();
     }

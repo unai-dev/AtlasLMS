@@ -116,6 +116,7 @@ public class LoanService : ILoanService
             .AnyAsync(x => x.BookID == dto.BookID && x.UserID == dto.UserID && x.DueDate > DateTime.UtcNow && x.Status == ELoanStatus.Active);
         if (loansUserWithBook)
             throw new BadRequestException($"El libro {dto.BookID} ya esta siendo prestado al mismo usuario {dto.UserID}");
+
         //Si el tiempo de vida del prestamo es menor a 7 o mayor a 30, lanzamos badrequest
         if (dto.LifeTime < 7 || dto.LifeTime > 30)
             throw new BadRequestException($"La duracion no puede ser menor a 7 dias, tampoco mayor a 30 dias");
@@ -137,9 +138,11 @@ public class LoanService : ILoanService
     {
         var loan = await _context.Loans.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El prestamo con ID {ID} no existe");
+
         var loanHasAnyBook = await _context.Loans.AnyAsync(x => x.BookID == loan.BookID && x.Status == ELoanStatus.Active);
         if (loanHasAnyBook)
             throw new BadRequestException($"El libro esta siendo prestado a un usuario. El prestamo se encuentra de forma activa");
+
         _context.Remove(loan);
         await _context.SaveChangesAsync();
     }

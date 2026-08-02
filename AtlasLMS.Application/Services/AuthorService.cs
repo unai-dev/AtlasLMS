@@ -6,7 +6,6 @@ using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
-using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -44,6 +43,7 @@ public class AuthorService : IAuthorService
             .Include(x => x.Books)
             .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"Autor con ID {ID} no encontrado");
+
         return _mapper.Map<AuthorDetailDto>(author);
     }
 
@@ -68,7 +68,7 @@ public class AuthorService : IAuthorService
             ?? throw new NotFoundException($"El autor con ID {ID} no existe");
 
         //Validamos que el usuario con el mismo nombre no exista
-        if (AtlasHelper.AreNotStringsEmpty(dto.FirstName, dto.LastName))
+        if (!string.IsNullOrEmpty(dto.FirstName) && !string.IsNullOrEmpty(dto.LastName))
         {
             var authorWithNameExists = await _context.Authors
                 .AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
@@ -76,8 +76,8 @@ public class AuthorService : IAuthorService
                 throw new BadRequestException($"El autor {dto.FirstName} {dto.LastName} ya existe");
         }
         //Si el DTO no tiene la informacion, guardamos el valor anterior
-        author.FirstName = AtlasHelper.GetOrFallbackStr(dto.FirstName, author.FirstName);
-        author.LastName = AtlasHelper.GetOrFallbackStr(dto.LastName, author.LastName);
+        author.FirstName = !string.IsNullOrEmpty(dto.FirstName) ? dto.FirstName : author.FirstName;
+        author.LastName = !string.IsNullOrEmpty(dto.LastName) ? dto.LastName : author.LastName;
         author.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();

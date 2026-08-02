@@ -5,7 +5,6 @@ using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
-using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -69,9 +68,9 @@ public class LocationService : ILocationService
     public async Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto)
     {
         //Normalizamos para guardar unicamente en mayusculas
-        dto.Shelf = AtlasHelper.NormalizeUpper(dto.Shelf.ToUpper());
-        dto.Column = AtlasHelper.NormalizeUpper(dto.Column.ToUpper());
-        dto.Aisle = AtlasHelper.NormalizeUpper(dto.Aisle.ToUpper());
+        dto.Shelf = dto.Shelf.ToUpper();
+        dto.Column = dto.Column.ToUpper();
+        dto.Aisle = dto.Aisle.ToUpper();
 
         //Si la localizacion concatenando, pasillo, columna y estante existe, lanzamos badrequest
         var existsLocation = await _context.Locations.AnyAsync(
@@ -93,9 +92,9 @@ public class LocationService : ILocationService
             ?? throw new NotFoundException($"Ubicaion con ID {ID} no encontrada");
 
         //Normalizamos para guardar unicamente en mayusculas
-        if (AtlasHelper.IsNotStringEmpty(dto.Shelf)) dto.Shelf = AtlasHelper.NormalizeUpper(dto.Shelf);
-        if (AtlasHelper.IsNotStringEmpty(dto.Column)) dto.Column = AtlasHelper.NormalizeUpper(dto.Column);
-        if (AtlasHelper.IsNotStringEmpty(dto.Aisle)) dto.Aisle = AtlasHelper.NormalizeUpper(dto.Aisle);
+        if (!string.IsNullOrEmpty(dto.Shelf)) dto.Shelf = dto.Shelf.ToUpper();
+        if (!string.IsNullOrEmpty(dto.Column)) dto.Column = dto.Column.ToUpper();
+        if (!string.IsNullOrEmpty(dto.Aisle)) dto.Aisle = dto.Aisle.ToUpper();
 
         //Si la localizacion concatenando, pasillo, columna y estante existe, lanzamos badrequest
         var existsLocation = await _context.Locations.AnyAsync(
@@ -107,11 +106,11 @@ public class LocationService : ILocationService
             throw new BadRequestException($"Ya existe la localizacion introducida");
 
         //En el caso que no venga la informacion en el DTO guardamos el valor anterior
-        location.Aisle = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Aisle, location.Aisle);
-        location.Column = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Column, location.Column);
-        location.Shelf = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Shelf, location.Shelf);
+        location.Aisle = !string.IsNullOrEmpty(dto.Aisle) ? dto.Aisle : location.Aisle;
+        location.Column = !string.IsNullOrEmpty(dto.Column) ? dto.Column : location.Column;
+        location.Shelf = !string.IsNullOrEmpty(dto.Shelf) ? dto.Shelf : location.Shelf;
 
-        location.LimitOfBooks = AtlasHelper.GetOrExistingIntNullable(dto.LimitOfBooks, location.LimitOfBooks);
+        location.LimitOfBooks = dto.LimitOfBooks ?? location.LimitOfBooks;
 
         location.UpdatedAt = DateTime.UtcNow;
 
@@ -123,9 +122,11 @@ public class LocationService : ILocationService
     {
         var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La localizacion con ID {ID} no existe");
+
         var locationHaveAnyBook = await _context.Books.AnyAsync(x => x.LocationID == ID);
         if (locationHaveAnyBook)
             throw new BadRequestException($"La localizacion a eliminar, contiene libros");
+
         _context.Remove(location);
         await _context.SaveChangesAsync();
     }

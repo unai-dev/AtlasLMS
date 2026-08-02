@@ -1,5 +1,4 @@
 ﻿using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Tools;
 
 using BlazorBootstrap;
 
@@ -18,7 +17,7 @@ public partial class HomePage
             isLoading = true;
             var result = await LocalStorage.GetItemAsync("token");
 
-            if (AtlasHelper.IsStringEmpty(result))
+            if (string.IsNullOrEmpty(result))
             {
                 Navigation.NavigateTo("/login");
                 return;

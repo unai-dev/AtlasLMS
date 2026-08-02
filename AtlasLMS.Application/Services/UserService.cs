@@ -5,7 +5,6 @@ using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
-using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -78,7 +77,7 @@ public class UserService : IUserService
             throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
 
         //Si existe un usuario con el mismo nickname, lanzamos badrequest
-        if (AtlasHelper.IsNotStringEmpty(dto.UserName))
+        if (!string.IsNullOrEmpty(dto.UserName))
         {
             var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName));
             if (existsUsername)
@@ -86,7 +85,8 @@ public class UserService : IUserService
         }
 
         //Si el DTO no contiene el nombre de usuario, guardamos la primera parte del email(unai@gmail.com) => unai
-        dto.UserName = AtlasHelper.GetOrFallbackStr(dto.UserName, AtlasHelper.GetEmailUserPart(dto.Email));
+        dto.UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : dto.Email.Split("@")[0];
+
         var user = _mapper.Map<User>(dto);
         await _userManager.CreateAsync(user, dto.Password);
         return _mapper.Map<UserReadDto>(user);
@@ -98,7 +98,7 @@ public class UserService : IUserService
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
 
         //Si el Email ya consta en nuestra base de datos, lanzamos badrequest
-        if (AtlasHelper.IsNotStringEmpty(dto.Email))
+        if (!string.IsNullOrEmpty(dto.Email))
         {
             var existsEmail = await _userManager.FindByEmailAsync(dto.Email!);
             if (existsEmail is not null && existsEmail.Id != ID)
@@ -106,7 +106,7 @@ public class UserService : IUserService
         }
 
         //Si el CIF ya consta en nuestra base de datos, lanzamos badrequest
-        if (AtlasHelper.IsNotStringEmpty(dto.CIF))
+        if (!string.IsNullOrEmpty(dto.CIF))
         {
             var existsCIF = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF) && x.Id != ID);
             if (existsCIF)
@@ -114,7 +114,7 @@ public class UserService : IUserService
         }
 
         //Si existe un usuario con el mismo nickname, lanzamos badrequest
-        if (AtlasHelper.IsNotStringEmpty(dto.UserName))
+        if (!string.IsNullOrEmpty(dto.UserName))
         {
             var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName) && x.Id != ID);
             if (existsUsername)
@@ -122,11 +122,9 @@ public class UserService : IUserService
         }
 
         //Si el DTO no tiene la informacion, guardamos el valor anterior
-        user.Email = AtlasHelper.GetOrFallbackStr(dto.Email, user.Email);
-        user.CIF = AtlasHelper.GetOrFallbackStr(dto.CIF, user.CIF);
-        user.UserName = AtlasHelper.GetOrFallbackStr(dto.UserName, user.UserName);
-        user.NormalizedEmail = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.Email, user.Email);
-        user.NormalizedUserName = AtlasHelper.GetOrFallbackAndNormalizeStr(dto.UserName, user.UserName);
+        user.Email = !string.IsNullOrEmpty(dto.Email) ? dto.Email : user.Email;
+        user.CIF = !string.IsNullOrEmpty(dto.CIF) ? dto.CIF : user.CIF;
+        user.UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : user.UserName;
 
         user.UpdatedAt = DateTime.UtcNow;
 

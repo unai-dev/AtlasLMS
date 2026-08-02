@@ -1,5 +1,4 @@
 ﻿using AtlasLMS.Blazor.Security.Contracts;
-using AtlasLMS.Tools;
 
 using Microsoft.JSInterop;
 
@@ -17,13 +16,13 @@ public class LocalStorageService : ILocalStorageService
 
     public async Task<string?> GetItemAsync(string key)
     {
-        key = AtlasHelper.NormalizeUpper(key);
+        key = key.ToUpper().Trim();
         return await _jS.InvokeAsync<string?>("localStorage.getItem", key);
     }
 
     public async Task SetItemAsync(string key, string value)
     {
-        key = AtlasHelper.NormalizeUpper(key);
+        key = key.ToUpper().Trim();
         await _jS.InvokeVoidAsync("localStorage.setItem", key, value);
     }
 }

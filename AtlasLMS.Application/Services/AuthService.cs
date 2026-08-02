@@ -8,7 +8,6 @@ using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Auth;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.Responses;
-using AtlasLMS.Tools;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +37,7 @@ public class AuthService : IAuthService
             throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
 
         //Si el username ya consta en la base de datos, lanzamos badrequest
-        if (AtlasHelper.IsNotStringEmpty(dto.UserName))
+        if (!string.IsNullOrEmpty(dto.UserName))
         {
             var userNameUnique = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName));
             if (userNameUnique)
@@ -53,7 +52,7 @@ public class AuthService : IAuthService
         var user = new User
         {
             CIF = dto.CIF,
-            UserName = dto.UserName = AtlasHelper.GetOrFallbackStr(dto.UserName, AtlasHelper.GetEmailUserPart(dto.Email)),
+            UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : dto.Email.Split("@")[0],
             Email = dto.Email
         };
 

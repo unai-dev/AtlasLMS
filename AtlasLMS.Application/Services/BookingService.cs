@@ -5,7 +5,6 @@ using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Tools;
 
 using AutoMapper;
 
@@ -91,7 +90,7 @@ public class BookingService : IBookingService
         if (totalBookingsUser >= 2)
             throw new BadRequestException($"Lo sentimos. El usuario {dto.UserID} ha superado el limite de reservas activas");
 
-        if (AtlasHelper.IsAnyDatePast(dto.StartTime))
+        if (dto.StartTime < DateTime.UtcNow)
             throw new BadRequestException($"La fecha de inicio no puede ser menor a la fecha actual");
 
         //Validamos stock, si la suma de reservas y prestamos activos da el total, lanzamos badrequest
@@ -122,9 +121,11 @@ public class BookingService : IBookingService
     {
         var booking = await _context.Bookings.FirstOrDefaultAsync(x => x.ID == bookingID)
             ?? throw new NotFoundException($"La reserva con ID {bookingID} no existe");
+
         var bookingHasAnyBook = await _context.Bookings.AnyAsync(x => x.BookID == booking.BookID && x.Status == EBookingStatus.Active);
         if (bookingHasAnyBook)
             throw new BadRequestException($"El libro esta siendo reservado a un o varios usuario/s. La/s reserva/s se encuentra/n de forma activa");
+
         _context.Remove(booking);
         await _context.SaveChangesAsync();
     }

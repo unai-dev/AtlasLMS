@@ -1,5 +1,4 @@
 ﻿using AtlasLMS.Shared.DTOs.Auth;
-using AtlasLMS.Tools;
 
 using BlazorBootstrap;
 
@@ -20,7 +19,7 @@ public partial class LoginPage
             currentPost = true;
             var result = await AuthService.LoginAsync(loginUser);
 
-            if (AtlasHelper.IsStringEmpty(result!.Token))
+            if (string.IsNullOrWhiteSpace(result!.Token))
                 return;
 
             await LocalStorage.SetItemAsync("token", result.Token);
