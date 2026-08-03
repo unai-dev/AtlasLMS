@@ -10,13 +10,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
+using Scalar.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // =======================================
 // =========== BASE CONFIGURATION ========
 // =======================================
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
 // =======================================
 // =============== DB CONTEXT ============
 // =======================================
@@ -80,8 +82,8 @@ builder.Services.AddCors(policy =>
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 // =======================================
