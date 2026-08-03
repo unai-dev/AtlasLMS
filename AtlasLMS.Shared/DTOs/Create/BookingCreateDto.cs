@@ -5,7 +5,7 @@ namespace AtlasLMS.Shared.DTOs.Create;
 public class BookingCreateDto
 {
     [Required]
-    public DateTime StartTime { get; set; }
+    public DateTime StartTime { get; set; } = DateTime.UtcNow;
 
     //Related properties
     //

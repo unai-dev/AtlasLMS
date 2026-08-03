@@ -1,0 +1,23 @@
+﻿@page "/books/create"
+
+<PageTitle>Mantenimiento de libros</PageTitle>
+
+<AtlasForm TModel="BookCreateDto"
+           CaptionMaintenance="libros"
+           CurrentPost="currentPost"
+           Model="book"
+           OnSave="HandleSaveBook"
+           OnCancel="HandleCancel">
+
+    <label class="form-label">Título</label>
+    <InputText class="form-control mb-3" @bind-Value="book.Title" placeholder="Introduce el título" />
+
+    <label class="form-label">ISBN</label>
+    <InputText class="form-control mb-3" @bind-Value="book.ISBN" placeholder="Introduce el ISBN" />
+
+    <label class="form-label">Sinopsis</label>
+    <InputTextArea class="form-control mb-3" @bind-Value="book.Synopsis" placeholder="Introduce la sinoposis" />
+
+    <label class="form-label">Fecha de publicación</label>
+    <InputDate class="form-control mb-3" @bind-Value="book.PublicationAt" />
+</AtlasForm>

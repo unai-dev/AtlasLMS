@@ -1,9 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
-
-using AtlasLMS.Blazor.Features.Loans.Contracts;
+﻿using AtlasLMS.Blazor.Features.Loans.Contracts;
+using AtlasLMS.Blazor.Security.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
@@ -15,6 +12,8 @@ public partial class LoansPage
 {
     [Inject] public required ILoanService LoanService { get; set; }
     [Inject] public required ToastService ToastService { get; set; }
+    [Inject] public required NavigationManager NavigationService { get; set; }
+    [Inject] public required IAtlasExceptionHandler AtlasExceptionHandler { get; set; }
 
     private List<LoanReadDto> loans = new List<LoanReadDto>();
     private ConfirmDialog dialog = default!;
@@ -28,6 +27,7 @@ public partial class LoansPage
     #endregion
 
     #region ButtonActions----------------------------------------------------------------
+    private void HandleAddLoan() => NavigationService.NavigateTo("/loans/create");
     private async Task HandleDeleteLoan(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
@@ -41,7 +41,7 @@ public partial class LoansPage
                 return;
             }
 
-            await SwitchExceptionMessage(response);
+            await AtlasExceptionHandler.SwitchExceptionMessage(response);
         }
         return;
     }
@@ -52,27 +52,12 @@ public partial class LoansPage
     {
         isLoading = true;
         loans = (await LoanService.GetLoansAsync()).ToList();
-        isLoading = false;
         if (loans.Count == 0)
         {
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay prestamos disponibles"));
             return;
         }
-    }
-
-    private async Task SwitchExceptionMessage(HttpResponseMessage response)
-    {
-
-        var exceptionResponse = await response.Content.ReadFromJsonAsync<MiddlewareExceptionResponse>();
-        if (exceptionResponse is null) return;
-        switch (response.StatusCode)
-        {
-            case HttpStatusCode.NotFound:
-            case HttpStatusCode.BadRequest:
-            case HttpStatusCode.InternalServerError:
-                ToastService.Notify(new(ToastType.Success, "¡Error!", exceptionResponse.Message));
-                break;
-        }
+        isLoading = false;
     }
     #endregion
 }

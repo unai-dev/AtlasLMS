@@ -1,0 +1,15 @@
+﻿@page "/bookings/create"
+
+<PageTitle>Mantenimiento de reservas</PageTitle>
+
+<AtlasForm TModel="BookingCreateDto"
+           CaptionMaintenance="reservas"
+           CurrentPost="currentPost"
+           Model="booking"
+           OnSave="HandleSaveBooking"
+           OnCancel="HandleCancel">
+
+    <label class="form-label">Fecha de inicio</label>
+    <InputDate class="form-control mb-3" @bind-Value="booking.StartTime" />
+
+</AtlasForm>

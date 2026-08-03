@@ -1,9 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
-
-using AtlasLMS.Blazor.Features.Bookings.Contracts;
+﻿using AtlasLMS.Blazor.Features.Bookings.Contracts;
+using AtlasLMS.Blazor.Security.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
@@ -15,6 +12,8 @@ public partial class BookingsPage
 {
     [Inject] public required IBookingService BookingService { get; set; }
     [Inject] public required ToastService ToastService { get; set; }
+    [Inject] public required NavigationManager NavigationService { get; set; }
+    [Inject] public required IAtlasExceptionHandler AtlasExceptionHandler { get; set; }
 
     private List<BookingReadDto> bookings = new List<BookingReadDto>();
     private ConfirmDialog dialog = default!;
@@ -28,6 +27,7 @@ public partial class BookingsPage
     #endregion
 
     #region ButtonActions----------------------------------------------------------------
+    private void HandleAddBooking() => NavigationService.NavigateTo("/bookings/create");
     private async Task HandleDeleteBooking(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
@@ -41,7 +41,7 @@ public partial class BookingsPage
                 return;
             }
 
-            await SwitchExceptionMessage(response);
+            await AtlasExceptionHandler.SwitchExceptionMessage(response);
         }
         return;
     }
@@ -57,21 +57,6 @@ public partial class BookingsPage
         {
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay reservas disponibles"));
             return;
-        }
-    }
-
-    private async Task SwitchExceptionMessage(HttpResponseMessage response)
-    {
-
-        var exceptionResponse = await response.Content.ReadFromJsonAsync<MiddlewareExceptionResponse>();
-        if (exceptionResponse is null) return;
-        switch (response.StatusCode)
-        {
-            case HttpStatusCode.NotFound:
-            case HttpStatusCode.BadRequest:
-            case HttpStatusCode.InternalServerError:
-                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
-                break;
         }
     }
     #endregion

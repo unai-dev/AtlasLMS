@@ -1,0 +1,14 @@
+﻿@page "/loans/create"
+
+<PageTitle>Mantenimiento de prestamos</PageTitle>
+
+<AtlasForm TModel="LoanCreateDto"
+           CaptionMaintenance="prestamos"
+           CurrentPost="currentPost"
+           Model="loan"
+           OnSave="HandleSaveLoan"
+           OnCancel="HandleCancel">
+
+           <label class="form-label">Tiempo de vida</label>
+           <InputNumber class="form-control mb-3" @bind-Value="loan.LifeTime" />
+</AtlasForm>

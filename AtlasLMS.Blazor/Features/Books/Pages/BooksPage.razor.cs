@@ -1,9 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
-
-using AtlasLMS.Blazor.Features.Books.Contracts;
+﻿using AtlasLMS.Blazor.Features.Books.Contracts;
+using AtlasLMS.Blazor.Security.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
@@ -15,6 +12,8 @@ public partial class BooksPage
 {
     [Inject] public required IBookService BookService { get; set; }
     [Inject] public required ToastService ToastService { get; set; }
+    [Inject] public required NavigationManager NavigationService { get; set; }
+    [Inject] public required IAtlasExceptionHandler AtlasExceptionHandler { get; set; }
 
     private List<BookReadDto> books = new List<BookReadDto>();
     private ConfirmDialog dialog = default!;
@@ -28,6 +27,7 @@ public partial class BooksPage
     #endregion
 
     #region ButtonActions----------------------------------------------------------------
+    private void HandleAddBook() => NavigationService.NavigateTo("/books/create");
     private async Task HandleDeleteBook(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
@@ -40,7 +40,7 @@ public partial class BooksPage
                 await RefreshBooks();
                 return;
             }
-            await SwitchExceptionMessage(response);
+            await AtlasExceptionHandler.SwitchExceptionMessage(response);
         }
         return;
     }
@@ -51,27 +51,12 @@ public partial class BooksPage
     {
         isLoading = true;
         books = (await BookService.GetBooksAsync()).ToList();
-        isLoading = false;
         if (books.Count == 0)
         {
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay libros disponibles"));
             return;
         }
-    }
-
-    private async Task SwitchExceptionMessage(HttpResponseMessage response)
-    {
-
-        var exceptionResponse = await response.Content.ReadFromJsonAsync<MiddlewareExceptionResponse>();
-        if (exceptionResponse is null) return;
-        switch (response.StatusCode)
-        {
-            case HttpStatusCode.NotFound:
-            case HttpStatusCode.BadRequest:
-            case HttpStatusCode.InternalServerError:
-                ToastService.Notify(new(ToastType.Success, "¡Error!", exceptionResponse.Message));
-                break;
-        }
+        isLoading = false;
     }
     #endregion
 }

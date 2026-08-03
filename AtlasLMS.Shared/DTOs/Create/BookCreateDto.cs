@@ -13,7 +13,7 @@ public class BookCreateDto
     public int Stock { get; set; }
     [StringLength(255)]
     public string? Synopsis { get; set; }
-    public DateTime PublicationAt { get; set; }
+    public DateTime PublicationAt { get; set; } = DateTime.UtcNow;
 
     //Related properties
     //

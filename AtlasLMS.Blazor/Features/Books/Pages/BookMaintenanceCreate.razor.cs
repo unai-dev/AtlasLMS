@@ -1,0 +1,37 @@
+﻿using AtlasLMS.Blazor.Features.Books.Contracts;
+using AtlasLMS.Blazor.Security.Contracts;
+using AtlasLMS.Shared.DTOs.Create;
+
+using BlazorBootstrap;
+
+using Microsoft.AspNetCore.Components;
+
+namespace AtlasLMS.Blazor.Features.Books.Pages;
+
+public partial class BookMaintenanceCreate
+{
+    [Inject] public required IBookService BookService { get; set; }
+    [Inject] public required ToastService ToastService { get; set; }
+    [Inject] public required NavigationManager NavigationService { get; set; }
+    [Inject] public required IAtlasExceptionHandler AtlasExceptionHandler { get; set; }
+
+    private BookCreateDto book = new();
+    private bool currentPost = false;
+
+    #region Actions-----------------------------------------------------------------------
+    private void HandleCancel() => NavigationService.NavigateTo("/books");
+    private async Task HandleSaveBook(BookCreateDto book)
+    {
+        currentPost = true;
+        var response = await BookService.CreateBookAsync(book);
+        if (response.IsSuccessStatusCode)
+        {
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Libro creado correctamente."));
+            NavigationService.NavigateTo("/books");
+            return;
+        }
+        await AtlasExceptionHandler.SwitchExceptionMessage(response);
+        currentPost = false;
+    }
+    #endregion
+}
