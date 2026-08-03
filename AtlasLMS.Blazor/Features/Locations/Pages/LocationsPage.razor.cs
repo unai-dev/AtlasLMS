@@ -1,9 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
-
-using AtlasLMS.Blazor.Features.Locations.Contracts;
+﻿using AtlasLMS.Blazor.Features.Locations.Contracts;
+using AtlasLMS.Blazor.Security.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
@@ -16,6 +13,7 @@ public partial class LocationsPage
     [Inject] public required ILocationService LocationService { get; set; }
     [Inject] public required ToastService ToastService { get; set; }
     [Inject] public required NavigationManager NavigationService { get; set; }
+    [Inject] public required IAtlasExceptionHandler AtlasExceptionHandler { get; set; }
 
     private List<LocationReadDto>? locations;
     private ConfirmDialog dialog = default!;
@@ -42,7 +40,7 @@ public partial class LocationsPage
                 await RefreshLocations();
                 return;
             }
-            await SwitchExceptionMessage(response);
+            await AtlasExceptionHandler.SwitchExceptionMessage(response);
         }
         return;
     }
@@ -59,25 +57,6 @@ public partial class LocationsPage
         {
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay ubicaciones disponibles"));
             return;
-        }
-    }
-
-    private async Task SwitchExceptionMessage(HttpResponseMessage response)
-    {
-        var exceptionResponse = await response.Content.ReadFromJsonAsync<MiddlewareExceptionResponse>();
-        if (exceptionResponse is null) return;
-
-        switch (response.StatusCode)
-        {
-            case HttpStatusCode.NotFound:
-                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
-                break;
-            case HttpStatusCode.BadRequest:
-                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
-                break;
-            default:
-                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
-                break;
         }
     }
     #endregion

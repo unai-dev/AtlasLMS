@@ -48,5 +48,6 @@ builder.Services.AddScoped<ILoanService, LoanService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+builder.Services.AddScoped<IAtlasExceptionHandler, AtlasExceptionHandler>();
 
 await builder.Build().RunAsync();
