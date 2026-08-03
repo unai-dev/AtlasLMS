@@ -9,13 +9,13 @@
            OnSave="HandleSaveUser">
 
     <label class="form-label">Email</label>
-    <InputText type="email" @bind-Value="@user.Email" placeholder="Introduce el email" class="form-control mb-3" />
+    <InputText @bind-Value="@user.Email" placeholder="Introduce el email" class="form-control mb-3" />
 
     <label class="form-label">Nombre de usuario</label>
-    <InputText type="text" @bind-Value="@user.UserName" placeholder="Introduce el nombre de usuario" class="form-control mb-3" />
+    <InputText @bind-Value="@user.UserName" placeholder="Introduce el nombre de usuario" class="form-control mb-3" />
 
     <label class="form-label">CIF</label>
-    <InputText type="text" @bind-Value="@user.CIF" placeholder="Introduce el CIF" class="form-control mb-3" />
+    <InputText @bind-Value="@user.CIF" placeholder="Introduce el CIF" class="form-control mb-3" />
 
     <label class="form-label">Contraseña</label>
     <PasswordInput @bind-Value="@user.Password" placeholder="Introduce la contraseña" />
