@@ -10,7 +10,7 @@ public class BookCreateDto
     [Required]
     [StringLength(13)]
     public string ISBN { get; set; } = string.Empty;
-    public int? Stock { get; set; }
+    public int Stock { get; set; }
     [StringLength(255)]
     public string? Synopsis { get; set; }
     public DateTime PublicationAt { get; set; }
