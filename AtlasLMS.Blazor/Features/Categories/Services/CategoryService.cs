@@ -18,11 +18,8 @@ public class CategoryService : ICategoryService
     public async Task<IEnumerable<CategoryReadDto>> GetCategoriesAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<CategoryReadDto>>("categories") ?? [];
 
-    public async Task<CategoryReadDto?> CreateCategoryAsync(CategoryCreateDto dto)
-    {
-        var response = await _http.PostAsJsonAsync("categories", dto);
-        return await response.Content.ReadFromJsonAsync<CategoryReadDto>();
-    }
+    public async Task<HttpResponseMessage> CreateCategoryAsync(CategoryCreateDto dto) =>
+        await _http.PostAsJsonAsync("categories", dto);
 
     public async Task<HttpResponseMessage> DeleteCategoryAsync(int ID) =>
         await _http.DeleteAsync($"categories/{ID}");

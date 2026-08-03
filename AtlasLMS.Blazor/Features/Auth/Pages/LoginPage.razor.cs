@@ -1,40 +1,24 @@
 ﻿using AtlasLMS.Shared.DTOs.Auth;
 
-using BlazorBootstrap;
-
 namespace AtlasLMS.Blazor.Features.Auth.Pages;
 
 public partial class LoginPage
 {
-    private LoginDto? loginUser = new LoginDto();
-    private bool currentPost;
+    private LoginDto loginUser = new LoginDto();
+    private bool currentPost = false;
 
-    #region Methods---------------------------------------------------------------------------
+    #region Actions---------------------------------------------------------------------------
     private async Task HandleLogin()
     {
-        try
-        {
-            if (loginUser is null)
-                return;
-            currentPost = true;
-            var result = await AuthService.LoginAsync(loginUser);
+        currentPost = true;
+        var result = await AuthService.LoginAsync(loginUser);
 
-            if (string.IsNullOrWhiteSpace(result!.Token))
-                return;
+        if (string.IsNullOrWhiteSpace(result!.Token)) return;
 
-            await LocalStorage.SetItemAsync("token", result.Token);
-            Navigation.NavigateTo("/");
+        await LocalStorage.SetItemAsync("token", result.Token);
+        Navigation.NavigateTo("/");
 
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            ToastService.Notify(new(ToastType.Danger, "¡Error!", "Error al iniciar sesión"));
-        }
-        finally
-        {
-            currentPost = false;
-        }
+        currentPost = false;
     }
     #endregion
 }

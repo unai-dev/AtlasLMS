@@ -11,10 +11,7 @@ public partial class HomePage
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
-
         user = await UserService.GetMe();
-        if (user is null) return;
-
         isLoading = false;
     }
     #endregion

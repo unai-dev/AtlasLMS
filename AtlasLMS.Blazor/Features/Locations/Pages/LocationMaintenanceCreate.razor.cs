@@ -18,14 +18,13 @@ public partial class LocationMaintenanceCreate
     private LocationCreateDto location = new();
     private bool currentPost = false;
 
-    #region Methods-----------------------------------------------------------------------------
+    #region Actions-----------------------------------------------------------------------------
     private void HandleCancel() => NavigationService.NavigateTo("/locations");
     private async Task HandleAddLocation(LocationCreateDto location)
     {
         currentPost = true;
 
         var response = await LocationService.CreateLocationAsync(location);
-        currentPost = false;
 
         if (response.IsSuccessStatusCode)
         {
@@ -34,6 +33,7 @@ public partial class LocationMaintenanceCreate
             return;
         }
         await AtlasExceptionHandler.SwitchExceptionMessage(response);
+        currentPost = false;
     }
     #endregion
 }

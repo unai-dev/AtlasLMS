@@ -1,9 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
-
-using AtlasLMS.Blazor.Features.Users.Contracts;
+﻿using AtlasLMS.Blazor.Features.Users.Contracts;
+using AtlasLMS.Blazor.Security.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
@@ -16,6 +13,7 @@ public partial class UsersPage
     [Inject] public required IUserService UserService { get; set; }
     [Inject] public required ToastService ToastService { get; set; }
     [Inject] public required NavigationManager NavigationService { get; set; }
+    [Inject] public required IAtlasExceptionHandler AtlasExceptionHandler { get; set; }
 
     private List<UserReadDto> users = new List<UserReadDto>();
     private ConfirmDialog dialog = default!;
@@ -43,11 +41,10 @@ public partial class UsersPage
                 await RefreshUsers();
                 return;
             }
-            await SwitchExceptionMessage(response);
+            await AtlasExceptionHandler.SwitchExceptionMessage(response);
         }
         return;
     }
-
     #endregion
 
     #region Methods----------------------------------------------------------------------
@@ -56,20 +53,6 @@ public partial class UsersPage
         isLoading = true;
         users = (await UserService.GetUsersAsync()).ToList();
         isLoading = false;
-    }
-
-    private async Task SwitchExceptionMessage(HttpResponseMessage response)
-    {
-        var exceptionResponse = await response.Content.ReadFromJsonAsync<MiddlewareExceptionResponse>();
-        if (exceptionResponse is null) return;
-        switch (response.StatusCode)
-        {
-            case HttpStatusCode.NotFound:
-            case HttpStatusCode.BadRequest:
-            case HttpStatusCode.InternalServerError:
-                ToastService.Notify(new(ToastType.Danger, "¡Error!", exceptionResponse.Message));
-                break;
-        }
     }
     #endregion
 }

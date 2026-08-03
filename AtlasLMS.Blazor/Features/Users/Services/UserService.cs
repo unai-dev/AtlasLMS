@@ -21,11 +21,9 @@ public class UserService : IUserService
     public async Task<UserReadDto?> GetMe() =>
         await _http.GetFromJsonAsync<UserReadDto>("users/me");
 
-    public async Task<UserReadDto?> CreateUserAsync(UserCreateDto dto)
-    {
-        var response = await _http.PostAsJsonAsync("users", dto);
-        return await response.Content.ReadFromJsonAsync<UserReadDto>();
-    }
+    public async Task<HttpResponseMessage> CreateUserAsync(UserCreateDto dto) =>
+        await _http.PostAsJsonAsync("users", dto);
+
     public async Task<HttpResponseMessage> DeleteUserAsync(string ID) =>
         await _http.DeleteAsync($"users/{ID}");
 }

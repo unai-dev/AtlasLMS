@@ -1,9 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
-
-using AtlasLMS.Blazor.Features.Categories.Contracts;
+﻿using AtlasLMS.Blazor.Features.Categories.Contracts;
+using AtlasLMS.Blazor.Security.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.Responses;
 
 using BlazorBootstrap;
 
@@ -16,6 +13,7 @@ public partial class CategoriesPage
     [Inject] public required ToastService ToastService { get; set; }
     [Inject] public required ICategoryService CategoryService { get; set; }
     [Inject] public required NavigationManager NavigationService { get; set; }
+    [Inject] public required IAtlasExceptionHandler AtlasExceptionHandler { get; set; }
 
     private List<CategoryReadDto> categories = new List<CategoryReadDto>();
     private ConfirmDialog dialog = default!;
@@ -43,7 +41,7 @@ public partial class CategoriesPage
                 return;
             }
 
-            await SwitchExceptionMessage(response);
+            await AtlasExceptionHandler.SwitchExceptionMessage(response);
         }
         return;
     }
@@ -59,21 +57,6 @@ public partial class CategoriesPage
         {
             ToastService.Notify(new(ToastType.Info, "¡Info!", "No hay categorias disponibles"));
             return;
-        }
-    }
-
-    private async Task SwitchExceptionMessage(HttpResponseMessage response)
-    {
-
-        var exceptionResponse = await response.Content.ReadFromJsonAsync<MiddlewareExceptionResponse>();
-        if (exceptionResponse is null) return;
-        switch (response.StatusCode)
-        {
-            case HttpStatusCode.NotFound:
-            case HttpStatusCode.BadRequest:
-            case HttpStatusCode.InternalServerError:
-                ToastService.Notify(new(ToastType.Success, "¡Error!", exceptionResponse.Message));
-                break;
         }
     }
     #endregion
