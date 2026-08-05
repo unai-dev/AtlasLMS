@@ -139,10 +139,6 @@ public class LoanService : ILoanService
         var loan = await _context.Loans.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El prestamo con ID {ID} no existe");
 
-        var loanHasAnyBook = await _context.Loans.AnyAsync(x => x.BookID == loan.BookID && x.Status == ELoanStatus.Active);
-        if (loanHasAnyBook)
-            throw new BadRequestException($"El libro esta siendo prestado a un usuario. El prestamo se encuentra de forma activa");
-
         _context.Remove(loan);
         await _context.SaveChangesAsync();
     }
