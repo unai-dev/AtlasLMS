@@ -13,7 +13,7 @@
     <InputNumber class="form-control mb-3" @bind-Value="loan.LifeTime" />
 
     <label class="form-label">Libro</label>
-    <InputSelect class="form-control mb-3" @bind-Value="loan.BookID">
+    <InputSelect class="form-select mb-3" @bind-Value="loan.BookID">
         <option value="">Seleciona un libro</option>
         @foreach (BookReadDto book in books)
         {
@@ -22,7 +22,7 @@
     </InputSelect>
     
     <label class="form-label">Usuario</label>
-    <InputSelect class="form-control mb-3" @bind-Value="loan.UserID">
+    <InputSelect class="form-select mb-3" @bind-Value="loan.UserID">
         <option value="">Seleciona un usuario</option>
         @foreach (UserReadDto user in users)
         {

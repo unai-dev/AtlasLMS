@@ -13,7 +13,7 @@
     <InputDate class="form-control mb-3" @bind-Value="booking.StartTime" />
 
     <label class="form-label">Libro</label>
-    <InputSelect class="form-control mb-3" @bind-Value="booking.BookID">
+    <InputSelect class="form-select mb-3" @bind-Value="booking.BookID">
         <option value="">Seleciona un libro</option>
         @foreach (BookReadDto book in books)
         {
@@ -22,7 +22,7 @@
     </InputSelect>
 
     <label class="form-label">Usuario</label>
-    <InputSelect class="form-control mb-3" @bind-Value="booking.UserID">
+    <InputSelect class="form-select mb-3" @bind-Value="booking.UserID">
         <option value="">Seleciona un usuario</option>
         @foreach (UserReadDto user in users)
         {
