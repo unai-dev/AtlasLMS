@@ -68,6 +68,11 @@ public class CategoryService : ICategoryService
     {
         var category = await _context.Categories.FirstOrDefaultAsync(x => x.ID == ID) ??
             throw new NotFoundException("Categoria no encontrada");
+
+        var categoryHasAnyBook = await _context.Books.AnyAsync(x => x.CategoryID == ID);
+        if (categoryHasAnyBook)
+            throw new BadRequestException($"La categoria no puede ser eliminada. Esta relacionada con algun libro");
+
         _context.Remove(category);
         await _context.SaveChangesAsync();
     }
