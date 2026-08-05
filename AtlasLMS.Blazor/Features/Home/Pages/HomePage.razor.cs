@@ -1,4 +1,5 @@
-﻿using AtlasLMS.Blazor.Security.Contracts;
+﻿using AtlasLMS.Blazor.Features.Users.Contracts;
+using AtlasLMS.Blazor.Security.Contracts;
 using AtlasLMS.Shared.DTOs.Read;
 
 using Microsoft.AspNetCore.Components;
@@ -9,6 +10,7 @@ public partial class HomePage
 {
     [Inject] public required ILocalStorageService LocalStorageService { get; set; }
     [Inject] public required NavigationManager NavigationService { get; set; }
+    [Inject] public required IUserService UserService { get; set; }
 
     private UserReadDto? user;
     private bool isLoading = false;

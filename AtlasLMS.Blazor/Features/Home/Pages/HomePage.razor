@@ -1,8 +1,5 @@
 ﻿@page "/"
-@inject ILocalStorageService LocalStorage
-@inject ToastService ToastService
-@inject IUserService UserService
-@inject NavigationManager Navigation
+@attribute [Authorize]
 
 <PageTitle>Inicio</PageTitle>
 
