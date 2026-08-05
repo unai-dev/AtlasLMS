@@ -9,6 +9,25 @@
            OnSave="HandleSaveLoan"
            OnCancel="HandleCancel">
 
-           <label class="form-label">Tiempo de vida</label>
-           <InputNumber class="form-control mb-3" @bind-Value="loan.LifeTime" />
+    <label class="form-label">Tiempo de vida</label>
+    <InputNumber class="form-control mb-3" @bind-Value="loan.LifeTime" />
+
+    <label class="form-label">Libro</label>
+    <InputSelect class="form-control mb-3" @bind-Value="loan.BookID">
+        <option value="">Seleciona un libro</option>
+        @foreach (BookReadDto book in books)
+        {
+            <option value="@book.ID">@book.Title</option>
+        }
+    </InputSelect>
+    
+    <label class="form-label">Usuario</label>
+    <InputSelect class="form-control mb-3" @bind-Value="loan.UserID">
+        <option value="">Seleciona un usuario</option>
+        @foreach (UserReadDto user in users)
+        {
+            <option value="@user.ID">@user.Email</option>
+        }
+    </InputSelect>
+
 </AtlasForm>
