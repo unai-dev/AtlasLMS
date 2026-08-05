@@ -24,15 +24,11 @@
 
                 <div class="text-end d-flex flex-column align-items-end">
                     <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
-                         style="width:64px; height:64px;">
+                         style="width:64px; height:64px; cursor:pointer;" @onclick="OnLogout">
                         <span class="fw-bold text-primary fs-4">
                             @(User.UserName?.FirstOrDefault().ToString().ToUpper())
                         </span>
                     </div>
-
-                    <button class="btn btn-link text-danger p-0 mt-2" @onclick="OnLogout">
-                        <Icon Name="IconName.BoxArrowInRight" Color="IconColor.Danger" Size="IconSize.x4" />
-                    </button>
                 </div>
             </div>
 
