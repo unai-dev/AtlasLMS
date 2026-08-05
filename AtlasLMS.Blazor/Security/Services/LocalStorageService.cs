@@ -25,4 +25,10 @@ public class LocalStorageService : ILocalStorageService
         key = key.ToUpper().Trim();
         await _jS.InvokeVoidAsync("localStorage.setItem", key, value);
     }
+
+    public async Task RemoveItemAsync(string key)
+    {
+        key = key.ToUpper().Trim();
+        await _jS.InvokeVoidAsync("localStorage.removeItem", key);
+    }
 }
