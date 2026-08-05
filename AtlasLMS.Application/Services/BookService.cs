@@ -144,6 +144,14 @@ public class BookService : IBookService
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El libro con ID {ID} no existe");
 
+        var bookHasAnyLoan = await _context.Loans.AnyAsync(x => x.BookID == ID && x.Status == ELoanStatus.Active);
+        if (bookHasAnyLoan)
+            throw new BadRequestException($"El libro no puede ser eliminado. Tiene prestamos activos");
+
+        var bookHasAnyBooking = await _context.Bookings.AnyAsync(x => x.BookID == ID && x.Status == EBookingStatus.Active);
+        if (bookHasAnyLoan)
+            throw new BadRequestException($"El Libro no puede ser eliminado. Tiene reservas activas");
+
         _context.Remove(book);
         await _context.SaveChangesAsync();
     }
