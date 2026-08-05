@@ -1,4 +1,5 @@
 ﻿using AtlasLMS.Application.Contracts;
+using AtlasLMS.Data;
 using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
@@ -19,12 +20,14 @@ public class UserService : IUserService
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _accessor;
+    private readonly AtlasDbContext _context;
 
-    public UserService(UserManager<User> userManager, IMapper mapper, IHttpContextAccessor accessor)
+    public UserService(UserManager<User> userManager, IMapper mapper, IHttpContextAccessor accessor, AtlasDbContext context)
     {
         _userManager = userManager;
         _mapper = mapper;
         _accessor = accessor;
+        _context = context;
     }
 
     public async Task<IEnumerable<UserReadDto>> GetUsersAsync()
@@ -136,6 +139,15 @@ public class UserService : IUserService
     {
         var user = await _userManager.FindByIdAsync(ID)
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
+
+        var userHasAnyLoan = await _context.Loans.AnyAsync(x => x.UserID == ID && x.Status == ELoanStatus.Active);
+        if (userHasAnyLoan)
+            throw new BadRequestException($"El usuario no puede ser eliminado. Tiene prestamos activos");
+
+        var userHasAnyBooking = await _context.Bookings.AnyAsync(x => x.UserID == ID && x.Status == EBookingStatus.Active);
+        if (userHasAnyLoan)
+            throw new BadRequestException($"El usuario no puede ser eliminado. Tiene reservas activas");
+
         await _userManager.DeleteAsync(user);
     }
 }
