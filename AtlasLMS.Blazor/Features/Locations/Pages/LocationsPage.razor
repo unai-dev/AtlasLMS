@@ -35,7 +35,8 @@
                                 @foreach (var location in locations)
                                 {
                                     <LocationItem Location="@location"
-                                                  OnDelete="() => HandleDeleteLocation(location.ID)" />
+                                                  OnDelete="() => HandleDeleteLocation(location.ID)"
+                                                  OnView="() => HandleViewLocation(location.ID)" />
                                 }
                             }
                         </tbody>
