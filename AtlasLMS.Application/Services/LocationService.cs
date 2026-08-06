@@ -3,6 +3,7 @@ using AtlasLMS.Data;
 using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
 
@@ -34,6 +35,13 @@ public class LocationService : ILocationService
         var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La localizacion con ID {ID} no existe");
         return _mapper.Map<LocationReadDto>(location);
+    }
+
+    public async Task<LocationDetailDto> GetLocationDetailAsync(int ID)
+    {
+        var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"La ubicación con ID {ID} no existe");
+        return _mapper.Map<LocationDetailDto>(location);
     }
 
     public async Task<IEnumerable<string>> GetAislesAsync()

@@ -1,5 +1,6 @@
 ﻿using AtlasLMS.Application.Contracts;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
 
@@ -27,6 +28,10 @@ public class LocationController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<LocationReadDto>> GetById(int id) =>
         Ok(await _locationService.GetLocationAsync(id));
+
+    [HttpGet("detail/{id:int}")]
+    public async Task<ActionResult<LocationDetailDto>> GetDetail(int id) =>
+        Ok(await _locationService.GetLocationDetailAsync(id));
 
     [HttpGet("aisles")]
     public async Task<ActionResult<IEnumerable<string>>> GetAisles() =>

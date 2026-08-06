@@ -1,4 +1,5 @@
 ﻿using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
 
@@ -12,6 +13,7 @@ public interface ILocationService
     Task<IEnumerable<string>> GetAislesAsync();
     Task<IEnumerable<string>> GetColumnsByAisleAsync(string aisle);
     Task<LocationReadDto> GetLocationAsync(int ID);
+    Task<LocationDetailDto> GetLocationDetailAsync(int ID);
     Task<IEnumerable<LocationReadDto>> GetLocationsAsync();
     Task<IEnumerable<string>> GetShelvesAsync(string aisle, string column);
 }
