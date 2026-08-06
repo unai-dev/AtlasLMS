@@ -1,20 +1,21 @@
 ﻿@typeparam TID
 
-<button class="btn btn-sm btn-outline-secondary me-1" @onclick="() => OnView.InvokeAsync(ID)">
-    <Icon Name="IconName.Eye" />
-</button>
-<button class="btn btn-sm btn-outline-primary me-1" @onclick="() => OnEdit.InvokeAsync(ID)">
-    <Icon Name="IconName.Pencil" />
-</button>
-<button class="btn btn-sm btn-outline-danger" @onclick="() => OnDelete.InvokeAsync(ID)">
-    <Icon Name="IconName.Trash" />
-</button>
+@if (ShowView)
+{
+    <button class="btn btn-sm btn-outline-secondary me-1" @onclick="() => OnView.InvokeAsync(ID)">
+        <Icon Name="IconName.Eye" />
+    </button>
+}
 
-@code {
-    #region Parameters-----------------------------------------
-    [Parameter] public TID? ID { get; set; }
-    [Parameter] public EventCallback<TID> OnDelete { get; set; }
-    [Parameter] public EventCallback<TID> OnView { get; set; }
-    [Parameter] public EventCallback<TID> OnEdit { get; set; }
-    #endregion
+@if (ShowEdit)
+{
+    <button class="btn btn-sm btn-outline-primary me-1" @onclick="() => OnEdit.InvokeAsync(ID)">
+        <Icon Name="IconName.Pencil" />
+    </button>
+}
+@if (ShowDelete)
+{
+    <button class="btn btn-sm btn-outline-danger" @onclick="() => OnDelete.InvokeAsync(ID)">
+        <Icon Name="IconName.Trash" />
+    </button>
 }
