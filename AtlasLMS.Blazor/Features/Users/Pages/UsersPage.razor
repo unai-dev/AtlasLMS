@@ -33,7 +33,7 @@
                         <tbody>
                             @foreach (var user in users)
                             {
-                                <UserItem User="@user" OnDelete="() => HandleDeleteUser(user.ID)" />
+                                <UserItem User="@user" OnDelete="() => HandleDeleteUser(user.ID)" OnView="() => HandleViewUser(user.ID)" />
                             }
                         </tbody>
                     }

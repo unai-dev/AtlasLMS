@@ -33,7 +33,8 @@
                             @foreach (var author in authors)
                             {
                                 <AuthorItem Author="@author"
-                                            OnDelete="() => HandleDeleteAuthor(author.ID)" />
+                                            OnDelete="() => HandleDeleteAuthor(author.ID)"
+                                            OnView="() => HandleViewAuthor(author.ID)" />
                             }
                         </tbody>
                     }
