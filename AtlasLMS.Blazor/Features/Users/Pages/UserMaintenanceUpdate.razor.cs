@@ -21,7 +21,7 @@ public partial class UserMaintenanceUpdate
     [Inject] public required ToastService ToastService { get; set; }
 
     private UserReadDto? userReadOnly;
-    private UserUpdateDto? user;
+    private UserUpdateDto user = new();
     private bool currentPost = false;
 
     #region OnParametersSet---------------------------------------------------------

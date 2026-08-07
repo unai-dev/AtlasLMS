@@ -29,6 +29,7 @@ public partial class LocationsPage
     #region ButtonActions----------------------------------------------------------------
     private async Task HandleAddLocation() => NavigationService.NavigateTo($"/locations/create");
     private async Task HandleViewLocation(int ID) => NavigationService.NavigateTo($"/locations/{ID}");
+    private async Task HandleEditLocation(int ID) => NavigationService.NavigateTo($"/locations/edit/{ID}");
     private async Task HandleDeleteLocation(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
