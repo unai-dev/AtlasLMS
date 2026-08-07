@@ -2,10 +2,10 @@
 @attribute [Authorize]
 
 <PageTitle>Prestamos</PageTitle>
-<ConfirmDialog  @ref="dialog" />
+<ConfirmDialog @ref="dialog" />
 <div class="container mt-4">
 
-    <AtlasGridHeader Title="Gestión de Prestamos" ButtonCaption="Nuevo prestamo" OnNew="HandleAddLoan"/>
+    <AtlasGridHeader Title="Gestión de Prestamos" ButtonCaption="Nuevo prestamo" OnNew="HandleAddLoan" />
 
     <div class="col-9 w-100">
         <div class="card shadow-sm">
@@ -31,7 +31,8 @@
                             @foreach (var loan in loans)
                             {
                                 <LoanItem Loan="@loan"
-                                          OnDelete="() => HandleDeleteLoan(loan.ID)" />
+                                          OnDelete="() => HandleDeleteLoan(loan.ID)"
+                                          OnView="() => HandleViewLoan(loan.ID)" />
                             }
                         </tbody>
                     }

@@ -28,6 +28,7 @@ public partial class LoansPage
 
     #region ButtonActions----------------------------------------------------------------
     private void HandleAddLoan() => NavigationService.NavigateTo("/loans/create");
+    private void HandleViewLoan(int ID) => NavigationService.NavigateTo($"/loans/{ID}");
     private async Task HandleDeleteLoan(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
