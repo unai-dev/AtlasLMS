@@ -9,6 +9,7 @@ namespace AtlasLMS.Blazor.Features.Users.Contracts
     {
         Task<IEnumerable<UserReadDto>> GetUsersAsync();
         Task<UserDetailDto?> GetUserDetailAsync(string ID);
+        Task<UserReadDto?> GetUserAsync(string ID);
         Task<UserReadDto?> GetMe();
         Task<HttpResponseMessage> CreateUserAsync(UserCreateDto dto);
         Task<HttpResponseMessage> UpdateUserAsync(string ID, UserUpdateDto dto);

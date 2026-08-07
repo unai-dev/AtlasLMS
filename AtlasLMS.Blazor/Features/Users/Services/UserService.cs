@@ -20,8 +20,11 @@ public class UserService : IUserService
     public async Task<IEnumerable<UserReadDto>> GetUsersAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<UserReadDto>>("users") ?? [];
 
-    public async Task<UserDetailDto?> GetUserDetailAsync(string ID) =>
+    public async Task<UserReadDto?> GetUserAsync(string ID) =>
         await _http.GetFromJsonAsync<UserDetailDto>($"users/{ID}");
+
+    public async Task<UserDetailDto?> GetUserDetailAsync(string ID) =>
+        await _http.GetFromJsonAsync<UserDetailDto>($"users/detail/{ID}");
 
     public async Task<UserReadDto?> GetMe() =>
         await _http.GetFromJsonAsync<UserReadDto>("users/me");

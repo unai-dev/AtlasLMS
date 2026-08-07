@@ -9,6 +9,7 @@ namespace AtlasLMS.Blazor.Features.Locations.Contracts
     {
         Task<IEnumerable<LocationReadDto>> GetLocationsAsync();
         Task<LocationDetailDto?> GetLocationDetailAsync(int ID);
+        Task<LocationReadDto?> GetLocationAsync(int ID);
         Task<HttpResponseMessage> CreateLocationAsync(LocationCreateDto dto);
         Task<HttpResponseMessage> UpdateLocationAsync(int ID, LocationUpdateDto dto);
         Task<HttpResponseMessage> DeleteLocationAsync(int ID);
