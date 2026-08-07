@@ -29,7 +29,7 @@ public class BookController : ControllerBase
     public async Task<ActionResult<BookReadDto>> GetById([FromRoute] int id) =>
         Ok(await _bookService.GetBook(id));
 
-    [HttpGet("{id:int}/detail")]
+    [HttpGet("detail/{id:int}")]
     public async Task<ActionResult<BookDetailDto>> GetDetail([FromRoute] int id) =>
         Ok(await _bookService.GetBookDetailAsync(id));
 
