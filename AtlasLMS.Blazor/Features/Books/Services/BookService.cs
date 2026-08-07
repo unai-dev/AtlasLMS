@@ -2,6 +2,7 @@
 
 using AtlasLMS.Blazor.Features.Books.Contracts;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Blazor.Features.Books.Services;
@@ -17,6 +18,9 @@ public class BookService : IBookService
 
     public async Task<IEnumerable<BookReadDto>> GetBooksAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<BookReadDto>>("books") ?? [];
+
+    public async Task<BookDetailDto?> GetBookAsync(int ID) =>
+        await _http.GetFromJsonAsync<BookDetailDto>($"books/detail/{ID}");
 
     public async Task<HttpResponseMessage> CreateBookAsync(BookCreateDto dto) =>
         await _http.PostAsJsonAsync("books", dto);

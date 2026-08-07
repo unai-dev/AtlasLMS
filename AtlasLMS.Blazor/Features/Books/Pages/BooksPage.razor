@@ -2,7 +2,7 @@
 @attribute [Authorize]
 
 <PageTitle>Libros</PageTitle>
-<ConfirmDialog @ref="dialog"/>
+<ConfirmDialog @ref="dialog" />
 <div class="container mt-4">
 
     <AtlasGridHeader Title="Gestión de Libros" ButtonCaption="Nuevo libro" OnNew="HandleAddBook" />
@@ -33,7 +33,8 @@
                             @foreach (var book in books)
                             {
                                 <BookItem Book="@book"
-                                          OnDelete="() => HandleDeleteBook(book.ID)" />
+                                          OnDelete="() => HandleDeleteBook(book.ID)"
+                                          OnView="() => HandleViewBook(book.ID)" />
                             }
                         </tbody>
                     }

@@ -28,6 +28,7 @@ public partial class BooksPage
 
     #region ButtonActions----------------------------------------------------------------
     private void HandleAddBook() => NavigationService.NavigateTo("/books/create");
+    private void HandleViewBook(int ID) => NavigationService.NavigateTo($"/books/{ID}");
     private async Task HandleDeleteBook(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");

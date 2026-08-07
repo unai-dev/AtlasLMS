@@ -39,7 +39,7 @@ public class BookService : IBookService
 
     public async Task<BookDetailDto> GetBookDetailAsync(int ID)
     {
-        var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
+        var book = await _context.Books.Include(x => x.Category).FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El libro con ID {ID} no existe");
         return _mapper.Map<BookDetailDto>(book);
     }

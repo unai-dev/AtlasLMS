@@ -1,0 +1,52 @@
+﻿@page "/books/{ID:int}"
+
+<PageTitle>Detalles de libro</PageTitle>
+
+@if (isLoading)
+{
+    <AtlasLoadingSpinner />
+}
+else if (book is not null)
+{
+    <div class="container mt-4">
+
+        <!-- Header -->
+        <AtlasDetailHeader HeaderText=@($"Detalles de {book.Title}") OnReturn="HandleReturn" />
+
+        <!-- Card principal -->
+        <Card Class="shadow-sm border-0 rounded-3 bg-light">
+            <CardBody Class="p-4">
+                <div class="row">
+
+                    <div class="col-md-9">
+                        <p><strong>ID:</strong> @book.ID</p>
+                        <p><strong>Título:</strong> @book.Title</p>
+                        <p><strong>ISBN:</strong> @book.ISBN</p>
+                        @if (!string.IsNullOrEmpty(book.Synopsis))
+                        {
+                            <p><strong>Sinopsis:</strong> @book.Synopsis</p>
+                        }
+                        <p><strong>Categoría:</strong> @book.CategoryName</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewAuthor(book.AuthorID)"><strong>Autor:</strong> @book.AuthorID</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewLocation(book.LocationID)"><strong>Ubicación:</strong> @book.LocationID</p>
+                        <p>
+                            <strong>Estado:</strong>
+                            <Badge Color="@(book.IsActive ? BadgeColor.Success : BadgeColor.Secondary)" Class="px-3 py-2">
+                                @(book.IsActive ? "Activo" : "Inactivo")
+                            </Badge>
+                        </p>
+                        <p><strong>Fecha de alta:</strong> @book.CreatedAt.ToString("d")</p>
+                        @if (book.UpdatedAt.HasValue)
+                        {
+                            <p><strong>Fecha de actualización:</strong> @book.UpdatedAt.Value.ToString("d")</p>
+                        }
+                    </div>
+                </div>
+            </CardBody>
+        </Card>
+    </div>
+}
+else
+{
+    <AtlasDetailNotData />
+}
