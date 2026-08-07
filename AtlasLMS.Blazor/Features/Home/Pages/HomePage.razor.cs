@@ -19,6 +19,14 @@ public partial class HomePage
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
+
+        var userHasToken = await LocalStorageService.GetItemAsync("token");
+        if (string.IsNullOrEmpty(userHasToken))
+        {
+            NavigationService.NavigateTo("/login");
+            return;
+        }
+
         user = await UserService.GetMe();
         isLoading = false;
     }
