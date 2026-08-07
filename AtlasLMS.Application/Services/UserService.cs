@@ -43,6 +43,17 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
+    public async Task<UserDetailDto> GetUserDetailAsync(string ID)
+    {
+        var user = await _userManager.Users
+            .Include(x => x.Bookings)
+            .Include(x => x.Loans)
+            .FirstOrDefaultAsync(x => x.Id == ID)
+            ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
+
+        return _mapper.Map<UserDetailDto>(user);
+    }
+
     public async Task<UserReadDto> GetMe()
     {
         var claim = _accessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "email")

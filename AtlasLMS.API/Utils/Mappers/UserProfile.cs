@@ -1,5 +1,6 @@
 ﻿using AtlasLMS.Domain.Entities;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 
 using AutoMapper;
@@ -12,6 +13,9 @@ public class UserProfile : Profile
     {
         // User -> ReadDTO
         CreateMap<User, UserReadDto>()
+            .ReverseMap();
+
+        CreateMap<User, UserDetailDto>()
             .ReverseMap();
 
         // CreateDto -> User

@@ -1,5 +1,6 @@
 ﻿using AtlasLMS.Application.Contracts;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
 
@@ -32,6 +33,11 @@ public class UserController : ControllerBase
     [Route("{ID}")]
     public async Task<ActionResult<UserReadDto>> Get([FromRoute] string ID) =>
         Ok(await _userService.GetUserAsync(ID));
+
+    [HttpGet]
+    [Route("detail/{ID}")]
+    public async Task<ActionResult<UserDetailDto>> GetDetail([FromRoute] string ID) =>
+        Ok(await _userService.GetUserDetailAsync(ID));
 
     [HttpGet]
     [Route("loan/{ID}")]
