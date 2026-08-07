@@ -34,7 +34,8 @@
                             {
                                 <AuthorItem Author="@author"
                                             OnDelete="() => HandleDeleteAuthor(author.ID)"
-                                            OnView="() => HandleViewAuthor(author.ID)" />
+                                            OnView="() => HandleViewAuthor(author.ID)"
+                                            OnEdit="() => HandleEditAuthor(author.ID)" />
                             }
                         </tbody>
                     }

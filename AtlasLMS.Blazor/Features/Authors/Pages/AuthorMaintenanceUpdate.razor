@@ -1,5 +1,17 @@
-﻿<h3>AuthorMaintenanceUpdate</h3>
+﻿@page "/authors/edit/{ID:int}"
 
-@code {
+<PageTitle>Mantenimiento de autores</PageTitle>
 
-}
+<AtlasForm TModel="AuthorUpdateDto"
+           CaptionMaintenance="autores"
+           CurrentPost="currentPost"
+           Model="author"
+           OnSave="HandleSaveAuthor"
+           OnCancel="HandleCancel">
+
+    <label class="form-label">Nombre</label>
+    <InputText class="form-control mb-3" @bind-Value="author.FirstName" placeholder="Introduce el nombre" />
+
+    <label class="form-label">Apellido</label>
+    <InputText class="form-control mb-3" @bind-Value="author.LastName" placeholder="Introduce el apellido" />
+</AtlasForm>

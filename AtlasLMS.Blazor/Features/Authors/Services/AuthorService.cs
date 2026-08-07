@@ -4,6 +4,7 @@ using AtlasLMS.Blazor.Features.Authors.Contracts;
 using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
+using AtlasLMS.Shared.DTOs.Update;
 
 namespace AtlasLMS.Blazor.Features.Authors.Services;
 
@@ -27,6 +28,9 @@ public class AuthorService : IAuthorService
 
     public async Task<HttpResponseMessage> CreateAuthorAsync(AuthorCreateDto dto) =>
         await _http.PostAsJsonAsync("authors", dto);
+
+    public async Task<HttpResponseMessage> UpdateAuthorAsync(int ID, AuthorUpdateDto dto) =>
+        await _http.PutAsJsonAsync($"authors/{ID}", dto);
 
     public async Task<HttpResponseMessage> DeleteAuthorAsync(int ID) =>
         await _http.DeleteAsync($"authors/{ID}");

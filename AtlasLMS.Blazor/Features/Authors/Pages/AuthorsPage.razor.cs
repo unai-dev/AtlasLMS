@@ -30,6 +30,7 @@ public partial class AuthorsPage
     #region ButtonActions----------------------------------------------------------------
     private void HandleAddAuthor() => NavigationService.NavigateTo("/authors/create");
     private void HandleViewAuthor(int ID) => NavigationService.NavigateTo($"/authors/{ID}");
+    private void HandleEditAuthor(int ID) => NavigationService.NavigateTo($"/authors/edit/{ID}");
     private async Task HandleDeleteAuthor(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");
