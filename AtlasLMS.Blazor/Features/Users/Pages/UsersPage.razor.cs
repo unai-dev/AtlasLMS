@@ -30,6 +30,7 @@ public partial class UsersPage
     #region ButtonActions----------------------------------------------------------
     private void HandleNewUser() => NavigationService.NavigateTo("/users/create");
     private void HandleViewUser(string ID) => NavigationService.NavigateTo($"users/{ID}");
+    private void HandleEditUser(string ID) => NavigationService.NavigateTo($"users/edit/{ID}");
     private async Task HandleDeleteUser(string ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");

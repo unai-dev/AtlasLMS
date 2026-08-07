@@ -1,0 +1,20 @@
+﻿@page "/users/edit/{ID}"
+
+<PageTitle>Mantenimiento de usuarios</PageTitle>
+
+<AtlasForm CaptionMaintenance="usuarios"
+           TModel="UserUpdateDto"
+           Model="user"
+           CurrentPost="currentPost"
+           OnCancel="HandleCancelUser"
+           OnSave="HandleSaveUser">
+
+    <label class="form-label">Email</label>
+    <InputText @bind-Value="@user.Email" placeholder="Introduce el email" class="form-control mb-3" />
+
+    <label class="form-label">Nombre de usuario</label>
+    <InputText @bind-Value="@user.UserName" placeholder="Introduce el nombre de usuario" class="form-control mb-3" />
+
+    <label class="form-label">CIF</label>
+    <InputText @bind-Value="@user.CIF" placeholder="Introduce el CIF" class="form-control mb-3" />
+</AtlasForm>
