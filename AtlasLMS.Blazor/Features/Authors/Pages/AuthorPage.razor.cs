@@ -22,7 +22,7 @@ public partial class AuthorPage
     {
         isLoading = true;
 
-        author = await AuthorService.GetAuthorAsync(ID);
+        author = await AuthorService.GetAuthorDetailAsync(ID);
         if (author is null) return;
 
         isLoading = false;

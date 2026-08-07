@@ -19,7 +19,10 @@ public class AuthorService : IAuthorService
     public async Task<IEnumerable<AuthorReadDto>> GetAuthorsAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<AuthorReadDto>>("authors") ?? [];
 
-    public async Task<AuthorDetailDto?> GetAuthorAsync(int ID) =>
+    public async Task<AuthorReadDto?> GetAuthorAsync(int ID) =>
+        await _http.GetFromJsonAsync<AuthorReadDto>($"authors/{ID}");
+
+    public async Task<AuthorDetailDto?> GetAuthorDetailAsync(int ID) =>
         await _http.GetFromJsonAsync<AuthorDetailDto>($"authors/detail/{ID}");
 
     public async Task<HttpResponseMessage> CreateAuthorAsync(AuthorCreateDto dto) =>
