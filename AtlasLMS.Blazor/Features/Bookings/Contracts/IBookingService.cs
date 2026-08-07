@@ -7,7 +7,7 @@ namespace AtlasLMS.Blazor.Features.Bookings.Contracts
     public interface IBookingService
     {
         Task<IEnumerable<BookingReadDto>> GetBookingsAsync();
-        Task<BookingDetailDto?> GetBookingAsync(int ID);
+        Task<BookingDetailDto?> GetBookingDetailAsync(int ID);
         Task<HttpResponseMessage> CreateBookingAsync(BookingCreateDto dto);
         Task<HttpResponseMessage> DeleteBookingAsync(int ID);
     }

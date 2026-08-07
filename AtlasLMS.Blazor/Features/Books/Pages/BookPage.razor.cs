@@ -22,7 +22,7 @@ public partial class BookPage
     {
         isLoading = true;
 
-        book = await BookService.GetBookAsync(ID);
+        book = await BookService.GetBookDetailAsync(ID);
         if (book is null) return;
 
         isLoading = false;

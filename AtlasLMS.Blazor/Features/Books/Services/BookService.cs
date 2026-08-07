@@ -19,7 +19,7 @@ public class BookService : IBookService
     public async Task<IEnumerable<BookReadDto>> GetBooksAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<BookReadDto>>("books") ?? [];
 
-    public async Task<BookDetailDto?> GetBookAsync(int ID) =>
+    public async Task<BookDetailDto?> GetBookDetailAsync(int ID) =>
         await _http.GetFromJsonAsync<BookDetailDto>($"books/detail/{ID}");
 
     public async Task<HttpResponseMessage> CreateBookAsync(BookCreateDto dto) =>

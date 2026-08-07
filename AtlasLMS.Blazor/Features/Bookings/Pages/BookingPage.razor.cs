@@ -22,7 +22,7 @@ public partial class BookingPage
     {
         isLoading = true;
 
-        booking = await BookingService.GetBookingAsync(ID);
+        booking = await BookingService.GetBookingDetailAsync(ID);
         if (booking is null) return;
 
         isLoading = false;

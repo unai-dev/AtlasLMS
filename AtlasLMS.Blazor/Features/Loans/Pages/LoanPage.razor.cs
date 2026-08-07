@@ -22,7 +22,7 @@ public partial class LoanPage
     {
         isLoading = true;
 
-        loan = await LoanService.GetLoanAsync(ID);
+        loan = await LoanService.GetLoanDetailAsync(ID);
         if (loan is null) return;
 
         isLoading = false;

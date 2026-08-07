@@ -27,7 +27,7 @@ public partial class UserMaintenanceUpdate
     #region OnParametersSet---------------------------------------------------------
     protected override async Task OnParametersSetAsync()
     {
-        userReadOnly = await UserService.GetUserAsync(ID);
+        userReadOnly = await UserService.GetUserDetailAsync(ID);
         if (userReadOnly is null) return;
 
         user = new UserUpdateDto

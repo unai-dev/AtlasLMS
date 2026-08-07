@@ -7,7 +7,7 @@ namespace AtlasLMS.Blazor.Features.Loans.Contracts;
 public interface ILoanService
 {
     Task<IEnumerable<LoanReadDto>> GetLoansAsync();
-    Task<LoanDetailDto?> GetLoanAsync(int ID);
+    Task<LoanDetailDto?> GetLoanDetailAsync(int ID);
     Task<HttpResponseMessage> CreateLoanAsync(LoanCreateDto dto);
     Task<HttpResponseMessage> DeleteLoanAsync(int ID);
 }

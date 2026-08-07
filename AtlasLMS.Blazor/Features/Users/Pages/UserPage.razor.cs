@@ -22,7 +22,7 @@ public partial class UserPage
     {
         isLoading = true;
 
-        user = await UserService.GetUserAsync(ID);
+        user = await UserService.GetUserDetailAsync(ID);
         if (user is null) return;
 
         isLoading = false;

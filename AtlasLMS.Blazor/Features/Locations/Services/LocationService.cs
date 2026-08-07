@@ -20,7 +20,7 @@ public class LocationService : ILocationService
     public async Task<IEnumerable<LocationReadDto>> GetLocationsAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<LocationReadDto>>("locations") ?? [];
 
-    public async Task<LocationDetailDto?> GetLocationAsync(int ID) =>
+    public async Task<LocationDetailDto?> GetLocationDetailAsync(int ID) =>
         await _http.GetFromJsonAsync<LocationDetailDto>($"locations/detail/{ID}");
 
     public async Task<HttpResponseMessage> CreateLocationAsync(LocationCreateDto dto) =>

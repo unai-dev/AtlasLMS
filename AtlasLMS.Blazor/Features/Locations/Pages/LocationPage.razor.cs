@@ -22,7 +22,7 @@ public partial class LocationPage
     {
         isLoading = true;
 
-        location = await LocationService.GetLocationAsync(ID);
+        location = await LocationService.GetLocationDetailAsync(ID);
         if (location is null) return;
 
         isLoading = false;

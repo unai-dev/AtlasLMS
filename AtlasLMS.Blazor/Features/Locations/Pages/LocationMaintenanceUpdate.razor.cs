@@ -27,7 +27,7 @@ public partial class LocationMaintenanceUpdate
     #region OnParametersSet------------------------------------------------------------------
     protected override async Task OnParametersSetAsync()
     {
-        locationReadOnly = await LocationService.GetLocationAsync(ID);
+        locationReadOnly = await LocationService.GetLocationDetailAsync(ID);
         if (locationReadOnly is null) return;
 
         location = new LocationUpdateDto

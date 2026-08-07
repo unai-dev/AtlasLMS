@@ -19,7 +19,7 @@ public class LoanService : ILoanService
     public async Task<IEnumerable<LoanReadDto>> GetLoansAsync() =>
     await _http.GetFromJsonAsync<IEnumerable<LoanReadDto>>("loans") ?? [];
 
-    public async Task<LoanDetailDto?> GetLoanAsync(int ID) =>
+    public async Task<LoanDetailDto?> GetLoanDetailAsync(int ID) =>
         await _http.GetFromJsonAsync<LoanDetailDto>($"loans/detail/{ID}");
 
     public async Task<HttpResponseMessage> CreateLoanAsync(LoanCreateDto dto) =>
