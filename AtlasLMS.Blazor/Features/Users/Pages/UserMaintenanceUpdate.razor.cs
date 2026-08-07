@@ -21,7 +21,7 @@ public partial class UserMaintenanceUpdate
     [Inject] public required ToastService ToastService { get; set; }
 
     private UserReadDto? userReadOnly;
-    private UserUpdateDto user = new();
+    private UserUpdateDto? user;
     private bool currentPost = false;
 
     #region OnParametersSet---------------------------------------------------------
@@ -30,9 +30,12 @@ public partial class UserMaintenanceUpdate
         userReadOnly = await UserService.GetUserAsync(ID);
         if (userReadOnly is null) return;
 
-        user.Email = userReadOnly.Email;
-        user.CIF = userReadOnly.CIF;
-        user.UserName = userReadOnly.UserName;
+        user = new UserUpdateDto
+        {
+            Email = userReadOnly.Email,
+            CIF = userReadOnly.CIF,
+            UserName = userReadOnly.UserName
+        };
     }
     #endregion
 
