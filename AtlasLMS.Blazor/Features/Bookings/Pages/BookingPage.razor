@@ -1,0 +1,44 @@
+﻿@page "/bookings/{ID:int}"
+
+<PageTitle>Detalles de reserva</PageTitle>
+
+
+@if (isLoading)
+{
+    <AtlasLoadingSpinner />
+}
+else if (booking is not null)
+{
+    <div class="container mt-4">
+
+        <!-- Header -->
+        <AtlasDetailHeader HeaderText="Detalles de reserva" OnReturn="HandleReturn" />
+
+        <!-- Card principal -->
+        <Card Class="shadow-sm border-0 rounded-3 bg-light">
+            <CardBody Class="p-4">
+                <div class="row">
+
+                    <div class="col-md-9">
+                        <p><strong>ID:</strong> @booking.ID</p>
+                        <p><strong>Fecha de inicio:</strong> @booking.StartTime</p>
+                        <p><strong>Fecha de recogida:</strong> @booking.PickupDeadline</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewUser(booking.UserID)"><strong>Usuario:</strong> @booking.UserID</p>
+                        <p class="link-primary" style="cursor:pointer;"><strong>Libro:</strong> @booking.BookID</p>
+                        <p>
+                            <strong>Estado:</strong>
+                            <Badge Color="@(booking.Status == 2 ? BadgeColor.Success : BadgeColor.Danger)" Class="px-3 py-2">
+                                @(booking.Status == 2 ? "Activo" : "Expirado/Cancelado")
+                            </Badge>
+                        </p>
+                        <p><strong>Fecha de alta:</strong> @booking.CreatedAt.ToString("d")</p>
+                    </div>
+                </div>
+            </CardBody>
+        </Card>
+    </div>
+}
+else
+{
+    <AtlasDetailNotData />
+}

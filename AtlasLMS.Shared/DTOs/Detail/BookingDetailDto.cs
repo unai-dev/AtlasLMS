@@ -2,12 +2,8 @@
 
 namespace AtlasLMS.Shared.DTOs.Detail;
 
-public class BookingDetailDto
+public class BookingDetailDto : BookingReadDto
 {
-    public DateTime StartTime { get; set; }
-    public DateTime PickupDeadline { get; set; }
-    public int Status { get; set; }
-
     // Related Properties
     //
     //

@@ -2,6 +2,7 @@
 
 using AtlasLMS.Blazor.Features.Bookings.Contracts;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Blazor.Features.Bookings.Services;
@@ -17,6 +18,9 @@ public class BookingService : IBookingService
 
     public async Task<IEnumerable<BookingReadDto>> GetBookingsAsync() =>
         await _http.GetFromJsonAsync<IEnumerable<BookingReadDto>>("bookings") ?? [];
+
+    public async Task<BookingDetailDto?> GetBookingAsync(int ID) =>
+        await _http.GetFromJsonAsync<BookingDetailDto>($"bookings/detail/{ID}");
 
     public async Task<HttpResponseMessage> CreateBookingAsync(BookingCreateDto dto) =>
         await _http.PostAsJsonAsync("bookings", dto);

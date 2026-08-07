@@ -2,13 +2,8 @@
 
 namespace AtlasLMS.Shared.DTOs.Detail;
 
-public class LoanDetailDto
+public class LoanDetailDto : LoanReadDto
 {
-    public DateTime StartDate { get; set; }
-    public int LifeTime { get; set; }
-    public DateTime DueDate { get; set; }
-    public int Status { get; set; }
-
     // Related Properties
     //
     //

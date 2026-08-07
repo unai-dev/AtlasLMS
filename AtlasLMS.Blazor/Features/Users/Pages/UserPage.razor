@@ -4,22 +4,14 @@
 
 @if (isLoading)
 {
-    <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
-        <Spinner Type="SpinnerType.Dots" Size="SpinnerSize.Large" Color="SpinnerColor.Danger" />
-    </div>
+    <AtlasLoadingSpinner />
 }
 else if (user is not null)
 {
     <div class="container mt-4">
 
         <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="fw-bold text-danger">Detalles de @user.UserName</h3>
-            <button class="btn btn-danger px-3" @onclick="HandleReturn">
-                <Icon Name="IconName.ArrowLeft" Color="IconColor.Light" Class="me-1" />
-                Volver
-            </button>
-        </div>
+        <AtlasDetailHeader HeaderText=@($"Detalles de {user.UserName}") OnReturn="HandleReturn" />
 
         <!-- Card principal -->
         <Card Class="shadow-sm border-0 rounded-3 bg-light">
@@ -60,7 +52,7 @@ else if (user is not null)
         </Card>
 
         <!-- Tabs -->
-            @* <Tabs Class="mt-4">
+        @* <Tabs Class="mt-4">
                 <Tab Title="Préstamos">
                     <LoanList Items="@User.Loans" />
                 </Tab>
@@ -72,8 +64,5 @@ else if (user is not null)
 }
 else
 {
-    <div class="text-center py-4">
-        <Icon Name="IconName.ExclamationTriangle" Class="display-6 text-warning mb-2" />
-        <p class="text-muted">Datos no disponibles</p>
-    </div>
+    <AtlasDetailNotData />
 }

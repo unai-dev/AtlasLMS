@@ -28,6 +28,7 @@ public partial class BookingsPage
 
     #region ButtonActions----------------------------------------------------------------
     private void HandleAddBooking() => NavigationService.NavigateTo("/bookings/create");
+    private void HandleViewBooking(int ID) => NavigationService.NavigateTo($"/bookings/{ID}");
     private async Task HandleDeleteBooking(int ID)
     {
         var confirm = await dialog.ShowAsync($"¿Esta seguro que desea eliminar este elemento?", "Esta acción no se puede deshacer.");

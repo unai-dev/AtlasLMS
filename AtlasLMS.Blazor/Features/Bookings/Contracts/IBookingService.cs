@@ -1,4 +1,5 @@
 ﻿using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Blazor.Features.Bookings.Contracts
@@ -6,6 +7,7 @@ namespace AtlasLMS.Blazor.Features.Bookings.Contracts
     public interface IBookingService
     {
         Task<IEnumerable<BookingReadDto>> GetBookingsAsync();
+        Task<BookingDetailDto?> GetBookingAsync(int ID);
         Task<HttpResponseMessage> CreateBookingAsync(BookingCreateDto dto);
         Task<HttpResponseMessage> DeleteBookingAsync(int ID);
     }

@@ -2,10 +2,10 @@
 @attribute [Authorize]
 
 <PageTitle>Reservas</PageTitle>
-<ConfirmDialog @ref="dialog"/>
+<ConfirmDialog @ref="dialog" />
 <div class="container mt-4">
 
-    <AtlasGridHeader Title="Gestión de Reservas" ButtonCaption="Nueva reserva" OnNew="HandleAddBooking"/>
+    <AtlasGridHeader Title="Gestión de Reservas" ButtonCaption="Nueva reserva" OnNew="HandleAddBooking" />
 
     <div class="col-9 w-100">
         <div class="card shadow-sm">
@@ -31,7 +31,8 @@
                             @foreach (var booking in bookings)
                             {
                                 <BookingItem Booking="@booking"
-                                             OnDelete="() => HandleDeleteBooking(booking.ID)" />
+                                             OnDelete="() => HandleDeleteBooking(booking.ID)"
+                                             OnView="() => HandleViewBooking(booking.ID)" />
                             }
                         </tbody>
                     }
