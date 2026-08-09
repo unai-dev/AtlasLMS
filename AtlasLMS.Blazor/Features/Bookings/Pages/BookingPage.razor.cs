@@ -32,5 +32,6 @@ public partial class BookingPage
     #region Actions---------------------------------------------------------------------
     private void HandleReturn() => NavigationService.NavigateTo("/bookings");
     private void HandleViewUser(string userID) => NavigationService.NavigateTo($"/users/{userID}");
+    private void HandleViewBook(int bookID) => NavigationService.NavigateTo($"/books/{bookID}");
     #endregion
 }

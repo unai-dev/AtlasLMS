@@ -32,5 +32,6 @@ public partial class LoanPage
     #region Actions---------------------------------------------------------------------
     private void HandleReturn() => NavigationService.NavigateTo("/loans");
     private void HandleViewUser(string userID) => NavigationService.NavigateTo($"/users/{userID}");
+    private void HandleViewBook(int bookID) => NavigationService.NavigateTo($"/books/{bookID}");
     #endregion
 }

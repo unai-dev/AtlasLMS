@@ -24,7 +24,7 @@ else if (booking is not null)
                         <p><strong>Fecha de inicio:</strong> @booking.StartTime</p>
                         <p><strong>Fecha de recogida:</strong> @booking.PickupDeadline</p>
                         <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewUser(booking.UserID)"><strong>Usuario:</strong> @booking.UserID</p>
-                        <p class="link-primary" style="cursor:pointer;"><strong>Libro:</strong> @booking.BookID</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewBook(booking.BookID)"><strong>Libro:</strong> @booking.BookID</p>
                         <p>
                             <strong>Estado:</strong>
                             <Badge Color="@(booking.Status == 2 ? BadgeColor.Success : BadgeColor.Danger)" Class="px-3 py-2">
