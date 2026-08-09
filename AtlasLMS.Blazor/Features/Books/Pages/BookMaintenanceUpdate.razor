@@ -1,0 +1,53 @@
+﻿@page "/books/edit/{ID:int}"
+
+<PageTitle>Mantenimiento de libros</PageTitle>
+
+<AtlasForm TModel="BookUpdateDto"
+           CaptionMaintenance="libros"
+           CurrentPost="currentPost"
+           Model="book"
+           OnSave="HandleSaveBook"
+           OnCancel="HandleCancel">
+
+    <label class="form-label">Título</label>
+    <InputText class="form-control mb-3" @bind-Value="book.Title" placeholder="Introduce el título" />
+
+    <label class="form-label">ISBN</label>
+    <InputText class="form-control mb-3" @bind-Value="book.ISBN" placeholder="Introduce el ISBN" />
+
+    <label class="form-label">Sinopsis</label>
+    <InputTextArea class="form-control mb-3" @bind-Value="book.Synopsis" placeholder="Introduce la sinoposis" />
+
+    <label class="form-label">Stock</label>
+    <InputNumber class="form-control mb-3" @bind-Value="book.Stock" />
+
+    <label class="form-label">Fecha de publicación</label>
+    <InputDate class="form-control mb-3" @bind-Value="book.PublicationAt" />
+
+    <label class="form-label">Autor</label>
+    <InputSelect class="form-select mb-3" @bind-Value="book.AuthorID">
+        <option value="">Seleciona un autor</option>
+        @foreach (AuthorReadDto author in authors)
+        {
+            <option value="@author.ID">@author.FullName</option>
+        }
+    </InputSelect>
+
+    <label class="form-label">Categoría</label>
+    <InputSelect class="form-select mb-3" @bind-Value="book.CategoryID">
+        <option value="">Seleciona una categoría</option>
+        @foreach (CategoryReadDto category in categories)
+        {
+            <option value="@category.ID">@category.Name</option>
+        }
+    </InputSelect>
+
+    <label class="form-label">Ubicación</label>
+    <InputSelect class="form-select mb-3" @bind-Value="book.LocationID">
+        <option value="">Seleciona una ubicación</option>
+        @foreach (LocationReadDto location in locations)
+        {
+            <option value="@location.ID">@location.Location</option>
+        }
+    </InputSelect>
+</AtlasForm>

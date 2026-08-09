@@ -34,7 +34,8 @@
                             {
                                 <BookItem Book="@book"
                                           OnDelete="() => HandleDeleteBook(book.ID)"
-                                          OnView="() => HandleViewBook(book.ID)" />
+                                          OnView="() => HandleViewBook(book.ID)"
+                                          OnEdit="() => HandleEditBook(book.ID)" />
                             }
                         </tbody>
                     }

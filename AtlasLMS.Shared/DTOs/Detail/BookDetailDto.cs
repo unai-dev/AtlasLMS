@@ -8,6 +8,7 @@ public class BookDetailDto : BaseDto
     public required string Title { get; set; }
     public required string ISBN { get; set; }
     public string? Synopsis { get; set; }
+    public int Stock { get; set; }
     public DateTime PublicationAt { get; set; }
 
     // Related Properties
