@@ -11,13 +11,13 @@
            OnCancel="HandleCancel">
 
     <label class="form-label">Título</label>
-    <InputText class="form-control mb-3" @bind-Value="book.Title" placeholder="Introduce el título" />
+    <InputText class="form-control mb-3" @bind-Value="book.Title" placeholder="Introduce el título" maxlength="55" />
 
     <label class="form-label">ISBN</label>
-    <InputText class="form-control mb-3" @bind-Value="book.ISBN" placeholder="Introduce el ISBN" />
+    <InputText class="form-control mb-3" @bind-Value="book.ISBN" placeholder="Introduce el ISBN" maxlength="13"/>
 
     <label class="form-label">Sinopsis</label>
-    <InputTextArea class="form-control mb-3" @bind-Value="book.Synopsis" placeholder="Introduce la sinoposis" />
+    <InputTextArea class="form-control mb-3" @bind-Value="book.Synopsis" placeholder="Introduce la sinoposis" maxlength="255" />
 
     <label class="form-label">Stock</label>
     <InputNumber class="form-control mb-3" @bind-Value="book.Stock" />
