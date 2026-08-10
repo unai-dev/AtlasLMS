@@ -63,23 +63,6 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public async Task<UserDetailDto> GetUserLoansAsync(string ID)
-    {
-        var user = await _userManager.Users
-            .Where(x => x.Id.Equals(ID))
-            .Select(x => x.Loans)
-            .ToListAsync();
-        return _mapper.Map<UserDetailDto>(user);
-    }
-    public async Task<UserDetailDto> GetUserBookingsAsync(string ID)
-    {
-        var user = await _userManager.Users
-            .Where(x => x.Id.Equals(ID))
-            .Select(x => x.Bookings)
-            .ToListAsync();
-        return _mapper.Map<UserDetailDto>(user);
-    }
-
     public async Task<UserReadDto> CreateUserAsync(UserCreateDto dto)
     {
         var existsEmail = await _userManager.FindByEmailAsync(dto.Email);

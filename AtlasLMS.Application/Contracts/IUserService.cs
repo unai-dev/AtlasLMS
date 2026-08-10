@@ -12,8 +12,6 @@ namespace AtlasLMS.Application.Contracts
         Task DeleteUserAsync(string ID);
         Task<UserReadDto> GetUserAsync(string ID);
         Task<UserDetailDto> GetUserDetailAsync(string ID);
-        Task<UserDetailDto> GetUserLoansAsync(string ID);
-        Task<UserDetailDto> GetUserBookingsAsync(string ID);
         Task<IEnumerable<UserReadDto>> GetUsersAsync();
         Task<UserReadDto> GetMe();
     }
