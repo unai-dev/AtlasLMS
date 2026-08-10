@@ -23,8 +23,8 @@ else if (loan is not null)
                         <p><strong>ID:</strong> @loan.ID</p>
                         <p><strong>Fecha de inicio:</strong> @loan.StartDate</p>
                         <p><strong>Fecha de recogida:</strong> @loan.DueDate</p>
-                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewUser(loan.UserID)"><strong>Usuario:</strong> @loan.UserID</p>
-                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewBook(loan.BookID)"><strong>Libro:</strong> @loan.BookID</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewUser(loan.UserID)">Ver Usuario</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewBook(loan.BookID)">Ver Libro</p>
                         <p>
                             <strong>Estado:</strong>
                             <Badge Color="@(loan.Status == 2 ? BadgeColor.Success : BadgeColor.Danger)" Class="px-3 py-2">

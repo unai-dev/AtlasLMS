@@ -27,8 +27,8 @@ else if (book is not null)
                             <p><strong>Sinopsis:</strong> @book.Synopsis</p>
                         }
                         <p><strong>Categoría:</strong> @book.CategoryName</p>
-                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewAuthor(book.AuthorID)"><strong>Autor:</strong> @book.AuthorID</p>
-                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewLocation(book.LocationID)"><strong>Ubicación:</strong> @book.LocationID</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewAuthor(book.AuthorID)">Ver autor</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="() => HandleViewLocation(book.LocationID)">Ver ubicación</p>
                         <p>
                             <strong>Estado:</strong>
                             <Badge Color="@(book.IsActive ? BadgeColor.Success : BadgeColor.Secondary)" Class="px-3 py-2">
