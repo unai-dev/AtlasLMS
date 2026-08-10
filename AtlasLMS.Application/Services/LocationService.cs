@@ -39,38 +39,11 @@ public class LocationService : ILocationService
 
     public async Task<LocationDetailDto> GetLocationDetailAsync(int ID)
     {
-        var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
+        var location = await _context.Locations
+            .Include(x => x.Books)
+            .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La ubicación con ID {ID} no existe");
         return _mapper.Map<LocationDetailDto>(location);
-    }
-
-    public async Task<IEnumerable<string>> GetAislesAsync()
-    {
-        var aisles = await _context.Locations
-            .Select(x => x.Aisle)
-            .Distinct()
-            .ToListAsync();
-        return aisles;
-    }
-
-    public async Task<IEnumerable<string>> GetColumnsByAisleAsync(string aisle)
-    {
-        var columns = await _context.Locations
-            .Where(x => x.Aisle.Equals(aisle))
-            .Select(x => x.Column)
-            .Distinct() //Omitimos duplicados
-            .ToListAsync();
-        return columns;
-    }
-
-    public async Task<IEnumerable<string>> GetShelvesAsync(string aisle, string column)
-    {
-        var shelves = await _context.Locations
-            .Where(x => x.Aisle.Equals(aisle) && x.Column.Equals(column))
-            .Select(x => x.Shelf)
-            .Distinct() //Omitimos duplicados
-            .ToListAsync();
-        return shelves;
     }
 
     public async Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto)

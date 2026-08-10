@@ -33,18 +33,6 @@ public class LocationController : ControllerBase
     public async Task<ActionResult<LocationDetailDto>> GetDetail(int id) =>
         Ok(await _locationService.GetLocationDetailAsync(id));
 
-    [HttpGet("aisles")]
-    public async Task<ActionResult<IEnumerable<string>>> GetAisles() =>
-        Ok(await _locationService.GetAislesAsync());
-
-    [HttpGet("aisles/{aisle}/columns")]
-    public async Task<ActionResult<IEnumerable<string>>> GetColumns(string aisle) =>
-        Ok(await _locationService.GetColumnsByAisleAsync(aisle));
-
-    [HttpGet("aisles/{aisle}/columns/{column}/shelves")]
-    public async Task<ActionResult<IEnumerable<string>>> GetShelves(string aisle, string column) =>
-        Ok(await _locationService.GetShelvesAsync(aisle, column));
-
     [HttpPost]
     public async Task<ActionResult<LocationReadDto>> Create([FromBody] LocationCreateDto dto)
     {
