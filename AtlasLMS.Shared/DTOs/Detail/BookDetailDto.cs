@@ -1,16 +1,9 @@
-﻿using AtlasLMS.Shared.DTOs.Common;
-using AtlasLMS.Shared.DTOs.Read;
+﻿using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Shared.DTOs.Detail;
 
-public class BookDetailDto : BaseDto
+public class BookDetailDto : BookReadDto
 {
-    public required string Title { get; set; }
-    public required string ISBN { get; set; }
-    public string? Synopsis { get; set; }
-    public int Stock { get; set; }
-    public DateTime PublicationAt { get; set; }
-
     // Related Properties
     //
     //
