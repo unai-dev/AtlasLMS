@@ -8,5 +8,7 @@ namespace AtlasLMS.Blazor.Features.Auth.Contracts
     {
         Task<AuthResponse?> LoginAsync(LoginDto dto);
         Task<AuthResponse?> RegisterAsync(UserCreateDto dto);
+        Task<HttpResponseMessage> MakeAdmin(ClaimDto dto);
+        Task<HttpResponseMessage> RemoveAdmin(ClaimDto dto);
     }
 }

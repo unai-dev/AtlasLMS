@@ -27,4 +27,10 @@ public class AuthService : IAuthService
         var result = await _http.PostAsJsonAsync("auth/register", dto);
         return await result.Content.ReadFromJsonAsync<AuthResponse>();
     }
+
+    public async Task<HttpResponseMessage> MakeAdmin(ClaimDto dto) =>
+        await _http.PostAsJsonAsync("auth/admin/add", dto);
+
+    public async Task<HttpResponseMessage> RemoveAdmin(ClaimDto dto) =>
+        await _http.PostAsJsonAsync("auth/admin/remove", dto);
 }

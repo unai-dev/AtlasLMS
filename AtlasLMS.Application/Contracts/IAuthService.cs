@@ -7,4 +7,6 @@ public interface IAuthService
 {
     Task<AuthResponse> Login(LoginDto dto);
     Task<AuthResponse> Register(UserCreateDto dto);
+    Task MakeAdmin(ClaimDto dto);
+    Task RemoveAdmin(ClaimDto dto);
 }

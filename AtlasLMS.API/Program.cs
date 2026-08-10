@@ -63,8 +63,7 @@ builder.Services.AddAuthentication().AddJwtBearer(cfg =>
 });
 builder.Services.AddAuthorization(opt =>
 {
-    opt.AddPolicy("ADMIN", policy => policy.RequireClaim("ADMIN"));
-    opt.AddPolicy("CUSTOMER", policy => policy.RequireClaim("CUSTOMER"));
+    opt.AddPolicy("admin", policy => policy.RequireClaim("admin"));
 });
 // =======================================
 // ================== CORS ===============

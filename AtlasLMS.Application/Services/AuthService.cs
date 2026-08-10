@@ -73,6 +73,23 @@ public class AuthService : IAuthService
         return await GetJwtToken(dto.Email);
     }
 
+    public async Task MakeAdmin(ClaimDto dto)
+    {
+        var user = await _userManager.FindByEmailAsync(dto.Email)
+            ?? throw new NotFoundException($"El usuario con email {dto.Email} no existe");
+
+        await _userManager.AddClaimAsync(user, new Claim("admin", "true"));
+    }
+
+    public async Task RemoveAdmin(ClaimDto dto)
+    {
+        var user = await _userManager.FindByEmailAsync(dto.Email)
+            ?? throw new NotFoundException($"El usuario con email {dto.Email} no existe");
+
+        await _userManager.RemoveClaimAsync(user, new Claim("admin", "true"));
+    }
+
+    #region GetJwtToken----------------------------------------------------------------------------------
     private async Task<AuthResponse> GetJwtToken(string email)
     {
         var claims = new List<Claim> { new Claim("email", email) };
@@ -99,4 +116,5 @@ public class AuthService : IAuthService
         return new AuthResponse { Token = generatedToken, Expiration = expiration };
 
     }
+    #endregion
 }
