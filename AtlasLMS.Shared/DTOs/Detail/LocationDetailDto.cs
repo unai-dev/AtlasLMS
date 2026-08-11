@@ -8,5 +8,5 @@ public class LocationDetailDto : LocationReadDto
     //
     //
     //
-    public List<BookingReadDto> Books { get; set; } = new List<BookingReadDto>();
+    public List<BookReadDto> Books { get; set; } = new List<BookReadDto>();
 }

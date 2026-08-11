@@ -40,6 +40,7 @@ public class LocationService : ILocationService
     public async Task<LocationDetailDto> GetLocationDetailAsync(int ID)
     {
         var location = await _context.Locations
+            .Include(x => x.Books)
             .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La ubicación con ID {ID} no existe");
         return _mapper.Map<LocationDetailDto>(location);
