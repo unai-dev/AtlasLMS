@@ -43,7 +43,7 @@ public partial class UserPage
 
     #region Actions--------------------------------------------------------
     private void HandleReturn() => NavigationService.NavigateTo("/users");
-    private async Task HandleAdmin()
+    private async Task HandleAddAdmin()
     {
         currentPost = true;
 
@@ -56,6 +56,23 @@ public partial class UserPage
             currentPost = false;
             return;
         }
+        await AtlasExceptionHandler.SwitchExceptionMessage(response);
+        currentPost = false;
+    }
+
+    private async Task HandleRemoveAdmin()
+    {
+        currentPost = true;
+        if (claim is null) return;
+
+        var response = await AuthService.RemoveAdmin(claim);
+        if (response.IsSuccessStatusCode)
+        {
+            ToastService.Notify(new(ToastType.Success, "¡Listo!", "Se elimino como administrador de Atlas el usuario correctamente."));
+            currentPost = false;
+            return;
+        }
+
         await AtlasExceptionHandler.SwitchExceptionMessage(response);
         currentPost = false;
     }

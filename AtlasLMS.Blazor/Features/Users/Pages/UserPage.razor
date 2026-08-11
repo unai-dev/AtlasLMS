@@ -48,10 +48,16 @@ else if (user is not null)
                         }
                     </div>
                 </div>
-                <button class="btn btn-danger mt-3 d-flex align-items-center" @onclick="HandleAdmin" disabled="@currentPost">
-                    <Icon Name="IconName.ShieldLockFill" Class="me-2" />
-                    @(currentPost ? "Haciendo administrador..." : "Hacer Administrador")
-                </button>
+                <div class="d-flex flex-row gap-2">
+                    <button class="btn btn-danger mt-3 d-flex align-items-center" @onclick="HandleAddAdmin" disabled="@currentPost">
+                        <Icon Name="IconName.ShieldLockFill" Class="me-2" />
+                        @(currentPost ? "Haciendo administrador..." : "Hacer Administrador")
+                    </button>
+                    <button class="btn btn-danger mt-3 d-flex align-items-center" @onclick="HandleRemoveAdmin" disabled="@currentPost">
+                        <Icon Name="IconName.ShieldLockFill" Class="me-2" />
+                        @(currentPost ? "Quitando administrador..." : "Quitar Administrador")
+                    </button>
+                </div>
             </CardBody>
         </Card>
 
