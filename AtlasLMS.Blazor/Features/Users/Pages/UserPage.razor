@@ -31,6 +31,9 @@ else if (user is not null)
                         <p><strong>Usuario:</strong> @user.UserName</p>
                         <p><strong>Email:</strong> @user.Email</p>
                         <p><strong>CIF:</strong> @user.CIF</p>
+                        <p class="link-primary" style="cursor: pointer;" @onclick="HandleBookings">Ver Reservas</p>
+                        <p class="link-primary" style="cursor: pointer;" @onclick="HandleLoans">Ver Prestamos</p>
+                        <p><strong>CIF:</strong> @user.CIF</p>
                         <p>
                             <strong>Estado:</strong>
                             <Badge Color="@(user.IsActive ? BadgeColor.Success : BadgeColor.Secondary)" Class="px-3 py-2">

@@ -43,6 +43,11 @@ public partial class UserPage
 
     #region Actions--------------------------------------------------------
     private void HandleReturn() => NavigationService.NavigateTo("/users");
+    //Bookings y Loans, son paginas provisionales
+    //El usuario cuando haga click para ver reservas
+    //o prestamos, se redirecionara a una pagina especial que unicamente mostrara sus prestamos/reservas
+    private void HandleBookings() => NavigationService.NavigateTo("/bookings");
+    private void HandleLoans() => NavigationService.NavigateTo("/loans");
     private async Task HandleAddAdmin()
     {
         currentPost = true;
