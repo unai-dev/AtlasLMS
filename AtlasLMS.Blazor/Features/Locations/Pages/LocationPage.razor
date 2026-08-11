@@ -24,6 +24,7 @@ else if (location is not null)
                         <p><strong>Columna:</strong> @location.Column</p>
                         <p><strong>Estante:</strong> @location.Shelf</p>
                         <p><strong>Limite de libros:</strong> @location.LimitOfBooks</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="HandleBooks">Ver libros</p>
                         <p>
                             <strong>Estado:</strong>
                             <Badge Color="@(location.IsActive ? BadgeColor.Success : BadgeColor.Secondary)" Class="px-3 py-2">

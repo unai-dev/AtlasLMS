@@ -29,6 +29,7 @@ else if (author is not null)
                     <div class="col-md-9">
                         <p><strong>ID:</strong> @author.ID</p>
                         <p><strong>Nombre:</strong> @author.FullName</p>
+                        <p class="link-primary" style="cursor:pointer;" @onclick="HandleBooks">Ver libros</p>
                         <p>
                             <strong>Estado:</strong>
                             <Badge Color="@(author.IsActive ? BadgeColor.Success : BadgeColor.Secondary)" Class="px-3 py-2">

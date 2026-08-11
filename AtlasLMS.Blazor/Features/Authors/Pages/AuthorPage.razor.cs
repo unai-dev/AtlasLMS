@@ -31,5 +31,7 @@ public partial class AuthorPage
 
     #region Actions----------------------------------------------------------
     private void HandleReturn() => NavigationService.NavigateTo("/authors");
+    //Provisional
+    private void HandleBooks() => NavigationService.NavigateTo("/books");
     #endregion
 }

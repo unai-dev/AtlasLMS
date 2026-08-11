@@ -31,5 +31,7 @@ public partial class LocationPage
 
     #region Actions----------------------------------------------------------------------
     private void HandleReturn() => NavigationService.NavigateTo("/locations");
+    //Provisional
+    private void HandleBooks() => NavigationService.NavigateTo("/books");
     #endregion
 }
