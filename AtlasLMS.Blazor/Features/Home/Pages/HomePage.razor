@@ -1,8 +1,0 @@
-﻿@page "/"
-@attribute [Authorize]
-
-<PageTitle>Inicio</PageTitle>
-
-<div class="container mt-4">
-    <WelcomeCard User="@user" IsLoading="@isLoading" OnLogout="HandleLogout" />
-</div>
