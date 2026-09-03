@@ -114,7 +114,7 @@ public class AuthService : IAuthService
 
         var generatedToken = new JwtSecurityTokenHandler().WriteToken(securityKey);
 
-        return new AuthResponse { Token = generatedToken, Expiration = expiration };
+        return new AuthResponse(generatedToken, expiration);
 
     }
     #endregion
