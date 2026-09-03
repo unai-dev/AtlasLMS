@@ -87,9 +87,9 @@ public class LocationService : ILocationService
             throw new BadRequestException($"Ya existe la localizacion introducida");
 
         //En el caso que no venga la informacion en el DTO guardamos el valor anterior
-        location.Aisle = !string.IsNullOrEmpty(dto.Aisle) ? dto.Aisle : location.Aisle;
-        location.Column = !string.IsNullOrEmpty(dto.Column) ? dto.Column : location.Column;
-        location.Shelf = !string.IsNullOrEmpty(dto.Shelf) ? dto.Shelf : location.Shelf;
+        location.Aisle = dto.Aisle ?? location.Aisle;
+        location.Column = dto.Column ?? location.Column;
+        location.Shelf = dto.Shelf ?? location.Shelf;
 
         location.LimitOfBooks = dto.LimitOfBooks ?? location.LimitOfBooks;
 

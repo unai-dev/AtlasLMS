@@ -52,7 +52,7 @@ public class AuthService : IAuthService
         var user = new User
         {
             CIF = dto.CIF,
-            UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : dto.Email.Split("@")[0],
+            UserName =  dto.UserName ?? dto.Email.Split("@")[0],
             Email = dto.Email
         };
 
@@ -64,6 +64,7 @@ public class AuthService : IAuthService
     {
         var user = await _userManager.FindByEmailAsync(dto.Email)
             ?? throw new NotFoundException($"El usuario {dto.Email} no existe");
+
         //Verificamos credenciales
         var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
 

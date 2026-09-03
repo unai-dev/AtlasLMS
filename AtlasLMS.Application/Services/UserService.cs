@@ -119,9 +119,9 @@ public class UserService : IUserService
         }
 
         //Si el DTO no tiene la informacion, guardamos el valor anterior
-        user.Email = !string.IsNullOrEmpty(dto.Email) ? dto.Email : user.Email;
-        user.CIF = !string.IsNullOrEmpty(dto.CIF) ? dto.CIF : user.CIF;
-        user.UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : user.UserName;
+        user.Email = dto.Email ?? user.Email;
+        user.CIF = dto.CIF ?? user.CIF;
+        user.UserName = dto.UserName ?? user.UserName;
 
         user.UpdatedAt = DateTime.UtcNow;
 

@@ -123,9 +123,9 @@ public class BookService : IBookService
             throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser mayor a la actual");
 
         //Si el DTO no contiene la informacion, guardamos el valor anterior
-        book.Title = !string.IsNullOrEmpty(dto.Title) ? dto.Title : book.Title;
-        book.ISBN = !string.IsNullOrEmpty(dto.ISBN) ? dto.ISBN : book.ISBN;
-        book.Synopsis = !string.IsNullOrEmpty(dto.Synopsis) ? dto.Synopsis : book.Synopsis;
+        book.Title = dto.Title ?? book.Title;
+        book.ISBN = dto.ISBN ?? book.ISBN;
+        book.Synopsis = dto.Synopsis ?? book.Synopsis;
 
         book.Stock = dto.Stock ?? book.Stock;
         book.PublicationAt = dto.PublicationAt ?? book.PublicationAt;

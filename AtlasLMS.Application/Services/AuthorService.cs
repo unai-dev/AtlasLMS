@@ -75,9 +75,10 @@ public class AuthorService : IAuthorService
             if (authorWithNameExists)
                 throw new BadRequestException($"El autor {dto.FirstName} {dto.LastName} ya existe");
         }
+
         //Si el DTO no tiene la informacion, guardamos el valor anterior
-        author.FirstName = !string.IsNullOrEmpty(dto.FirstName) ? dto.FirstName : author.FirstName;
-        author.LastName = !string.IsNullOrEmpty(dto.LastName) ? dto.LastName : author.LastName;
+        author.FirstName =  dto.FirstName ?? author.FirstName;
+        author.LastName = dto.LastName ?? author.LastName;
         author.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();
