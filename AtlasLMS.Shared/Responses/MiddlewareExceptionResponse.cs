@@ -5,4 +5,4 @@ namespace AtlasLMS.Shared.Responses;
 /// <summary>
 /// Modelo de respuesta al capturar una excepcion
 /// </summary>
-public record MiddlewareExceptionResponse(bool Success, HttpStatusCode StatusCode, string Message);
+public record MiddlewareExceptionResponse(HttpStatusCode StatusCode, string Message);
