@@ -134,12 +134,8 @@ public class UserService : IUserService
         var user = await _userManager.FindByIdAsync(ID)
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
 
-        var userHasAnyLoan = await _context.Loans.AnyAsync(x => x.UserID == ID && x.Status == ELoanStatus.Active);
-        if (userHasAnyLoan)
-            throw new BadRequestException($"El usuario no puede ser eliminado. Tiene prestamos activos");
-
         var userHasAnyBooking = await _context.Bookings.AnyAsync(x => x.UserID == ID && x.Status == EBookingStatus.Active);
-        if (userHasAnyLoan)
+        if (userHasAnyBooking)
             throw new BadRequestException($"El usuario no puede ser eliminado. Tiene reservas activas");
 
         await _userManager.DeleteAsync(user);

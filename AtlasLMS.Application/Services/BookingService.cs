@@ -93,12 +93,10 @@ public class BookingService : IBookingService
         if (dto.StartTime < DateTime.UtcNow)
             throw new BadRequestException($"La fecha de inicio no puede ser menor a la fecha actual");
 
-        //Validamos stock, si la suma de reservas y prestamos activos da el total, lanzamos badrequest
+        //Validamos stock, si el total de reservas activas da el total, lanzamos badrequest
         var activeBookings = await _context.Bookings
             .CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > dto.StartTime);
-        var activeLoans = await _context.Loans
-            .CountAsync(x => x.BookID == dto.BookID && x.DueDate > dto.StartTime);
-        if ((activeBookings + activeLoans) >= book.Stock)
+        if (activeBookings >= book.Stock)
             throw new BadRequestException($"No hay ejemplares suficientes para el libro {dto.BookID}");
 
         //Si el usuario ya ha reservado el libro en el periodo de fecha indicado, lanzamos badrequest
