@@ -4,7 +4,7 @@ namespace AtlasLMS.Domain.Entities;
 
 public class User : IdentityUser
 {
-    public required string CIF { get; set; }
+    public string CIF { get; set; } = null!;
     public bool IsActive { get; set; } = true;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
@@ -13,6 +13,5 @@ public class User : IdentityUser
     //
     //
     //
-    public List<Loan> Loans { get; set; } = new List<Loan>();
     public List<Booking> Bookings { get; set; } = new List<Booking>();
 }

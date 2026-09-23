@@ -4,8 +4,8 @@ namespace AtlasLMS.Domain.Entities;
 
 public class Author : BaseEntity
 {
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
 
     // Related Properties
     //

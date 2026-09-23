@@ -9,6 +9,10 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
 {
     public void Configure(EntityTypeBuilder<Book> builder)
     {
+        builder.ToTable("asp_Books");
+
+        builder.HasKey(x => x.ID);
+
         builder.Property(x => x.Title)
             .IsRequired()
             .HasMaxLength(55);

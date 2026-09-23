@@ -4,10 +4,10 @@ namespace AtlasLMS.Domain.Entities;
 
 public class Location : BaseEntity
 {
-    public required string Aisle { get; set; }
-    public required string Shelf { get; set; }
-    public required string Column { get; set; }
-    public int LimitOfBooks { get; set; }
+    public string Aisle { get; set; } = null!;
+    public string Shelf { get; set; } = null!;
+    public string Column { get; set; } = null!;
+    public int LimitOfBooks { get; set; } = 5;
 
     // Related Properties
     //

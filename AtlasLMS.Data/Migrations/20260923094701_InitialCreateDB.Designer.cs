@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AtlasLMS.Data.Migrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20260923091942_InitialCreateDB")]
+    [Migration("20260923094701_InitialCreateDB")]
     partial class InitialCreateDB
     {
         /// <inheritdoc />
@@ -54,7 +54,7 @@ namespace AtlasLMS.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Authors");
+                    b.ToTable("asp_Authors", (string)null);
                 });
 
             modelBuilder.Entity("AtlasLMS.Domain.Entities.Book", b =>
@@ -113,7 +113,7 @@ namespace AtlasLMS.Data.Migrations
 
                     b.HasIndex("LocationID");
 
-                    b.ToTable("Books");
+                    b.ToTable("asp_Books", (string)null);
                 });
 
             modelBuilder.Entity("AtlasLMS.Domain.Entities.Booking", b =>
@@ -157,7 +157,7 @@ namespace AtlasLMS.Data.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("asp_Bookings", (string)null);
                 });
 
             modelBuilder.Entity("AtlasLMS.Domain.Entities.Category", b =>
@@ -184,52 +184,7 @@ namespace AtlasLMS.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("AtlasLMS.Domain.Entities.Loan", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("BookID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LifeTime")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("BookID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Loan");
+                    b.ToTable("asp_Categories", (string)null);
                 });
 
             modelBuilder.Entity("AtlasLMS.Domain.Entities.Location", b =>
@@ -271,7 +226,7 @@ namespace AtlasLMS.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Locations");
+                    b.ToTable("asp_Locations", (string)null);
                 });
 
             modelBuilder.Entity("AtlasLMS.Domain.Entities.User", b =>
@@ -529,25 +484,6 @@ namespace AtlasLMS.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AtlasLMS.Domain.Entities.Loan", b =>
-                {
-                    b.HasOne("AtlasLMS.Domain.Entities.Book", "Book")
-                        .WithMany("Loans")
-                        .HasForeignKey("BookID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AtlasLMS.Domain.Entities.User", "User")
-                        .WithMany("Loans")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -607,8 +543,6 @@ namespace AtlasLMS.Data.Migrations
             modelBuilder.Entity("AtlasLMS.Domain.Entities.Book", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("Loans");
                 });
 
             modelBuilder.Entity("AtlasLMS.Domain.Entities.Category", b =>
@@ -624,8 +558,6 @@ namespace AtlasLMS.Data.Migrations
             modelBuilder.Entity("AtlasLMS.Domain.Entities.User", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("Loans");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,6 +9,10 @@ public class AuthorConfiguration : IEntityTypeConfiguration<Author>
 {
     public void Configure(EntityTypeBuilder<Author> builder)
     {
+        builder.ToTable("asp_Authors");
+
+        builder.HasKey(x => x.ID);
+
         builder.Property(x => x.FirstName)
             .IsRequired()
             .HasMaxLength(55);

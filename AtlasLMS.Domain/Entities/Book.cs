@@ -6,8 +6,8 @@ namespace AtlasLMS.Domain.Entities;
 
 public class Book : BaseEntity
 {
-    public required string Title { get; set; }
-    public required string ISBN { get; set; }
+    public string Title { get; set; } = null!;
+    public string ISBN { get; set; } = null!;
     public int Stock { get; set; }
     public string? Synopsis { get; set; }
     public DateTime PublicationAt { get; set; }
@@ -29,5 +29,4 @@ public class Book : BaseEntity
     public Location? Location { get; set; }
 
     public List<Booking> Bookings { get; set; } = new List<Booking>();
-    public List<Loan> Loans { get; set; } = new List<Loan>();
 }

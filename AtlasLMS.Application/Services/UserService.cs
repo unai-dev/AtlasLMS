@@ -47,7 +47,6 @@ public class UserService : IUserService
     {
         var user = await _userManager.Users
             .Include(x => x.Bookings)
-            .Include(x => x.Loans)
             .FirstOrDefaultAsync(x => x.Id == ID)
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
 
