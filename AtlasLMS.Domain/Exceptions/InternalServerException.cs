@@ -2,8 +2,6 @@
 
 public class InternalServerException : Exception
 {
-    public InternalServerException(string msg) : base(msg)
-    {
-
-    }
+    public InternalServerException() { }
+    public InternalServerException(string msg) : base(msg) { }
 }
