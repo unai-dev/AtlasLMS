@@ -32,7 +32,9 @@ public class UserService : IUserService
 
     public async Task<IEnumerable<UserReadDto>> GetUsersAsync()
     {
-        var users = await _userManager.Users.ToListAsync();
+        var users = await _userManager.Users
+            .AsNoTracking()
+            .ToListAsync();
         return _mapper.Map<IEnumerable<UserReadDto>>(users);
     }
 
@@ -47,6 +49,7 @@ public class UserService : IUserService
     {
         var user = await _userManager.Users
             .Include(x => x.Bookings)
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == ID)
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
 

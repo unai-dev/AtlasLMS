@@ -26,13 +26,17 @@ public class LocationService : ILocationService
 
     public async Task<IEnumerable<LocationReadDto>> GetLocationsAsync()
     {
-        var locations = await _context.Locations.ToListAsync();
+        var locations = await _context.Locations
+            .AsNoTracking()
+            .ToListAsync();
         return _mapper.Map<IEnumerable<LocationReadDto>>(locations);
     }
 
     public async Task<LocationReadDto> GetLocationAsync(int ID)
     {
-        var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
+        var location = await _context.Locations
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La localizacion con ID {ID} no existe");
         return _mapper.Map<LocationReadDto>(location);
     }
@@ -41,6 +45,7 @@ public class LocationService : ILocationService
     {
         var location = await _context.Locations
             .Include(x => x.Books)
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La ubicación con ID {ID} no existe");
         return _mapper.Map<LocationDetailDto>(location);

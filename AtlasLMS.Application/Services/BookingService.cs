@@ -28,13 +28,16 @@ public class BookingService : IBookingService
 
     public async Task<IEnumerable<BookingReadDto>> GetBookingsAsync()
     {
-        var bookings = await _context.Bookings.ToListAsync();
+        var bookings = await _context.Bookings
+            .AsNoTracking()
+            .ToListAsync();
         return _mapper.Map<IEnumerable<BookingReadDto>>(bookings);
     }
 
     public async Task<IEnumerable<BookingReadDto>> GetBookingsByUserAsync(string userID)
     {
-        var userExists = await _userManager.Users.AnyAsync(x => x.Id.Equals(userID));
+        var userExists = await _userManager.Users
+            .AnyAsync(x => x.Id.Equals(userID));
         if (!userExists)
             throw new NotFoundException($"El usuario con ID {userID} no existe");
 
@@ -44,7 +47,9 @@ public class BookingService : IBookingService
 
     public async Task<IEnumerable<BookingReadDto>> GetBookingsByStatusAsync(EBookingStatus? status)
     {
-        var query = _context.Bookings.AsQueryable();
+        var query = _context.Bookings
+            .AsNoTracking()
+            .AsQueryable();
 
         var filteredBookings = query.Where(x => x.Status == status);
         var bookings = await filteredBookings.ToListAsync();
@@ -54,7 +59,9 @@ public class BookingService : IBookingService
 
     public async Task<BookingReadDto> GetBookingAsync(int ID)
     {
-        var booking = await _context.Bookings.FirstOrDefaultAsync(x => x.ID == ID)
+        var booking = await _context.Bookings
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La reserva con ID {ID} no existe");
         return _mapper.Map<BookingReadDto>(booking);
     }
@@ -71,7 +78,9 @@ public class BookingService : IBookingService
     }
     public async Task<BookingDetailDto> GetBookingDetailAsync(int ID)
     {
-        var booking = await _context.Bookings.FirstOrDefaultAsync(x => x.ID == ID)
+        var booking = await _context.Bookings
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La reserva con ID {ID} no existe");
         return _mapper.Map<BookingDetailDto>(booking);
     }

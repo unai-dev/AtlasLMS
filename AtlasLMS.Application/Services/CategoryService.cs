@@ -24,13 +24,17 @@ public class CategoryService : ICategoryService
 
     public async Task<IEnumerable<CategoryReadDto>> GetCategoriesAsync()
     {
-        var categories = await _context.Categories.ToListAsync();
+        var categories = await _context.Categories
+            .AsNoTracking()
+            .ToListAsync();
         return _mapper.Map<IEnumerable<CategoryReadDto>>(categories);
     }
 
     public async Task<CategoryReadDto> GetCategoryAsync(int ID)
     {
-        var category = await _context.Categories.FirstOrDefaultAsync(x => x.ID == ID) ??
+        var category = await _context.Categories
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID) ??
             throw new NotFoundException("Categoria no econtrada");
         return _mapper.Map<CategoryReadDto>(category);
     }

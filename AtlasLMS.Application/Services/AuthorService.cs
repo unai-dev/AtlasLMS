@@ -26,13 +26,17 @@ public class AuthorService : IAuthorService
 
     public async Task<IEnumerable<AuthorReadDto>> GetAuthorsAsync()
     {
-        var authors = await _context.Authors.ToListAsync();
+        var authors = await _context.Authors
+            .AsNoTracking()
+            .ToListAsync();
         return _mapper.Map<IEnumerable<AuthorReadDto>>(authors);
     }
 
     public async Task<AuthorReadDto> GetAuthorAsync(int ID)
     {
-        var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID) ??
+        var author = await _context.Authors
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID) ??
             throw new NotFoundException($"Autor con ID {ID} no encontrado");
         return _mapper.Map<AuthorReadDto>(author);
     }
@@ -41,6 +45,7 @@ public class AuthorService : IAuthorService
     {
         var author = await _context.Authors
             .Include(x => x.Books)
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"Autor con ID {ID} no encontrado");
 
