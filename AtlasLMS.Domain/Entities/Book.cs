@@ -12,10 +12,7 @@ public class Book : BaseEntity
     public string? Synopsis { get; set; }
     public DateTime PublicationAt { get; set; }
 
-    // Related Properties
-    //
-    //
-    //
+    #region Related Properties
     [ForeignKey("AuthorID")]
     public required int AuthorID { get; set; }
     public Author? Author { get; set; }
@@ -29,4 +26,6 @@ public class Book : BaseEntity
     public Location? Location { get; set; }
 
     public List<Booking> Bookings { get; set; } = new List<Booking>();
+    public List<Center> Centers = new List<Center>();
+    #endregion
 }

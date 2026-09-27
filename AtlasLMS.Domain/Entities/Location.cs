@@ -9,9 +9,11 @@ public class Location : BaseEntity
     public string Column { get; set; } = null!;
     public int LimitOfBooks { get; set; } = 5;
 
-    // Related Properties
-    //
-    //
-    //
+
+    #region Related Properties
+    public int CenterID { get; set; }
+    public Center? Center { get; set; }
+
     public List<Book> Books { get; set; } = new List<Book>();
+    #endregion
 }
