@@ -21,17 +21,8 @@ public class BookingController : ControllerBase
         _bookingService = bookingService;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<BookingReadDto>>> GetAll([FromQuery] EBookingStatus? status)
-    {
-        if (status is not null)
-            return Ok(await _bookingService.GetBookingsByStatusAsync(status));
-
-        return Ok(await _bookingService.GetBookingsAsync());
-    }
-
     [HttpGet("user/{userID}")]
-    public async Task<ActionResult<IEnumerable<BookingReadDto>>> GetByUser(string userID) =>
+    public async Task<ActionResult<IEnumerable<BookingReadDto>>> GetByUser(int userID) =>
         Ok(await _bookingService.GetBookingsByUserAsync(userID));
 
     [HttpGet("{id:int}")]

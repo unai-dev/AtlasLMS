@@ -34,26 +34,18 @@ public class BookingService : IBookingService
         return _mapper.Map<IEnumerable<BookingReadDto>>(bookings);
     }
 
-    public async Task<IEnumerable<BookingReadDto>> GetBookingsByUserAsync(string userID)
+    public async Task<IEnumerable<BookingReadDto>> GetBookingsByUserAsync(int userID)
     {
         var userExists = await _userManager.Users
-            .AnyAsync(x => x.Id.Equals(userID));
+            .AnyAsync(x => x.Id == userID);
         if (!userExists)
             throw new NotFoundException($"El usuario con ID {userID} no existe");
 
-        var bookings = await _context.Bookings.Where(x => x.UserID.Equals(userID)).Include(x => x.Book).ToListAsync();
-        return _mapper.Map<IEnumerable<BookingReadDto>>(bookings);
-    }
-
-    public async Task<IEnumerable<BookingReadDto>> GetBookingsByStatusAsync(EBookingStatus? status)
-    {
-        var query = _context.Bookings
+        var bookings = await _context.Bookings
+            .Where(x => x.UserID == userID)
+            .Include(x => x.Book)
             .AsNoTracking()
-            .AsQueryable();
-
-        var filteredBookings = query.Where(x => x.Status == status);
-        var bookings = await filteredBookings.ToListAsync();
-
+            .ToListAsync();
         return _mapper.Map<IEnumerable<BookingReadDto>>(bookings);
     }
 
@@ -90,7 +82,7 @@ public class BookingService : IBookingService
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == dto.BookID)
             ?? throw new NotFoundException($"El libro con ID {dto.BookID} no existe");
 
-        var userExists = await _userManager.FindByIdAsync(dto.UserID)
+        var userExists = await _userManager.FindByIdAsync(dto.UserID.ToString())
             ?? throw new NotFoundException($"Usuario con ID {dto.UserID} no existe");
 
         //Si el usuario ha superado el limite de reservas(2) lanzamos un badrequest

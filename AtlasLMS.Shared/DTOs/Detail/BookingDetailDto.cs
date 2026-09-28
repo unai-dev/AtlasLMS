@@ -10,6 +10,6 @@ public class BookingDetailDto : BookingReadDto
     //
     public int BookID { get; set; }
     public BookReadDto? Book { get; set; }
-    public required string UserID { get; set; }
+    public int UserID { get; set; }
     public UserReadDto? User { get; set; }
 }

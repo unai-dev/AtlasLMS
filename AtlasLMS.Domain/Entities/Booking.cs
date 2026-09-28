@@ -19,14 +19,14 @@ public class Booking : BaseEntity
     public int BookID { get; set; }
     public Book? Book { get; set; }
     #endregion
-
-    #region EBookingStatus
-    public enum EBookingStatus
-    {
-        Cancelled = 0,
-        Expired = 1,
-        Active = 2,
-    }
-    #endregion
 }
+
+#region EBookingStatus
+public enum EBookingStatus
+{
+    Cancelled = 0,
+    Expired = 1,
+    Active = 2,
+}
+#endregion
 

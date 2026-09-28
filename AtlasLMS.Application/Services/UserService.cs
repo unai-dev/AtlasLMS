@@ -38,14 +38,14 @@ public class UserService : IUserService
         return _mapper.Map<IEnumerable<UserReadDto>>(users);
     }
 
-    public async Task<UserReadDto> GetUserAsync(string ID)
+    public async Task<UserReadDto> GetUserAsync(int ID)
     {
-        var user = await _userManager.FindByIdAsync(ID)
+        var user = await _userManager.FindByIdAsync(ID.ToString())
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public async Task<UserDetailDto> GetUserDetailAsync(string ID)
+    public async Task<UserDetailDto> GetUserDetailAsync(int ID)
     {
         var user = await _userManager.Users
             .Include(x => x.Bookings)
@@ -91,9 +91,9 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public async Task<UserReadDto> UpdateUserAsync(string ID, UserUpdateDto dto)
+    public async Task<UserReadDto> UpdateUserAsync(int ID, UserUpdateDto dto)
     {
-        var user = await _userManager.FindByIdAsync(ID)
+        var user = await _userManager.FindByIdAsync(ID.ToString())
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
 
         //Si el Email ya consta en nuestra base de datos, lanzamos badrequest
@@ -131,9 +131,9 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public async Task DeleteUserAsync(string ID)
+    public async Task DeleteUserAsync(int ID)
     {
-        var user = await _userManager.FindByIdAsync(ID)
+        var user = await _userManager.FindByIdAsync(ID.ToString())
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
 
         var userHasAnyBooking = await _context.Bookings.AnyAsync(x => x.UserID == ID && x.Status == EBookingStatus.Active);

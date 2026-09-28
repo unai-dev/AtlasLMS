@@ -8,10 +8,10 @@ namespace AtlasLMS.Application.Contracts
     public interface IUserService
     {
         Task<UserReadDto> CreateUserAsync(UserCreateDto dto);
-        Task<UserReadDto> UpdateUserAsync(string ID, UserUpdateDto dto);
-        Task DeleteUserAsync(string ID);
-        Task<UserReadDto> GetUserAsync(string ID);
-        Task<UserDetailDto> GetUserDetailAsync(string ID);
+        Task<UserReadDto> UpdateUserAsync(int ID, UserUpdateDto dto);
+        Task DeleteUserAsync(int ID);
+        Task<UserReadDto> GetUserAsync(int ID);
+        Task<UserDetailDto> GetUserDetailAsync(int ID);
         Task<IEnumerable<UserReadDto>> GetUsersAsync();
         Task<UserReadDto> GetMe();
     }

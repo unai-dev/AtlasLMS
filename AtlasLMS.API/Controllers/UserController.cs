@@ -31,12 +31,12 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("{ID}")]
-    public async Task<ActionResult<UserReadDto>> Get([FromRoute] string ID) =>
+    public async Task<ActionResult<UserReadDto>> Get([FromRoute] int ID) =>
         Ok(await _userService.GetUserAsync(ID));
 
     [HttpGet]
     [Route("detail/{ID}")]
-    public async Task<ActionResult<UserDetailDto>> GetDetail([FromRoute] string ID) =>
+    public async Task<ActionResult<UserDetailDto>> GetDetail([FromRoute] int ID) =>
         Ok(await _userService.GetUserDetailAsync(ID));
 
     [HttpPost]
@@ -48,12 +48,12 @@ public class UserController : ControllerBase
 
     [HttpPut]
     [Route("{ID}")]
-    public async Task<ActionResult<UserReadDto>> Put([FromRoute] string ID, [FromBody] UserUpdateDto dto) =>
+    public async Task<ActionResult<UserReadDto>> Put([FromRoute] int ID, [FromBody] UserUpdateDto dto) =>
         Ok(await _userService.UpdateUserAsync(ID, dto));
 
     [HttpDelete]
     [Route("{ID}")]
-    public async Task<ActionResult> Delete([FromRoute] string ID)
+    public async Task<ActionResult> Delete([FromRoute] int ID)
     {
         await _userService.DeleteUserAsync(ID);
         return NoContent();

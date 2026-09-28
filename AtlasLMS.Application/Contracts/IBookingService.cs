@@ -12,8 +12,7 @@ namespace AtlasLMS.Application.Contracts
         Task<BookingReadDto> GetBookingAsync(int ID);
         Task<BookingReadDto> GetBookingByBookAsync(int bookID);
         Task<IEnumerable<BookingReadDto>> GetBookingsAsync();
-        Task<IEnumerable<BookingReadDto>> GetBookingsByStatusAsync(EBookingStatus? status);
-        Task<IEnumerable<BookingReadDto>> GetBookingsByUserAsync(string userID);
+        Task<IEnumerable<BookingReadDto>> GetBookingsByUserAsync(int userID);
         Task<BookingDetailDto> GetBookingDetailAsync(int ID);
     }
 }
