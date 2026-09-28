@@ -13,21 +13,15 @@ public class LocationProfile : Profile
     public LocationProfile()
     {
         // Location -> ReadDto
-        CreateMap<Location, LocationReadDto>()
-            .ReverseMap();
+        CreateMap<Location, LocationReadDto>().ReverseMap();
 
         // Location -> ReadDto
-        CreateMap<Location, LocationDetailDto>()
-            .ReverseMap();
+        CreateMap<Location, LocationDetailDto>().ReverseMap();
 
         // CreateDto -> Location
-        CreateMap<LocationCreateDto, Location>()
-            .ForMember(dest => dest.ID, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
+        CreateMap<LocationCreateDto, Location>().ReverseMap();
 
         // UpdateDto -> Location
-        CreateMap<LocationUpdateDto, Location>()
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+        CreateMap<LocationUpdateDto, Location>().ReverseMap();
     }
 }

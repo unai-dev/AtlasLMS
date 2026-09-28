@@ -12,17 +12,12 @@ public class UserProfile : Profile
     public UserProfile()
     {
         // User -> ReadDTO
-        CreateMap<User, UserReadDto>()
-            .ReverseMap();
+        CreateMap<User, UserReadDto>().ReverseMap();
 
-        CreateMap<User, UserDetailDto>()
-            .ReverseMap();
+        // User -> DetailDto
+        CreateMap<User, UserDetailDto>().ReverseMap();
 
         // CreateDto -> User
-        CreateMap<UserCreateDto, User>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.Bookings, opt => opt.Ignore());
+        CreateMap<UserCreateDto, User>().ReverseMap();
     }
 }

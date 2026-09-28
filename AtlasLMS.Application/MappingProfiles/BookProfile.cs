@@ -13,24 +13,17 @@ public class BookProfile : Profile
     public BookProfile()
     {
         // Book -> ReadDto
-        CreateMap<Book, BookReadDto>()
-            .ReverseMap();
+        CreateMap<Book, BookReadDto>().ReverseMap();
+
+        // Book -> DetailDto
         CreateMap<Book, BookDetailDto>()
             .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category!.Name))
             .ReverseMap();
 
         // CreateDto -> Book
-        CreateMap<BookCreateDto, Book>()
-            .ForMember(dest => dest.ID, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.Author, opt => opt.Ignore())
-            .ForMember(dest => dest.Category, opt => opt.Ignore());
+        CreateMap<BookCreateDto, Book>().ReverseMap();
 
         // UpdateDto -> Book
-        CreateMap<BookUpdateDto, Book>()
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.Author, opt => opt.Ignore())
-            .ForMember(dest => dest.Category, opt => opt.Ignore());
+        CreateMap<BookUpdateDto, Book>().ReverseMap();
     }
 }

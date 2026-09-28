@@ -13,23 +13,15 @@ public class AuthorProfile : Profile
     public AuthorProfile()
     {
         // Author -> ReadDto
-        CreateMap<Author, AuthorReadDto>()
-            .ReverseMap();
+        CreateMap<Author, AuthorReadDto>().ReverseMap();
 
         // Author -> DetailDto
-        CreateMap<Author, AuthorDetailDto>()
-            .ReverseMap();
+        CreateMap<Author, AuthorDetailDto>().ReverseMap();
 
         // CreateDto -> Author
-        CreateMap<AuthorCreateDto, Author>()
-            .ForMember(dest => dest.ID, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.Books, opt => opt.Ignore());
+        CreateMap<AuthorCreateDto, Author>().ReverseMap();
 
         // UpdateDto -> Author
-        CreateMap<AuthorUpdateDto, Author>()
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.Books, opt => opt.Ignore());
+        CreateMap<AuthorUpdateDto, Author>().ReverseMap();
     }
 }
