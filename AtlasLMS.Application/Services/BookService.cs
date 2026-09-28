@@ -1,5 +1,6 @@
 ﻿using AtlasLMS.Application.Contracts;
 using AtlasLMS.Data;
+using AtlasLMS.Domain;
 using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;

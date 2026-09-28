@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
 using AtlasLMS.Domain.Entities.Common;
 
 namespace AtlasLMS.Domain.Entities;
@@ -20,13 +18,4 @@ public class Booking : BaseEntity
     public Book? Book { get; set; }
     #endregion
 }
-
-#region EBookingStatus
-public enum EBookingStatus
-{
-    Cancelled = 0,
-    Expired = 1,
-    Active = 2,
-}
-#endregion
 
