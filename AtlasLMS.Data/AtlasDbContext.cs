@@ -31,6 +31,9 @@ public class AtlasDbContext : IdentityDbContext<User>
         builder.ApplyConfiguration(new CategoryConfiguration());
         builder.ApplyConfiguration(new LocationConfiguration());
         builder.ApplyConfiguration(new BookingConfiguration());
+        builder.ApplyConfiguration(new LibraryConfiguration());
+        builder.ApplyConfiguration(new CenterConfiguration());
+        builder.ApplyConfiguration(new AddressConfiguration());
     }
 
 }

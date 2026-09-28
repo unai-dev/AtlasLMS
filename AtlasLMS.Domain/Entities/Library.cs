@@ -11,6 +11,7 @@ public class Library: BaseEntity
     #region Properties
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
+    public string NIF { get; set; } = null!;
     #endregion
 
     #region Related Properties

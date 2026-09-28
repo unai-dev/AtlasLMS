@@ -15,11 +15,11 @@ public class Booking : BaseEntity
     //
     //
     [ForeignKey("UserID")]
-    public required string UserID { get; set; }
+    public string UserID { get; set; } = null!;
     public User? User { get; set; }
 
     [ForeignKey("BookID")]
-    public required int BookID { get; set; }
+    public int BookID { get; set; }
     public Book? Book { get; set; }
 }
 public enum EBookingStatus
