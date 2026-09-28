@@ -5,7 +5,7 @@ using AtlasLMS.Shared.DTOs.Read;
 
 using AutoMapper;
 
-namespace AtlasLMS.API.Utils.Mappers;
+namespace AtlasLMS.Application.MappingProfiles;
 
 public class BookingProfile : Profile
 {

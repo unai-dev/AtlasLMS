@@ -6,7 +6,7 @@ using AtlasLMS.Shared.DTOs.Update;
 
 using AutoMapper;
 
-namespace AtlasLMS.API.Utils.Mappers;
+namespace AtlasLMS.Application.MappingProfiles;
 
 public class AuthorProfile : Profile
 {
