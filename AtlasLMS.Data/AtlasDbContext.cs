@@ -1,12 +1,13 @@
 using AtlasLMS.Data.Configurations;
 using AtlasLMS.Domain.Entities;
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AtlasLMS.Data;
 
-public class AtlasDbContext : IdentityDbContext<User>
+public class AtlasDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 {
     public AtlasDbContext(DbContextOptions options) : base(options)
     {

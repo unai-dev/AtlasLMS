@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AtlasLMS.Domain.Entities;
 
-public class User : IdentityUser
+public class User : IdentityUser<int>
 {
     #region Properties
     public string CIF { get; set; } = null!;

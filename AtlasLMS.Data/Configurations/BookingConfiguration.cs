@@ -17,7 +17,6 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .IsRequired();
 
         builder.Property(x => x.Status)
-            .HasDefaultValue(EBookingStatus.Active)
             .IsRequired();
 
         builder.Property(x => x.PickupDeadline)

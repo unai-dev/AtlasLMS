@@ -6,22 +6,21 @@ namespace AtlasLMS.Domain.Entities;
 
 public class Book : BaseEntity
 {
+    #region Properties
     public string Title { get; set; } = null!;
     public string ISBN { get; set; } = null!;
     public int Stock { get; set; }
     public string? Synopsis { get; set; }
     public DateTime PublicationAt { get; set; }
+    #endregion
 
     #region Related Properties
-    [ForeignKey("AuthorID")]
     public int AuthorID { get; set; }
     public Author? Author { get; set; }
 
-    [ForeignKey("CategoryID")]
     public int CategoryID { get; set; }
     public Category? Category { get; set; }
 
-    [ForeignKey("LocationID")]
     public int? LocationID { get; set; }
     public Location? Location { get; set; }
 
