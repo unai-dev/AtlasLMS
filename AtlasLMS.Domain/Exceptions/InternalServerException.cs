@@ -4,4 +4,5 @@ public class InternalServerException : Exception
 {
     public InternalServerException() { }
     public InternalServerException(string msg) : base(msg) { }
+    public InternalServerException(string msg, Exception ex) : base(msg, ex) { }
 }
