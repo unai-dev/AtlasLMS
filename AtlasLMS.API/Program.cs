@@ -43,7 +43,7 @@ builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 // =============== AUTH ==================
 // =======================================
 builder.Services.AddIdentityCore<User>()
-    .AddRoles<IdentityRole>()
+    //.AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AtlasDbContext>()
     .AddDefaultTokenProviders()
     .AddSignInManager();

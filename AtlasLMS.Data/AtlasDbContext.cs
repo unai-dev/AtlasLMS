@@ -9,7 +9,7 @@ namespace AtlasLMS.Data;
 
 public class AtlasDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 {
-    public AtlasDbContext(DbContextOptions options) : base(options)
+    public AtlasDbContext(DbContextOptions<AtlasDbContext> options) : base(options)
     {
 
     }

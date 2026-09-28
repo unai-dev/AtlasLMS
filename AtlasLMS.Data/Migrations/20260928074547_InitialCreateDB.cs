@@ -12,6 +12,26 @@ namespace AtlasLMS.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "asp_Addresses",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MainAddress = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    SecondAddress = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_asp_Addresses", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "asp_Authors",
                 columns: table => new
                 {
@@ -45,29 +65,11 @@ namespace AtlasLMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "asp_Locations",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Aisle = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    Shelf = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    Column = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    LimitOfBooks = table.Column<int>(type: "int", nullable: false, defaultValue: 5),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_asp_Locations", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -78,14 +80,87 @@ namespace AtlasLMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "asp_Libraries",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
+                    NIF = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    AddressID = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_asp_Libraries", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_asp_Libraries_asp_Addresses_AddressID",
+                        column: x => x.AddressID,
+                        principalTable: "asp_Addresses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "asp_Centers",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
+                    Abbreviation = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    LibraryID = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_asp_Centers", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_asp_Centers_asp_Libraries_LibraryID",
+                        column: x => x.LibraryID,
+                        principalTable: "asp_Libraries",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CIF = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LibraryID = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -104,66 +179,37 @@ namespace AtlasLMS.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_asp_Libraries_LibraryID",
+                        column: x => x.LibraryID,
+                        principalTable: "asp_Libraries",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "asp_Books",
+                name: "asp_Locations",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false),
-                    ISBN = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    Stock = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    Synopsis = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    PublicationAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuthorID = table.Column<int>(type: "int", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: false),
-                    LocationID = table.Column<int>(type: "int", nullable: true),
+                    Aisle = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    Shelf = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    Column = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    LimitOfBooks = table.Column<int>(type: "int", nullable: false, defaultValue: 5),
+                    CenterID = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_asp_Books", x => x.ID);
+                    table.PrimaryKey("PK_asp_Locations", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_asp_Books_asp_Authors_AuthorID",
-                        column: x => x.AuthorID,
-                        principalTable: "asp_Authors",
+                        name: "FK_asp_Locations_asp_Centers_CenterID",
+                        column: x => x.CenterID,
+                        principalTable: "asp_Centers",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_asp_Books_asp_Categories_CategoryID",
-                        column: x => x.CategoryID,
-                        principalTable: "asp_Categories",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_asp_Books_asp_Locations_LocationID",
-                        column: x => x.LocationID,
-                        principalTable: "asp_Locations",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -173,7 +219,7 @@ namespace AtlasLMS.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -195,7 +241,7 @@ namespace AtlasLMS.Data.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -212,8 +258,8 @@ namespace AtlasLMS.Data.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -236,7 +282,7 @@ namespace AtlasLMS.Data.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -253,6 +299,52 @@ namespace AtlasLMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "asp_Books",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false),
+                    ISBN = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    Synopsis = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PublicationAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AuthorID = table.Column<int>(type: "int", nullable: false),
+                    CategoryID = table.Column<int>(type: "int", nullable: false),
+                    LocationID = table.Column<int>(type: "int", nullable: true),
+                    CenterID = table.Column<int>(type: "int", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_asp_Books", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_asp_Books_asp_Authors_AuthorID",
+                        column: x => x.AuthorID,
+                        principalTable: "asp_Authors",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_asp_Books_asp_Categories_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "asp_Categories",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_asp_Books_asp_Centers_CenterID",
+                        column: x => x.CenterID,
+                        principalTable: "asp_Centers",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_asp_Books_asp_Locations_LocationID",
+                        column: x => x.LocationID,
+                        principalTable: "asp_Locations",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "asp_Bookings",
                 columns: table => new
                 {
@@ -260,8 +352,8 @@ namespace AtlasLMS.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PickupDeadline = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 2),
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false),
                     BookID = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -305,9 +397,29 @@ namespace AtlasLMS.Data.Migrations
                 column: "CategoryID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_asp_Books_CenterID",
+                table: "asp_Books",
+                column: "CenterID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_asp_Books_LocationID",
                 table: "asp_Books",
                 column: "LocationID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_asp_Centers_LibraryID",
+                table: "asp_Centers",
+                column: "LibraryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_asp_Libraries_AddressID",
+                table: "asp_Libraries",
+                column: "AddressID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_asp_Locations_CenterID",
+                table: "asp_Locations",
+                column: "CenterID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -340,6 +452,11 @@ namespace AtlasLMS.Data.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_LibraryID",
+                table: "AspNetUsers",
+                column: "LibraryID");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -387,6 +504,15 @@ namespace AtlasLMS.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "asp_Locations");
+
+            migrationBuilder.DropTable(
+                name: "asp_Centers");
+
+            migrationBuilder.DropTable(
+                name: "asp_Libraries");
+
+            migrationBuilder.DropTable(
+                name: "asp_Addresses");
         }
     }
 }
