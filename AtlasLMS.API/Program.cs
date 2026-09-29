@@ -34,6 +34,7 @@ builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 // =======================================
 // =============== AUTOMAPPER ============
 // =======================================
