@@ -29,10 +29,6 @@ public class BookingController : ControllerBase
     public async Task<ActionResult<BookingReadDto>> Get(int id) =>
         Ok(await _bookingService.GetBookingAsync(id));
 
-    [HttpGet("book/{bookID:int}")]
-    public async Task<ActionResult<IEnumerable<BookingReadDto>>> GetByBook(int bookID) =>
-        Ok(await _bookingService.GetBookingByBookAsync(bookID));
-
     [HttpGet("detail/{ID:int}")]
     public async Task<ActionResult<BookingDetailDto>> GetDetail(int ID) =>
         Ok(await _bookingService.GetBookingDetailAsync(ID));

@@ -58,17 +58,6 @@ public class BookingService : IBookingService
             ?? throw new NotFoundException($"La reserva con ID {ID} no existe");
         return _mapper.Map<BookingReadDto>(booking);
     }
-
-    public async Task<BookingReadDto> GetBookingByBookAsync(int bookID)
-    {
-        var bookExists = await _context.Books.AnyAsync(x => x.ID == bookID);
-        if (!bookExists)
-            throw new NotFoundException($"El libro con ID {bookID} no existe");
-
-        var booking = await _context.Bookings.FirstOrDefaultAsync(x => x.BookID == bookID)
-            ?? throw new NotFoundException($"La reserva con el libro {bookID} no existe");
-        return _mapper.Map<BookingReadDto>(booking);
-    }
     public async Task<BookingDetailDto> GetBookingDetailAsync(int ID)
     {
         var booking = await _context.Bookings
