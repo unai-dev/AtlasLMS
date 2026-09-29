@@ -9,11 +9,11 @@ namespace AtlasLMS.Data;
 
 public class AtlasDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 {
-    public AtlasDbContext(DbContextOptions<AtlasDbContext> options) : base(options)
-    {
+    #region NEW
+    public AtlasDbContext(DbContextOptions<AtlasDbContext> options) : base(options) { }
+    #endregion
 
-    }
-    //Hacemos inmutables los DbSets
+    #region DBSETS
     public DbSet<Book> Books => Set<Book>();
     public DbSet<Author> Authors => Set<Author>();
     public DbSet<Category> Categories => Set<Category>();
@@ -22,11 +22,14 @@ public class AtlasDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     public DbSet<Library> Libraries => Set<Library>();
     public DbSet<Center> Centers => Set<Center>();
     public DbSet<Address> Addresses => Set<Address>();
+    #endregion
 
+    #region OnModelCreating
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        //Aplicamos configuraciones de entidad
+
+        #region Entity Configurations
         builder.ApplyConfiguration(new BookConfiguration());
         builder.ApplyConfiguration(new AuthorConfiguration());
         builder.ApplyConfiguration(new CategoryConfiguration());
@@ -35,6 +38,7 @@ public class AtlasDbContext : IdentityDbContext<User, IdentityRole<int>, int>
         builder.ApplyConfiguration(new LibraryConfiguration());
         builder.ApplyConfiguration(new CenterConfiguration());
         builder.ApplyConfiguration(new AddressConfiguration());
+        #endregion
     }
-
+    #endregion
 }
