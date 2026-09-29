@@ -14,19 +14,16 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// =======================================
-// =========== BASE CONFIGURATION ========
-// =======================================
+#region BASE CONFIGURATION
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-// =======================================
-// =============== DB CONTEXT ============
-// =======================================
-builder.Services.AddDbContext<AtlasDbContext>(cfg => cfg.UseSqlServer(builder.Configuration.GetConnectionString("LMS_CN")));
+#endregion
 
-// =======================================
-// ================ SERVICES =============
-// =======================================
+#region DB CONTEXT 
+builder.Services.AddDbContext<AtlasDbContext>(cfg => cfg.UseSqlServer(builder.Configuration.GetConnectionString("LMS_CN")));
+#endregion
+
+#region SERVICES
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
@@ -35,14 +32,13 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
-// =======================================
-// =============== AUTOMAPPER ============
-// =======================================
-builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
+#endregion
 
-// =======================================
-// =============== AUTH ==================
-// =======================================
+#region AUTOMAPPER 
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
+#endregion
+
+#region AUTH
 builder.Services.AddIdentityCore<User>()
     //.AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AtlasDbContext>()
@@ -65,9 +61,9 @@ builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("admin", policy => policy.RequireClaim("admin"));
 });
-// =======================================
-// ================== CORS ===============
-// =======================================
+#endregion
+
+#region CORS
 builder.Services.AddCors(policy =>
 {
     policy.AddDefaultPolicy(cfg =>
@@ -75,19 +71,18 @@ builder.Services.AddCors(policy =>
         cfg.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
     });
 });
-// =======================================
-// =========== INITIALIZE APP ============
-// =======================================
+#endregion
+
+#region APP AND OPENAPI
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+#endregion
 
-// =======================================
-// =============== MIDDLEWARES ===========
-// =======================================
+#region MIDDLEWARES 
 app.UseHttpsRedirection();
 app.UseMiddleware<CustomExceptionMiddleware>();
 app.MapControllers();
@@ -95,3 +90,4 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.Run();
+#endregion
