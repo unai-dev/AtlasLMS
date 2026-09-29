@@ -7,10 +7,10 @@ namespace AtlasLMS.Application.Contracts;
 
 public interface ILocationService
 {
+    Task<IEnumerable<LocationReadDto>> GetLocationsAsync();
+    Task<LocationReadDto> GetLocationAsync(int ID);
+    Task<LocationDetailDto> GetLocationDetailAsync(int ID);
     Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto);
     Task<LocationReadDto> UpdateLocationAsync(int ID, LocationUpdateDto dto);
     Task DeleteLocationAsync(int ID);
-    Task<LocationReadDto> GetLocationAsync(int ID);
-    Task<LocationDetailDto> GetLocationDetailAsync(int ID);
-    Task<IEnumerable<LocationReadDto>> GetLocationsAsync();
 }

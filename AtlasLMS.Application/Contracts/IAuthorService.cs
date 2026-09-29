@@ -7,10 +7,10 @@ namespace AtlasLMS.Application.Contracts;
 
 public interface IAuthorService
 {
+    Task<IEnumerable<AuthorReadDto>> GetAuthorsAsync();
+    Task<AuthorReadDto> GetAuthorAsync(int ID);
+    Task<AuthorDetailDto> GetAuthorDetailAsync(int ID);
     Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto);
     Task<AuthorReadDto> UpdateAuthorAsync(int ID, AuthorUpdateDto dto);
     Task DeleteAuthorAsync(int ID);
-    Task<AuthorReadDto> GetAuthorAsync(int ID);
-    Task<AuthorDetailDto> GetAuthorDetailAsync(int ID);
-    Task<IEnumerable<AuthorReadDto>> GetAuthorsAsync();
 }
