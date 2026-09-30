@@ -57,13 +57,17 @@ public class UserService : IUserService
         return _mapper.Map<UserDetailDto>(user);
     }
 
-    public async Task<UserReadDto> GetMe()
+    public async Task<UserDetailDto> GetMe()
     {
         var claim = _accessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "email")
             ?? throw new BadRequestException("Error al claim de  usuario");
 
-        var user = await _userManager.FindByEmailAsync(claim.Value);
-        return _mapper.Map<UserReadDto>(user);
+        var user = await _userManager.Users
+            .Include(x => x.Library)
+            .Include(x => x.Bookings)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Email == claim.Value);
+        return _mapper.Map<UserDetailDto>(user);
     }
 
     public async Task<UserReadDto> Create(UserCreateDto dto)

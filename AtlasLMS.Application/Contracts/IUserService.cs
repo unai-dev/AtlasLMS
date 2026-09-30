@@ -8,6 +8,6 @@ namespace AtlasLMS.Application.Contracts;
 
 public interface IUserService : IAtlasContract<UserReadDto, UserDetailDto, UserCreateDto>
 {
-    Task<UserReadDto> GetMe();
+    Task<UserDetailDto> GetMe();
     Task<UserReadDto> UpdateUserAsync(int ID, UserUpdateDto dto);
 }
