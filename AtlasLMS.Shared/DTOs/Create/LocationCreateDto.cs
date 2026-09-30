@@ -4,6 +4,7 @@ namespace AtlasLMS.Shared.DTOs.Create;
 
 public class LocationCreateDto
 {
+    #region Properties
     [Required]
     [StringLength(5)]
     public string Aisle { get; set; } = string.Empty;
@@ -14,4 +15,5 @@ public class LocationCreateDto
     [StringLength(5)]
     public string Column { get; set; } = string.Empty;
     public int LimitOfBooks { get; set; }
+    #endregion
 }

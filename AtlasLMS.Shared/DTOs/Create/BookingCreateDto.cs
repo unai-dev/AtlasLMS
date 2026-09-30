@@ -4,13 +4,12 @@ namespace AtlasLMS.Shared.DTOs.Create;
 
 public class BookingCreateDto
 {
-    [Required]
+    #region Properties
     public DateTime StartTime { get; set; } = DateTime.UtcNow;
+    #endregion
 
-    //Related properties
-    //
-    //
-    //
+    #region Related properties
     public int UserID { get; set; }
     public int BookID { get; set; }
+    #endregion
 }

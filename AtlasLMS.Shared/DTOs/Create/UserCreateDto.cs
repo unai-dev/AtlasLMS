@@ -4,6 +4,7 @@ namespace AtlasLMS.Shared.DTOs.Create;
 
 public class UserCreateDto
 {
+    #region Properties
     [Required]
     [EmailAddress]
     public string Email { get; set; } = string.Empty;
@@ -14,4 +15,5 @@ public class UserCreateDto
     public string Password { get; set; } = string.Empty;
     [StringLength(25)]
     public string? UserName { get; set; }
+    #endregion
 }
