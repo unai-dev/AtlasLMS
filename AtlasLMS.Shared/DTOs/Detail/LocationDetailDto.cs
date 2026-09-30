@@ -4,9 +4,7 @@ namespace AtlasLMS.Shared.DTOs.Detail;
 
 public class LocationDetailDto : LocationReadDto
 {
-    //Related Properties
-    //
-    //
-    //
+    #region Related Properties
     public List<BookReadDto> Books { get; set; } = new List<BookReadDto>();
+    #endregion
 }
