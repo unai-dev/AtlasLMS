@@ -27,7 +27,7 @@ public class BookingService : IBookingService
         _userManager = userManager;
     }
 
-    public async Task<IEnumerable<BookingReadDto>> GetBookingsAsync()
+    public async Task<IEnumerable<BookingReadDto>> GetAll()
     {
         var bookings = await _context.Bookings
             .AsNoTracking()
@@ -50,7 +50,7 @@ public class BookingService : IBookingService
         return _mapper.Map<IEnumerable<BookingReadDto>>(bookings);
     }
 
-    public async Task<BookingReadDto> GetBookingAsync(int ID)
+    public async Task<BookingReadDto> GetByID(int ID)
     {
         var booking = await _context.Bookings
             .AsNoTracking()
@@ -58,7 +58,7 @@ public class BookingService : IBookingService
             ?? throw new NotFoundException($"La reserva con ID {ID} no existe");
         return _mapper.Map<BookingReadDto>(booking);
     }
-    public async Task<BookingDetailDto> GetBookingDetailAsync(int ID)
+    public async Task<BookingDetailDto> GetDetail(int ID)
     {
         var booking = await _context.Bookings
             .AsNoTracking()
@@ -67,7 +67,7 @@ public class BookingService : IBookingService
         return _mapper.Map<BookingDetailDto>(booking);
     }
 
-    public async Task<BookingReadDto> CreateBookingAsync(BookingCreateDto dto)
+    public async Task<BookingReadDto> Create(BookingCreateDto dto)
     {
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == dto.BookID)
             ?? throw new NotFoundException($"El libro con ID {dto.BookID} no existe");
@@ -106,7 +106,7 @@ public class BookingService : IBookingService
         return _mapper.Map<BookingReadDto>(booking);
     }
 
-    public async Task DeleteBookingAsync(int bookingID)
+    public async Task Delete(int bookingID)
     {
         var booking = await _context.Bookings.FirstOrDefaultAsync(x => x.ID == bookingID)
             ?? throw new NotFoundException($"La reserva con ID {bookingID} no existe");

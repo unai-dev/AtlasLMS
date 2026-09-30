@@ -25,7 +25,7 @@ public class BookService : IBookService
         _context = context;
     }
 
-    public async Task<IEnumerable<BookReadDto>> GetBooksAsync()
+    public async Task<IEnumerable<BookReadDto>> GetAll()
     {
         var books = await _context.Books
             .AsNoTracking()
@@ -33,7 +33,7 @@ public class BookService : IBookService
         return _mapper.Map<IEnumerable<BookReadDto>>(books);
     }
 
-    public async Task<BookReadDto> GetBook(int ID)
+    public async Task<BookReadDto> GetByID(int ID)
     {
         var book = await _context.Books
             .AsNoTracking()
@@ -42,7 +42,7 @@ public class BookService : IBookService
         return _mapper.Map<BookReadDto>(book);
     }
 
-    public async Task<BookDetailDto> GetBookDetailAsync(int ID)
+    public async Task<BookDetailDto> GetDetail(int ID)
     {
         var book = await _context.Books
             .AsNoTracking()
@@ -52,7 +52,7 @@ public class BookService : IBookService
         return _mapper.Map<BookDetailDto>(book);
     }
 
-    public async Task<BookReadDto> CreateBookAsync(BookCreateDto dto)
+    public async Task<BookReadDto> Create(BookCreateDto dto)
     {
         var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN));
         if (bookExists)
@@ -147,7 +147,7 @@ public class BookService : IBookService
         await _context.SaveChangesAsync();
         return _mapper.Map<BookReadDto>(book);
     }
-    public async Task DeleteBookAsync(int ID)
+    public async Task Delete(int ID)
     {
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El libro con ID {ID} no existe");

@@ -1,14 +1,10 @@
-﻿using AtlasLMS.Shared.DTOs.Create;
+﻿using AtlasLMS.Application.Contracts.Common;
+using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 
 namespace AtlasLMS.Application.Contracts;
 
-public interface IAddressService
+public interface IAddressService : IAtlasContract<AddressReadDto, AddressDetailDto, AddressCreateDto>
 {
-    Task<AddressReadDto> GetAddressAsync(int ID);
-    Task<IEnumerable<AddressReadDto>> GetAddressesAsync();
-    Task<AddressDetailDto> GetAddressDetailAsync(int ID);
-    Task<AddressReadDto> CreateAddressAsync(AddressCreateDto dto);
-    Task DeleteAddressAsync(int ID);
 }

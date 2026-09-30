@@ -23,7 +23,7 @@ public class AddressService : IAddressService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<AddressReadDto>> GetAddressesAsync()
+    public async Task<IEnumerable<AddressReadDto>> GetAll()
     {
         var addresses = await _context.Addresses
             .AsNoTracking()
@@ -31,7 +31,7 @@ public class AddressService : IAddressService
         return _mapper.Map<IEnumerable<AddressReadDto>>(addresses);
     }
 
-    public async Task<AddressReadDto> GetAddressAsync(int ID)
+    public async Task<AddressReadDto> GetByID(int ID)
     {
         var address = await _context.Addresses
             .AsNoTracking()
@@ -41,7 +41,7 @@ public class AddressService : IAddressService
         return _mapper.Map<AddressReadDto>(address);
     }
 
-    public async Task<AddressDetailDto> GetAddressDetailAsync(int ID)
+    public async Task<AddressDetailDto> GetDetail(int ID)
     {
         var address = await _context.Addresses
             .AsNoTracking()
@@ -51,7 +51,7 @@ public class AddressService : IAddressService
         return _mapper.Map<AddressDetailDto>(address);
     }
 
-    public async Task<AddressReadDto> CreateAddressAsync(AddressCreateDto dto)
+    public async Task<AddressReadDto> Create(AddressCreateDto dto)
     {
         var addressExists = await _context.Addresses
             .AnyAsync(x => x.MainAddress.Equals(dto.MainAddress));
@@ -71,7 +71,7 @@ public class AddressService : IAddressService
      * TODO: Update Implementation
      */
 
-    public async Task DeleteAddressAsync(int ID)
+    public async Task Delete(int ID)
     {
         var address = await _context.Addresses
             .FirstOrDefaultAsync(x => x.ID == ID)

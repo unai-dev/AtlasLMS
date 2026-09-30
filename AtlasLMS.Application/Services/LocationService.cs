@@ -24,7 +24,7 @@ public class LocationService : ILocationService
         _context = context;
     }
 
-    public async Task<IEnumerable<LocationReadDto>> GetLocationsAsync()
+    public async Task<IEnumerable<LocationReadDto>> GetAll()
     {
         var locations = await _context.Locations
             .AsNoTracking()
@@ -32,7 +32,7 @@ public class LocationService : ILocationService
         return _mapper.Map<IEnumerable<LocationReadDto>>(locations);
     }
 
-    public async Task<LocationReadDto> GetLocationAsync(int ID)
+    public async Task<LocationReadDto> GetByID(int ID)
     {
         var location = await _context.Locations
             .AsNoTracking()
@@ -41,7 +41,7 @@ public class LocationService : ILocationService
         return _mapper.Map<LocationReadDto>(location);
     }
 
-    public async Task<LocationDetailDto> GetLocationDetailAsync(int ID)
+    public async Task<LocationDetailDto> GetDetail(int ID)
     {
         var location = await _context.Locations
             .Include(x => x.Books)
@@ -51,7 +51,7 @@ public class LocationService : ILocationService
         return _mapper.Map<LocationDetailDto>(location);
     }
 
-    public async Task<LocationReadDto> CreateLocationAsync(LocationCreateDto dto)
+    public async Task<LocationReadDto> Create(LocationCreateDto dto)
     {
         //Normalizamos para guardar unicamente en mayusculas
         dto.Shelf = dto.Shelf.ToUpper();
@@ -104,7 +104,7 @@ public class LocationService : ILocationService
         return _mapper.Map<LocationReadDto>(location);
     }
 
-    public async Task DeleteLocationAsync(int ID)
+    public async Task Delete(int ID)
     {
         var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La localizacion con ID {ID} no existe");

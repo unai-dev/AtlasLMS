@@ -27,23 +27,23 @@ public class BookingController : ControllerBase
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<BookingReadDto>> Get(int id) =>
-        Ok(await _bookingService.GetBookingAsync(id));
+        Ok(await _bookingService.GetByID(id));
 
     [HttpGet("detail/{ID:int}")]
     public async Task<ActionResult<BookingDetailDto>> GetDetail(int ID) =>
-        Ok(await _bookingService.GetBookingDetailAsync(ID));
+        Ok(await _bookingService.GetDetail(ID));
 
     [HttpPost]
     public async Task<ActionResult<BookingReadDto>> Create([FromBody] BookingCreateDto dto)
     {
-        var booking = await _bookingService.CreateBookingAsync(dto);
+        var booking = await _bookingService.Create(dto);
         return CreatedAtAction(nameof(Get), new { id = booking.ID }, booking);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await _bookingService.DeleteBookingAsync(id);
+        await _bookingService.Delete(id);
         return NoContent();
     }
 }

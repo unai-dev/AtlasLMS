@@ -31,7 +31,7 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<IEnumerable<UserReadDto>> GetUsersAsync()
+    public async Task<IEnumerable<UserReadDto>> GetAll()
     {
         var users = await _userManager.Users
             .AsNoTracking()
@@ -39,14 +39,14 @@ public class UserService : IUserService
         return _mapper.Map<IEnumerable<UserReadDto>>(users);
     }
 
-    public async Task<UserReadDto> GetUserAsync(int ID)
+    public async Task<UserReadDto> GetByID(int ID)
     {
         var user = await _userManager.FindByIdAsync(ID.ToString())
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public async Task<UserDetailDto> GetUserDetailAsync(int ID)
+    public async Task<UserDetailDto> GetDetail(int ID)
     {
         var user = await _userManager.Users
             .Include(x => x.Bookings)
@@ -66,7 +66,7 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public async Task<UserReadDto> CreateUserAsync(UserCreateDto dto)
+    public async Task<UserReadDto> Create(UserCreateDto dto)
     {
         var existsEmail = await _userManager.FindByEmailAsync(dto.Email);
         if (existsEmail is not null)
@@ -132,7 +132,7 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public async Task DeleteUserAsync(int ID)
+    public async Task Delete(int ID)
     {
         var user = await _userManager.FindByIdAsync(ID.ToString())
             ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");

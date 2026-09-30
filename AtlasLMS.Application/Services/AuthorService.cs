@@ -24,7 +24,7 @@ public class AuthorService : IAuthorService
         _context = context;
     }
 
-    public async Task<IEnumerable<AuthorReadDto>> GetAuthorsAsync()
+    public async Task<IEnumerable<AuthorReadDto>> GetAll()
     {
         var authors = await _context.Authors
             .AsNoTracking()
@@ -32,7 +32,7 @@ public class AuthorService : IAuthorService
         return _mapper.Map<IEnumerable<AuthorReadDto>>(authors);
     }
 
-    public async Task<AuthorReadDto> GetAuthorAsync(int ID)
+    public async Task<AuthorReadDto> GetByID(int ID)
     {
         var author = await _context.Authors
             .AsNoTracking()
@@ -41,7 +41,7 @@ public class AuthorService : IAuthorService
         return _mapper.Map<AuthorReadDto>(author);
     }
 
-    public async Task<AuthorDetailDto> GetAuthorDetailAsync(int ID)
+    public async Task<AuthorDetailDto> GetDetail(int ID)
     {
         var author = await _context.Authors
             .Include(x => x.Books)
@@ -52,7 +52,7 @@ public class AuthorService : IAuthorService
         return _mapper.Map<AuthorDetailDto>(author);
     }
 
-    public async Task<AuthorReadDto> CreateAuthorAsync(AuthorCreateDto dto)
+    public async Task<AuthorReadDto> Create(AuthorCreateDto dto)
     {
         //Validamos que el usuario con el mismo nombre no exista
         var authorExists = await _context.Authors
@@ -90,7 +90,7 @@ public class AuthorService : IAuthorService
         return _mapper.Map<AuthorReadDto>(author);
     }
 
-    public async Task DeleteAuthorAsync(int ID)
+    public async Task Delete(int ID)
     {
         var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID) ??
             throw new NotFoundException($"Autor con ID {ID} no encontrado");

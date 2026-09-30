@@ -23,20 +23,20 @@ public class LocationController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<LocationReadDto>>> GetAll() =>
-        Ok(await _locationService.GetLocationsAsync());
+        Ok(await _locationService.GetAll());
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<LocationReadDto>> GetById(int id) =>
-        Ok(await _locationService.GetLocationAsync(id));
+        Ok(await _locationService.GetByID(id));
 
     [HttpGet("detail/{id:int}")]
     public async Task<ActionResult<LocationDetailDto>> GetDetail(int id) =>
-        Ok(await _locationService.GetLocationDetailAsync(id));
+        Ok(await _locationService.GetDetail(id));
 
     [HttpPost]
     public async Task<ActionResult<LocationReadDto>> Create([FromBody] LocationCreateDto dto)
     {
-        var result = await _locationService.CreateLocationAsync(dto);
+        var result = await _locationService.Create(dto);
         return CreatedAtAction(nameof(GetById), new { id = result.ID }, result);
     }
 
@@ -48,7 +48,7 @@ public class LocationController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await _locationService.DeleteLocationAsync(id);
+        await _locationService.Delete(id);
         return NoContent();
     }
 }

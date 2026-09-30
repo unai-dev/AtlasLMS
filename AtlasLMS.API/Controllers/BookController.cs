@@ -23,20 +23,20 @@ public class BookController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<BookReadDto>>> Get() =>
-        Ok(await _bookService.GetBooksAsync());
+        Ok(await _bookService.GetAll());
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<BookReadDto>> GetById([FromRoute] int id) =>
-        Ok(await _bookService.GetBook(id));
+        Ok(await _bookService.GetByID(id));
 
     [HttpGet("detail/{id:int}")]
     public async Task<ActionResult<BookDetailDto>> GetDetail([FromRoute] int id) =>
-        Ok(await _bookService.GetBookDetailAsync(id));
+        Ok(await _bookService.GetDetail(id));
 
     [HttpPost]
     public async Task<ActionResult<BookReadDto>> Post([FromBody] BookCreateDto dto)
     {
-        var result = await _bookService.CreateBookAsync(dto);
+        var result = await _bookService.Create(dto);
         return CreatedAtAction(nameof(GetById), new { id = result.ID }, result);
     }
 
@@ -48,7 +48,7 @@ public class BookController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        await _bookService.DeleteBookAsync(id);
+        await _bookService.Delete(id);
         return NoContent();
     }
 }

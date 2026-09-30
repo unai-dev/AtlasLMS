@@ -1,16 +1,12 @@
-﻿using AtlasLMS.Shared.DTOs.Create;
+﻿using AtlasLMS.Application.Contracts.Common;
+using AtlasLMS.Shared.DTOs.Create;
 using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 using AtlasLMS.Shared.DTOs.Update;
 
 namespace AtlasLMS.Application.Contracts;
 
-public interface IBookService
+public interface IBookService : IAtlasContract<BookReadDto, BookDetailDto, BookCreateDto>
 {
-    Task<IEnumerable<BookReadDto>> GetBooksAsync();
-    Task<BookReadDto> GetBook(int ID);
-    Task<BookDetailDto> GetBookDetailAsync(int ID);
-    Task<BookReadDto> CreateBookAsync(BookCreateDto dto);
     Task<BookReadDto> UpdateBookAsync(int ID, BookUpdateDto dto);
-    Task DeleteBookAsync(int ID);
 }
