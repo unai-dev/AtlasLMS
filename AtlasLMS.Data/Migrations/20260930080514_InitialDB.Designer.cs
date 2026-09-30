@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AtlasLMS.Data.Migrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20260928074547_InitialCreateDB")]
-    partial class InitialCreateDB
+    [Migration("20260930080514_InitialDB")]
+    partial class InitialDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

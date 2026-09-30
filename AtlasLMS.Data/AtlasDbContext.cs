@@ -1,3 +1,5 @@
+using System.Reflection;
+
 using AtlasLMS.Data.Configurations;
 using AtlasLMS.Domain.Entities;
 
@@ -30,14 +32,7 @@ public class AtlasDbContext : IdentityDbContext<User, IdentityRole<int>, int>
         base.OnModelCreating(builder);
 
         #region Entity Configurations
-        builder.ApplyConfiguration(new BookConfiguration());
-        builder.ApplyConfiguration(new AuthorConfiguration());
-        builder.ApplyConfiguration(new CategoryConfiguration());
-        builder.ApplyConfiguration(new LocationConfiguration());
-        builder.ApplyConfiguration(new BookingConfiguration());
-        builder.ApplyConfiguration(new LibraryConfiguration());
-        builder.ApplyConfiguration(new CenterConfiguration());
-        builder.ApplyConfiguration(new AddressConfiguration());
+        builder.ApplyConfigurationsFromAssembly(typeof(AtlasDbContext).Assembly);
         #endregion
     }
     #endregion
