@@ -85,7 +85,7 @@ if (app.Environment.IsDevelopment())
 
 #region MIDDLEWARES 
 app.UseHttpsRedirection();
-app.UseMiddleware<CustomExceptionMiddleware>();
+app.UseMiddleware<AtlasCatchMiddleware>();
 app.MapControllers();
 app.UseCors();
 app.UseAuthentication();

@@ -5,15 +5,13 @@ using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.Responses;
 
 namespace AtlasLMS.API.Middlewares;
-/// <summary>
-/// Middleware global para centralizar el manejo de excepciones
-/// </summary>
-public class CustomExceptionMiddleware
+
+public class AtlasCatchMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ILogger<CustomExceptionMiddleware> _logger;
+    private readonly ILogger<AtlasCatchMiddleware> _logger;
 
-    public CustomExceptionMiddleware(RequestDelegate next, ILogger<CustomExceptionMiddleware> logger)
+    public AtlasCatchMiddleware(RequestDelegate next, ILogger<AtlasCatchMiddleware> logger)
     {
         _logger = logger;
         _next = next;
