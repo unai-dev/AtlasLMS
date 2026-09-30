@@ -4,7 +4,9 @@ namespace AtlasLMS.Shared.DTOs.Read;
 
 public class BookingReadDto : BaseDto
 {
+    #region Properties
     public DateTime StartTime { get; set; }
     public DateTime PickupDeadline { get; set; }
     public int Status { get; set; }
+    #endregion
 }
