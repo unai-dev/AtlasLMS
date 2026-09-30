@@ -4,6 +4,7 @@ namespace AtlasLMS.Shared.DTOs.Update;
 
 public class BookUpdateDto
 {
+    #region Properties
     [StringLength(55)]
     public string? Title { get; set; }
     [StringLength(13)]
@@ -12,11 +13,11 @@ public class BookUpdateDto
     [StringLength(255)]
     public string? Synopsis { get; set; }
     public DateTime? PublicationAt { get; set; }
-    //Related properties
-    //
-    //
-    //
+    #endregion
+
+    #region Related properties
     public int? AuthorID { get; set; }
     public int? CategoryID { get; set; }
     public int? LocationID { get; set; }
+    #endregion
 }

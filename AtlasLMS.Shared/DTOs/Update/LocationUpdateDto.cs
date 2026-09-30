@@ -4,6 +4,7 @@ namespace AtlasLMS.Shared.DTOs.Update;
 
 public class LocationUpdateDto
 {
+    #region Properties
     [StringLength(5)]
     public string? Aisle { get; set; }
     [StringLength(5)]
@@ -11,4 +12,5 @@ public class LocationUpdateDto
     [StringLength(5)]
     public string? Column { get; set; }
     public int? LimitOfBooks { get; set; }
+    #endregion
 }
