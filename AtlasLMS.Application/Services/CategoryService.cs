@@ -3,6 +3,7 @@ using AtlasLMS.Data;
 using AtlasLMS.Domain.Entities;
 using AtlasLMS.Domain.Exceptions;
 using AtlasLMS.Shared.DTOs.Create;
+using AtlasLMS.Shared.DTOs.Detail;
 using AtlasLMS.Shared.DTOs.Read;
 
 using AutoMapper;
@@ -22,7 +23,7 @@ public class CategoryService : ICategoryService
         _context = context;
     }
 
-    public async Task<IEnumerable<CategoryReadDto>> GetCategoriesAsync()
+    public async Task<IEnumerable<CategoryReadDto>> GetAll()
     {
         var categories = await _context.Categories
             .AsNoTracking()
@@ -30,7 +31,7 @@ public class CategoryService : ICategoryService
         return _mapper.Map<IEnumerable<CategoryReadDto>>(categories);
     }
 
-    public async Task<CategoryReadDto> GetCategoryAsync(int ID)
+    public async Task<CategoryReadDto> GetByID(int ID)
     {
         var category = await _context.Categories
             .AsNoTracking()
@@ -39,7 +40,16 @@ public class CategoryService : ICategoryService
         return _mapper.Map<CategoryReadDto>(category);
     }
 
-    public async Task<CategoryReadDto> CreateCategoryAsync(CategoryCreateDto dto)
+    public async Task<CategoryDetailDto> GetDetail(int ID)
+    {
+        var category = await _context.Categories
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID) ??
+            throw new NotFoundException("Categoria no econtrada");
+        return _mapper.Map<CategoryDetailDto>(category);
+    }
+
+    public async Task<CategoryReadDto> Create(CategoryCreateDto dto)
     {
         var categoryExists = await _context.Categories.AnyAsync(x => x.Name.Equals(dto.Name));
         if (categoryExists)
@@ -53,7 +63,7 @@ public class CategoryService : ICategoryService
         return _mapper.Map<CategoryReadDto>(category);
     }
 
-    public async Task DeleteCategoryAsync(int ID)
+    public async Task Delete(int ID)
     {
         var category = await _context.Categories.FirstOrDefaultAsync(x => x.ID == ID) ??
             throw new NotFoundException("Categoria no encontrada");
