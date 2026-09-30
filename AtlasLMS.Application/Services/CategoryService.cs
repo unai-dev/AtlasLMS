@@ -43,6 +43,7 @@ public class CategoryService : ICategoryService
     public async Task<CategoryDetailDto> GetDetail(int ID)
     {
         var category = await _context.Categories
+            .Include(x => x.Books)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ID == ID) ??
             throw new NotFoundException("Categoria no econtrada");

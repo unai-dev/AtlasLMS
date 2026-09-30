@@ -45,8 +45,11 @@ public class BookService : IBookService
     public async Task<BookDetailDto> GetDetail(int ID)
     {
         var book = await _context.Books
-            .AsNoTracking()
             .Include(x => x.Category)
+            .Include(x => x.Author)
+            .Include(x => x.Location)
+            .Include(x => x.Centers)
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"El libro con ID {ID} no existe");
         return _mapper.Map<BookDetailDto>(book);

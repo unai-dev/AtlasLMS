@@ -61,6 +61,8 @@ public class BookingService : IBookingService
     public async Task<BookingDetailDto> GetDetail(int ID)
     {
         var booking = await _context.Bookings
+            .Include(x => x.Book)
+            .Include(x => x.User)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La reserva con ID {ID} no existe");
