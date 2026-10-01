@@ -1,0 +1,13 @@
+﻿namespace Unova.App.Contracts.Common;
+
+public interface IUnovaContract<TRead, TDetail, TCreate>
+    where TRead : class
+    where TDetail : class
+    where TCreate : class
+{
+    Task<IEnumerable<TRead>> GetAll();
+    Task<TRead> GetByID(int ID);
+    Task<TDetail> GetDetail(int ID);
+    Task<TRead> Create(TCreate entity);
+    Task Delete(int ID);
+}

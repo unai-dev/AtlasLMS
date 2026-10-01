@@ -1,0 +1,119 @@
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+using Unova.App.Contracts;
+using Unova.Domain;
+using Unova.Domain.Entities;
+using Unova.Infrastructure;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
+
+namespace Unova.App.Services;
+
+public class BookingService : IBookingService
+{
+    private readonly UnovaDbContext _context;
+    private readonly IMapper _mapper;
+    private readonly UserManager<User> _userManager;
+
+    public BookingService(UnovaDbContext context, IMapper mapper, UserManager<User> userManager)
+    {
+        _context = context;
+        _mapper = mapper;
+        _userManager = userManager;
+    }
+
+    public async Task<IEnumerable<BookingReadDto>> GetAll()
+    {
+        var bookings = await _context.Bookings
+            .AsNoTracking()
+            .ToListAsync();
+        return _mapper.Map<IEnumerable<BookingReadDto>>(bookings);
+    }
+
+    public async Task<IEnumerable<BookingReadDto>> GetBookingsByUserAsync(int userID)
+    {
+        var userExists = await _userManager.Users
+            .AnyAsync(x => x.Id == userID);
+        if (!userExists)
+            throw new NotFoundException($"El usuario con ID {userID} no existe");
+
+        var bookings = await _context.Bookings
+            .Where(x => x.UserID == userID)
+            .Include(x => x.Book)
+            .AsNoTracking()
+            .ToListAsync();
+        return _mapper.Map<IEnumerable<BookingReadDto>>(bookings);
+    }
+
+    public async Task<BookingReadDto> GetByID(int ID)
+    {
+        var booking = await _context.Bookings
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"La reserva con ID {ID} no existe");
+        return _mapper.Map<BookingReadDto>(booking);
+    }
+    public async Task<BookingDetailDto> GetDetail(int ID)
+    {
+        var booking = await _context.Bookings
+            .Include(x => x.Book)
+            .Include(x => x.User)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"La reserva con ID {ID} no existe");
+        return _mapper.Map<BookingDetailDto>(booking);
+    }
+
+    public async Task<BookingReadDto> Create(BookingCreateDto dto)
+    {
+        var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == dto.BookID)
+            ?? throw new NotFoundException($"El libro con ID {dto.BookID} no existe");
+
+        var userExists = await _userManager.FindByIdAsync(dto.UserID.ToString())
+            ?? throw new NotFoundException($"Usuario con ID {dto.UserID} no existe");
+
+        //Si el usuario ha superado el limite de reservas(2) lanzamos un badrequest
+        //Filtramos por userID y por el estado de la reserva(activo)
+        var totalBookingsUser = await _context.Bookings.CountAsync(x => x.UserID == dto.UserID && x.Status == EBookingStatus.Active);
+        if (totalBookingsUser >= 2)
+            throw new BadRequestException($"Lo sentimos. El usuario {dto.UserID} ha superado el limite de reservas activas");
+
+        if (dto.StartTime < DateTime.UtcNow)
+            throw new BadRequestException($"La fecha de inicio no puede ser menor a la fecha actual");
+
+        //Validamos stock, si el total de reservas activas da el total, lanzamos badrequest
+        var activeBookings = await _context.Bookings
+            .CountAsync(x => x.BookID == dto.BookID && x.PickupDeadline > dto.StartTime);
+        if (activeBookings >= book.Stock)
+            throw new BadRequestException($"No hay ejemplares suficientes para el libro {dto.BookID}");
+
+        //Si el usuario ya ha reservado el libro en el periodo de fecha indicado, lanzamos badrequest
+        //Filtramos por bookID, userID, rango de fecha(fecha final de la reserva mayor a fecha de comienzo) y estado(activo)
+        var userBookingWithBook = await _context.Bookings
+            .AnyAsync(x => x.BookID == dto.BookID && x.PickupDeadline > dto.StartTime && x.UserID == dto.UserID && x.Status == EBookingStatus.Active);
+        if (userBookingWithBook)
+            throw new BadRequestException($"El libro {dto.BookID} ya esta reservado por el mismo usuario {dto.UserID}");
+
+        var booking = _mapper.Map<Booking>(dto);
+        //Agregamos los dias que el usuario tiene para recoger el libro(3)
+        booking.PickupDeadline = booking.StartTime.AddDays(3);
+
+        _context.Add(booking);
+        await _context.SaveChangesAsync();
+        return _mapper.Map<BookingReadDto>(booking);
+    }
+
+    public async Task Delete(int bookingID)
+    {
+        var booking = await _context.Bookings.FirstOrDefaultAsync(x => x.ID == bookingID)
+            ?? throw new NotFoundException($"La reserva con ID {bookingID} no existe");
+
+        _context.Remove(booking);
+        await _context.SaveChangesAsync();
+    }
+
+}

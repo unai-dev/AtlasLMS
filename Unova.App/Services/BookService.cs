@@ -1,0 +1,164 @@
+﻿using AutoMapper;
+
+using Microsoft.EntityFrameworkCore;
+
+using Unova.App.Contracts;
+using Unova.Domain;
+using Unova.Domain.Entities;
+using Unova.Infrastructure;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
+using Unova.Shared.DTOs.Update;
+
+namespace Unova.App.Services;
+
+public class BookService : IBookService
+{
+    private readonly IMapper _mapper;
+    private readonly UnovaDbContext _context;
+
+    public BookService(IMapper mapper, UnovaDbContext context)
+    {
+        _mapper = mapper;
+        _context = context;
+    }
+
+    public async Task<IEnumerable<BookReadDto>> GetAll()
+    {
+        var books = await _context.Books
+            .AsNoTracking()
+            .ToListAsync();
+        return _mapper.Map<IEnumerable<BookReadDto>>(books);
+    }
+
+    public async Task<BookReadDto> GetByID(int ID)
+    {
+        var book = await _context.Books
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"El libro con ID {ID} no existe");
+        return _mapper.Map<BookReadDto>(book);
+    }
+
+    public async Task<BookDetailDto> GetDetail(int ID)
+    {
+        var book = await _context.Books
+            .Include(x => x.Category)
+            .Include(x => x.Author)
+            .Include(x => x.Location)
+            .Include(x => x.Centers)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"El libro con ID {ID} no existe");
+        return _mapper.Map<BookDetailDto>(book);
+    }
+
+    public async Task<BookReadDto> Create(BookCreateDto dto)
+    {
+        var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN));
+        if (bookExists)
+            throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
+
+        //Validamos si la localizacion existe
+        //Si existe, validamos que el limite no haya sido alcanzado el total libros permitidos
+        if (dto.LocationID.HasValue)
+        {
+            var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == dto.LocationID)
+                ?? throw new NotFoundException($"La localizacion '{dto.LocationID}' no existe");
+
+            var totalBooksByLocation = await _context.Books.CountAsync(x => x.LocationID == dto.LocationID);
+            if (location.LimitOfBooks == totalBooksByLocation)
+                throw new BadRequestException($"La localizacion no permite mas libros. Ya excede del limite");
+        }
+
+        var categoryExists = await _context.Categories.AnyAsync(x => x.ID == dto.CategoryID);
+        if (!categoryExists)
+            throw new NotFoundException($"La categoria con ID {dto.CategoryID} no existe");
+
+        var authorExists = await _context.Authors.AnyAsync(x => x.ID == dto.AuthorID);
+        if (!authorExists)
+            throw new NotFoundException($"El autor con ID {dto.AuthorID} no existe");
+
+        //Si la fecha es mayor a la fecha actual, lanzamos badrequest
+        if (dto.PublicationAt > DateTime.UtcNow)
+            throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser mayor a la actual");
+
+        var book = _mapper.Map<Book>(dto);
+
+        _context.Add(book);
+        await _context.SaveChangesAsync();
+        return _mapper.Map<BookReadDto>(book);
+    }
+
+    public async Task<BookReadDto> UpdateBookAsync(int ID, BookUpdateDto dto)
+    {
+        var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"El libro con ID {ID} no existe");
+
+        //Si el autor no existe, lanzamos badrequest
+        if (dto.AuthorID.HasValue)
+        {
+            var authorExists = await _context.Authors.AnyAsync(x => x.ID == dto.AuthorID);
+            if (!authorExists)
+                throw new NotFoundException($"El autor con el ID {dto.AuthorID} no existe");
+        }
+
+        //Si la categoria no existe, lanzamos badrequest
+        if (dto.CategoryID.HasValue)
+        {
+            var categoryExists = await _context.Categories.AnyAsync(x => x.ID == dto.CategoryID);
+            if (!categoryExists)
+                throw new NotFoundException($"La categoria con el ID {dto.CategoryID} no existe");
+        }
+
+        //Si la localizacion no existe, lanzamos badrequest
+        if (dto.LocationID.HasValue)
+        {
+            var locationExists = await _context.Locations.AnyAsync(x => x.ID == dto.LocationID);
+            if (!locationExists)
+                throw new NotFoundException($"La localizacion con el ID {dto.LocationID} no existe");
+        }
+
+        //Si el ISBN ya es ocupado por otro ejemplar, lanzamos badrequest
+        if (!string.IsNullOrEmpty(dto.ISBN))
+        {
+            var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN) && x.ID != ID);
+            if (bookExists)
+                throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
+        }
+
+        //Si la fecha es mayor a la actual, lanzamos badrequest
+        if (dto.PublicationAt.HasValue && dto.PublicationAt > DateTime.UtcNow)
+            throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser mayor a la actual");
+
+        //Si el DTO no contiene la informacion, guardamos el valor anterior
+        book.Title = dto.Title ?? book.Title;
+        book.ISBN = dto.ISBN ?? book.ISBN;
+        book.Synopsis = dto.Synopsis ?? book.Synopsis;
+
+        book.Stock = dto.Stock ?? book.Stock;
+        book.PublicationAt = dto.PublicationAt ?? book.PublicationAt;
+
+        book.AuthorID = dto.AuthorID ?? book.AuthorID;
+        book.CategoryID = dto.CategoryID ?? book.CategoryID;
+        book.LocationID = dto.LocationID ?? book.LocationID;
+
+        book.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+        return _mapper.Map<BookReadDto>(book);
+    }
+    public async Task Delete(int ID)
+    {
+        var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
+            ?? throw new NotFoundException($"El libro con ID {ID} no existe");
+
+        var bookHasAnyBooking = await _context.Bookings.AnyAsync(x => x.BookID == ID && x.Status == EBookingStatus.Active);
+        if (bookHasAnyBooking)
+            throw new BadRequestException($"El Libro no puede ser eliminado. Tiene reservas activas");
+
+        _context.Remove(book);
+        await _context.SaveChangesAsync();
+    }
+}

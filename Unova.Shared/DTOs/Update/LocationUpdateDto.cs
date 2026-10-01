@@ -1,0 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace Unova.Shared.DTOs.Update;
+
+public class LocationUpdateDto
+{
+    #region Properties
+    [StringLength(5)]
+    public string? Aisle { get; set; }
+    [StringLength(5)]
+    public string? Shelf { get; set; }
+    [StringLength(5)]
+    public string? Column { get; set; }
+    public int? LimitOfBooks { get; set; }
+    #endregion
+}
