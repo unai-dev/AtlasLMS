@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Unova.Shared.DTOs.Create;
+﻿namespace Unova.Shared.DTOs.Create;
 
 public class EnterpriseCreateDto
 {

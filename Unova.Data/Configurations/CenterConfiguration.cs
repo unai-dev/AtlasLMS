@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-using Unova.Domain.Entities;
-
-namespace Unova.Infrastructure.Configurations;
+﻿namespace Unova.Infrastructure.Configurations;
 
 public class CenterConfiguration : IEntityTypeConfiguration<Center>
 {

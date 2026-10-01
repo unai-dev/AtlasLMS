@@ -1,11 +1,8 @@
-using System.Text;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-
 using Scalar.AspNetCore;
-
+using System.Text;
 using Unova.API.Middlewares;
 using Unova.App.Contracts;
 using Unova.App.Services;

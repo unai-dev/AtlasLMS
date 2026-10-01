@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Unova.Shared.DTOs.Update;
 
 public class AuthorUpdateDto

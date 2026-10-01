@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Unova.Shared.DTOs.Update;
+﻿namespace Unova.Shared.DTOs.Update;
 
 public class EnterpriseUpdateDto
 {

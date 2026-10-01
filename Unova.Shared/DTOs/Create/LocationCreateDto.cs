@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Unova.Shared.DTOs.Create;
 
 public class LocationCreateDto
