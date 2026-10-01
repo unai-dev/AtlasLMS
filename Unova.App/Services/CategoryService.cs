@@ -2,13 +2,6 @@ using AutoMapper;
 
 using Microsoft.EntityFrameworkCore;
 
-using Unova.App.Contracts;
-using Unova.Domain.Entities;
-using Unova.Infrastructure;
-using Unova.Shared.DTOs.Create;
-using Unova.Shared.DTOs.Detail;
-using Unova.Shared.DTOs.Read;
-
 namespace Unova.App.Services;
 
 public class CategoryService : ICategoryService

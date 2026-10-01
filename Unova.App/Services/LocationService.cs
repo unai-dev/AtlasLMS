@@ -2,12 +2,6 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using Unova.App.Contracts;
-using Unova.Domain.Entities;
-using Unova.Infrastructure;
-using Unova.Shared.DTOs.Create;
-using Unova.Shared.DTOs.Detail;
-using Unova.Shared.DTOs.Read;
 using Unova.Shared.DTOs.Update;
 
 namespace Unova.App.Services;
