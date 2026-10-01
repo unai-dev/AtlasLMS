@@ -1,6 +1,6 @@
 ﻿namespace Unova.App.Contracts.Common;
 
-public interface IAtlasContract<TRead, TDetail, TCreate>
+public interface IUnovaContract<TRead, TDetail, TCreate>
     where TRead : class
     where TDetail : class
     where TCreate : class

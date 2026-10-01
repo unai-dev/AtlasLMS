@@ -5,7 +5,7 @@ using Unova.Shared.DTOs.Read;
 
 namespace Unova.App.Contracts;
 
-public interface IBookingService : IAtlasContract<BookingReadDto, BookingDetailDto, BookingCreateDto>
+public interface IBookingService : IUnovaContract<BookingReadDto, BookingDetailDto, BookingCreateDto>
 {
     Task<IEnumerable<BookingReadDto>> GetBookingsByUserAsync(int userID);
 }

@@ -5,6 +5,6 @@ using Unova.Shared.DTOs.Read;
 
 namespace Unova.App.Contracts;
 
-public interface IAddressService : IAtlasContract<AddressReadDto, AddressDetailDto, AddressCreateDto>
+public interface IAddressService : IUnovaContract<AddressReadDto, AddressDetailDto, AddressCreateDto>
 {
 }

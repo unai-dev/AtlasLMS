@@ -5,6 +5,6 @@ using Unova.Shared.DTOs.Read;
 
 namespace Unova.App.Contracts;
 
-public interface ICenterService : IAtlasContract<CenterReadDto, CenterDetailDto, CenterCreateDto>
+public interface ICenterService : IUnovaContract<CenterReadDto, CenterDetailDto, CenterCreateDto>
 {
 }

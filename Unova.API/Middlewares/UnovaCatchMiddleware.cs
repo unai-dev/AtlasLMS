@@ -6,12 +6,12 @@ using Unova.Shared.Responses;
 
 namespace Unova.API.Middlewares;
 
-public class AtlasCatchMiddleware
+public class UnovaCatchMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ILogger<AtlasCatchMiddleware> _logger;
+    private readonly ILogger<UnovaCatchMiddleware> _logger;
 
-    public AtlasCatchMiddleware(RequestDelegate next, ILogger<AtlasCatchMiddleware> logger)
+    public UnovaCatchMiddleware(RequestDelegate next, ILogger<UnovaCatchMiddleware> logger)
     {
         _logger = logger;
         _next = next;

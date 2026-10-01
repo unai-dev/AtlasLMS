@@ -5,6 +5,6 @@ using Unova.Shared.DTOs.Read;
 
 namespace Unova.App.Contracts;
 
-public interface ICategoryService : IAtlasContract<CategoryReadDto, CategoryDetailDto, CategoryCreateDto>
+public interface ICategoryService : IUnovaContract<CategoryReadDto, CategoryDetailDto, CategoryCreateDto>
 {
 }

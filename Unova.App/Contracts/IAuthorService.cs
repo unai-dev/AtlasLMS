@@ -6,7 +6,7 @@ using Unova.Shared.DTOs.Update;
 
 namespace Unova.App.Contracts;
 
-public interface IAuthorService : IAtlasContract<AuthorReadDto, AuthorDetailDto, AuthorCreateDto>
+public interface IAuthorService : IUnovaContract<AuthorReadDto, AuthorDetailDto, AuthorCreateDto>
 {
     Task<AuthorReadDto> UpdateAuthorAsync(int ID, AuthorUpdateDto dto);
 }
