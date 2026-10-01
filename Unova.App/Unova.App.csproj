@@ -6,9 +6,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AtlasLMS.Data\AtlasLMS.Data.csproj" />
-		<ProjectReference Include="..\AtlasLMS.Domain\AtlasLMS.Domain.csproj" />
-		<ProjectReference Include="..\AtlasLMS.Shared\AtlasLMS.Shared.csproj" />
+		<ProjectReference Include="..\Unova.Data\Unova.Infrastructure.csproj" />
+		<ProjectReference Include="..\Unova.Domain\Unova.Domain.csproj" />
+		<ProjectReference Include="..\Unova.Shared\Unova.Shared.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup>

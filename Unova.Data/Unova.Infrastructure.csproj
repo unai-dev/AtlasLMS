@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AtlasLMS.Domain\AtlasLMS.Domain.csproj" />
+    <ProjectReference Include="..\Unova.Domain\Unova.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
