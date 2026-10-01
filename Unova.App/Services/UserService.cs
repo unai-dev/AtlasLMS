@@ -4,13 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-using Unova.App.Contracts;
 using Unova.Domain;
-using Unova.Domain.Entities;
-using Unova.Infrastructure;
-using Unova.Shared.DTOs.Create;
-using Unova.Shared.DTOs.Detail;
-using Unova.Shared.DTOs.Read;
 using Unova.Shared.DTOs.Update;
 
 namespace Unova.App.Services;
@@ -62,7 +56,7 @@ public class UserService : IUserService
             ?? throw new BadRequestException("Error al claim de  usuario");
 
         var user = await _userManager.Users
-            .Include(x => x.Library)
+            .Include(x => x.Enterprise)
             .Include(x => x.Bookings)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Email == claim.Value);

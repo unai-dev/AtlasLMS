@@ -2,7 +2,7 @@
 
 namespace Unova.Shared.DTOs.Detail;
 
-public class LibraryDetailDto : LibraryReadDto
+public class EnterpriseDetailDto : EnterpriseReadDto
 {
     #region Related Properties 
     public int AddressID { get; set; }

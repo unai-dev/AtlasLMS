@@ -1,24 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Unova.Shared.DTOs.Create;
+namespace Unova.Shared.DTOs.Update;
 
-public class LibraryCreateDto
+public class EnterpriseUpdateDto
 {
     #region Properties 
-    [Required]
     [StringLength(255)]
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
 
     [StringLength(2000)]
     public string? Description { get; set; }
 
-    [Required]
     [StringLength(15)]
-    public string NIF { get; set; } = string.Empty;
+    public string? NIF { get; set; }
     #endregion
 
     #region Related Properties 
-    [Required]
-    public int AddressID { get; set; }
+    public int? AddressID { get; set; }
     #endregion
 }

@@ -13,6 +13,6 @@ public class Address : BaseEntity
     #endregion
 
     #region Related Properties
-    public List<Library> Libraries { get; set; } = new List<Library>();
+    public List<Enterprise> Enterprises { get; set; } = new List<Enterprise>();
     #endregion
 }
