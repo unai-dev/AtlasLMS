@@ -37,7 +37,7 @@ public class AddressService : IAddressService
     public async Task<AddressDetailDto> GetDetail(int ID)
     {
         var address = await _context.Addresses
-            .Include(x => x.Libraries)
+            .Include(x => x.Enterprises)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"Address with ID {ID} not found");

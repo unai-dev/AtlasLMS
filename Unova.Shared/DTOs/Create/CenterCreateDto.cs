@@ -18,6 +18,6 @@ public class CenterCreateDto
     #endregion
 
     #region Related Properties
-    public int LibraryID { get; set; }
+    public int EnterpriseID { get; set; }
     #endregion
 }

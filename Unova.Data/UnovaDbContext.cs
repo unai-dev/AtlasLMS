@@ -18,7 +18,7 @@ public class UnovaDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Location> Locations => Set<Location>();
     public DbSet<Booking> Bookings => Set<Booking>();
-    public DbSet<Library> Libraries => Set<Library>();
+    public DbSet<Enterprise> Libraries => Set<Enterprise>();
     public DbSet<Center> Centers => Set<Center>();
     public DbSet<Address> Addresses => Set<Address>();
     #endregion

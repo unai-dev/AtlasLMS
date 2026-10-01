@@ -2,13 +2,6 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using Unova.App.Contracts;
-using Unova.Domain.Entities;
-using Unova.Infrastructure;
-using Unova.Shared.DTOs.Create;
-using Unova.Shared.DTOs.Detail;
-using Unova.Shared.DTOs.Read;
-
 namespace Unova.App.Services;
 
 public class CenterService : ICenterService
@@ -27,10 +20,10 @@ public class CenterService : ICenterService
     public async Task<IEnumerable<CenterReadDto>> GetAll()
     {
         var currentUser = await _userService.GetMe();
-        var libraryID = currentUser.LibraryID;
+        var enterpriseID = currentUser.EnterpriseID;
 
         var centers = await _context.Centers
-            .Where(x => x.LibraryID == libraryID)
+            .Where(x => x.EnterpriseID == enterpriseID)
             .AsNoTracking()
             .ToListAsync();
         return _mapper.Map<IEnumerable<CenterReadDto>>(centers);
@@ -48,7 +41,7 @@ public class CenterService : ICenterService
     public async Task<CenterDetailDto> GetDetail(int ID)
     {
         var center = await _context.Centers
-            .Include(x => x.Library)
+            .Include(x => x.Enterprise)
             .Include(x => x.Books)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ID == ID)
@@ -60,14 +53,14 @@ public class CenterService : ICenterService
     public async Task<CenterReadDto> Create(CenterCreateDto dto)
     {
         var currentUser = await _userService.GetMe();
-        var libraryID = currentUser.LibraryID;
+        var enterpriseID = currentUser.EnterpriseID;
 
         var exists = await _context.Centers
-            .Where(x => x.LibraryID == libraryID)
+            .Where(x => x.EnterpriseID == enterpriseID)
             .AnyAsync(x => x.Name.Equals(dto.Name));
 
         if (exists)
-            throw new BadRequestException($"The center already exists in current library");
+            throw new BadRequestException($"The center already exists in current enterprise");
 
         var center = _mapper.Map<Center>(dto);
 

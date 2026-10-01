@@ -12,8 +12,8 @@ public class User : IdentityUser<int>
     #endregion
 
     #region Related Properties
-    public int LibraryID { get; set; }
-    public Library? Library { get; set; }
+    public int EnterpriseID { get; set; }
+    public Enterprise? Enterprise { get; set; }
 
     public List<Booking> Bookings { get; set; } = new List<Booking>();
     #endregion

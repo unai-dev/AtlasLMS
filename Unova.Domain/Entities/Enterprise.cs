@@ -2,7 +2,7 @@
 
 namespace Unova.Domain.Entities;
 
-public class Library : BaseEntity
+public class Enterprise : BaseEntity
 {
     #region Properties
     public string Name { get; set; } = null!;

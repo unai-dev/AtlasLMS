@@ -1,10 +1,5 @@
 using AutoMapper;
 
-using Unova.Domain.Entities;
-using Unova.Shared.DTOs.Create;
-using Unova.Shared.DTOs.Detail;
-using Unova.Shared.DTOs.Read;
-
 namespace Unova.App.MappingProfiles;
 
 public class BookingProfile : Profile

@@ -7,10 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-using Unova.App.Contracts;
-using Unova.Domain.Entities;
 using Unova.Shared.DTOs.Auth;
-using Unova.Shared.DTOs.Create;
 using Unova.Shared.Responses;
 
 namespace Unova.App.Services;

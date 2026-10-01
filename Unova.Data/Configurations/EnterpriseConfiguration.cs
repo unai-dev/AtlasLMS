@@ -5,9 +5,9 @@ using Unova.Domain.Entities;
 
 namespace Unova.Infrastructure.Configurations;
 
-public class LibraryConfiguration : IEntityTypeConfiguration<Library>
+public class EnterpriseConfiguration : IEntityTypeConfiguration<Enterprise>
 {
-    public void Configure(EntityTypeBuilder<Library> builder)
+    public void Configure(EntityTypeBuilder<Enterprise> builder)
     {
         builder.ToTable("asp_Libraries");
 

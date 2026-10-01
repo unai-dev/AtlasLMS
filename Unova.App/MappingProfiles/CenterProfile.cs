@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 
-using Unova.Domain.Entities;
-using Unova.Shared.DTOs.Create;
-using Unova.Shared.DTOs.Detail;
-using Unova.Shared.DTOs.Read;
 using Unova.Shared.DTOs.Update;
 
 namespace Unova.App.MappingProfiles;
