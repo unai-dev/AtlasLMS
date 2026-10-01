@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using Unova.API.Controllers.Common;
 using Unova.App.Contracts;
 using Unova.Shared.DTOs.Create;
 using Unova.Shared.DTOs.Detail;
@@ -8,10 +8,8 @@ using Unova.Shared.DTOs.Update;
 
 namespace Unova.API.Controllers;
 
-[ApiController]
 [Route("api/users")]
-//[Authorize]
-public class UserController : ControllerBase
+public class UserController : UnovaController
 {
     private readonly IUserService _userService;
 

@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Mvc;
+using Unova.API.Controllers.Common;
 using Unova.App.Contracts;
 using Unova.Shared.DTOs.Create;
 using Unova.Shared.DTOs.Detail;
@@ -8,10 +7,8 @@ using Unova.Shared.DTOs.Read;
 
 namespace Unova.API.Controllers;
 
-[ApiController]
 [Route("api/centers")]
-[Authorize]
-public class CenterController : ControllerBase
+public class CenterController : UnovaController
 {
     private readonly ICenterService _centerService;
 

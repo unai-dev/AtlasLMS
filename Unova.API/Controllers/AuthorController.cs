@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Unova.API.Controllers.Common;
 using Unova.App.Contracts;
 using Unova.Shared.DTOs.Create;
 using Unova.Shared.DTOs.Detail;
@@ -9,10 +8,8 @@ using Unova.Shared.DTOs.Update;
 
 namespace Unova.API.Controllers;
 
-[ApiController]
 [Route("api/authors")]
-[Authorize]
-public class AuthorController : ControllerBase
+public class AuthorController : UnovaController
 {
     private readonly IAuthorService _authorService;
 
