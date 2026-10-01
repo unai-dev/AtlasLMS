@@ -31,6 +31,7 @@ builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<ICenterService, CenterService>();
 builder.Services.AddScoped<ICopyService, CopyService>();
+builder.Services.AddScoped<IEnterpriseService, EnterpriseService>();
 #endregion
 
 #region AUTOMAPPER 
