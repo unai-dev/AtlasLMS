@@ -17,7 +17,8 @@ builder.Services.AddOpenApi();
 #endregion
 
 #region DB CONTEXT 
-builder.Services.AddDbContext<UnovaDbContext>(cfg => cfg.UseSqlServer(builder.Configuration.GetConnectionString("LMS_CN")));
+string sCS = builder.Configuration.GetConnectionString("UNOVA_CS")!;
+builder.Services.AddDbContext<UnovaDbContext>(cfg => cfg.UseSqlServer(sCS));
 #endregion
 
 #region SERVICES

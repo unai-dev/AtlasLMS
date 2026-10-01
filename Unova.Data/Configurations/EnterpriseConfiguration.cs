@@ -4,7 +4,7 @@ public class EnterpriseConfiguration : IEntityTypeConfiguration<Enterprise>
 {
     public void Configure(EntityTypeBuilder<Enterprise> builder)
     {
-        builder.ToTable("asp_Libraries");
+        builder.ToTable("asp_Enterprises");
 
         builder.HasKey(x => x.ID);
 
