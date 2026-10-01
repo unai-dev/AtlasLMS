@@ -1,16 +1,16 @@
 using System.Text;
 
-using AtlasLMS.API.Middlewares;
-using AtlasLMS.Application.Contracts;
-using AtlasLMS.Application.Services;
-using AtlasLMS.Data;
-using AtlasLMS.Domain.Entities;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 using Scalar.AspNetCore;
+
+using Unova.API.Middlewares;
+using Unova.App.Contracts;
+using Unova.App.Services;
+using Unova.Domain.Entities;
+using Unova.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +20,7 @@ builder.Services.AddOpenApi();
 #endregion
 
 #region DB CONTEXT 
-builder.Services.AddDbContext<AtlasDbContext>(cfg => cfg.UseSqlServer(builder.Configuration.GetConnectionString("LMS_CN")));
+builder.Services.AddDbContext<UnovaDbContext>(cfg => cfg.UseSqlServer(builder.Configuration.GetConnectionString("LMS_CN")));
 #endregion
 
 #region SERVICES
@@ -42,7 +42,7 @@ builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 #region AUTH
 builder.Services.AddIdentityCore<User>()
     //.AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<AtlasDbContext>()
+    .AddEntityFrameworkStores<UnovaDbContext>()
     .AddDefaultTokenProviders()
     .AddSignInManager();
 builder.Services.AddAuthentication().AddJwtBearer(cfg =>

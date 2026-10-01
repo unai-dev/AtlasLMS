@@ -1,4 +1,4 @@
-﻿namespace AtlasLMS.Application.Contracts.Common;
+﻿namespace Unova.App.Contracts.Common;
 
 public interface IAtlasContract<TRead, TDetail, TCreate>
     where TRead : class

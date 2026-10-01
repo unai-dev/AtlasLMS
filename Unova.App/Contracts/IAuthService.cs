@@ -1,7 +1,7 @@
-using AtlasLMS.Shared.DTOs.Auth;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.Responses;
-namespace AtlasLMS.Application.Contracts;
+using Unova.Shared.DTOs.Auth;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.Responses;
+namespace Unova.App.Contracts;
 
 public interface IAuthService
 {

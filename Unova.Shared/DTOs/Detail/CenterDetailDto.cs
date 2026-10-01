@@ -1,8 +1,8 @@
-﻿using AtlasLMS.Shared.DTOs.Read;
+﻿using Unova.Shared.DTOs.Read;
 
-namespace AtlasLMS.Shared.DTOs.Detail;
+namespace Unova.Shared.DTOs.Detail;
 
-public class CenterDetailDto: CenterReadDto
+public class CenterDetailDto : CenterReadDto
 {
     #region Related Properties
     public int LibraryID { get; set; }

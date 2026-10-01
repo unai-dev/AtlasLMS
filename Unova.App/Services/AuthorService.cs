@@ -1,24 +1,23 @@
-using AtlasLMS.Application.Contracts;
-using AtlasLMS.Data;
-using AtlasLMS.Domain.Entities;
-using AtlasLMS.Domain.Exceptions;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.DTOs.Update;
-
 using AutoMapper;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace AtlasLMS.Application.Services;
+using Unova.App.Contracts;
+using Unova.Domain.Entities;
+using Unova.Infrastructure;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
+using Unova.Shared.DTOs.Update;
+
+namespace Unova.App.Services;
 
 public class AuthorService : IAuthorService
 {
     private readonly IMapper _mapper;
-    private readonly AtlasDbContext _context;
+    private readonly UnovaDbContext _context;
 
-    public AuthorService(IMapper mapper, AtlasDbContext context)
+    public AuthorService(IMapper mapper, UnovaDbContext context)
     {
         _mapper = mapper;
         _context = context;
@@ -82,7 +81,7 @@ public class AuthorService : IAuthorService
         }
 
         //Si el DTO no tiene la informacion, guardamos el valor anterior
-        author.FirstName =  dto.FirstName ?? author.FirstName;
+        author.FirstName = dto.FirstName ?? author.FirstName;
         author.LastName = dto.LastName ?? author.LastName;
         author.UpdatedAt = DateTime.UtcNow;
 

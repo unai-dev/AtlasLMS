@@ -1,9 +1,9 @@
-﻿using AtlasLMS.Application.Contracts.Common;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
+﻿using Unova.App.Contracts.Common;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
 
-namespace AtlasLMS.Application.Contracts;
+namespace Unova.App.Contracts;
 
 public interface IAddressService : IAtlasContract<AddressReadDto, AddressDetailDto, AddressCreateDto>
 {

@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace AtlasLMS.Shared.Responses;
+namespace Unova.Shared.Responses;
 
 /// <summary>
 /// Modelo de respuesta al capturar una excepcion

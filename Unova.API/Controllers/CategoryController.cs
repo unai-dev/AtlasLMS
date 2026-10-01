@@ -1,12 +1,12 @@
-using AtlasLMS.Application.Contracts;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AtlasLMS.API.Controllers;
+using Unova.App.Contracts;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
+
+namespace Unova.API.Controllers;
 
 [ApiController]
 [Route("api/categories")]
@@ -28,7 +28,7 @@ public class CategoryController : ControllerBase
     [Route("{id:int}")]
     public async Task<ActionResult<CategoryReadDto>> Get([FromRoute] int ID) =>
         Ok(await _categoryService.GetByID(ID));
-    
+
     [HttpGet]
     [Route("detail/{id:int}")]
     public async Task<ActionResult<CategoryDetailDto>> GetDetail([FromRoute] int ID) =>

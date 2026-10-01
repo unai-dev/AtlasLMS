@@ -1,11 +1,11 @@
-﻿using AtlasLMS.Domain.Entities;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
+﻿using AutoMapper;
 
-using AutoMapper;
+using Unova.Domain.Entities;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
 
-namespace AtlasLMS.Application.MappingProfiles;
+namespace Unova.App.MappingProfiles;
 
 public class UserProfile : Profile
 {

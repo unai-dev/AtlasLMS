@@ -1,12 +1,12 @@
-using AtlasLMS.Application.Contracts;
-using AtlasLMS.Shared.DTOs.Auth;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.Responses;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AtlasLMS.API.Controllers;
+using Unova.App.Contracts;
+using Unova.Shared.DTOs.Auth;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.Responses;
+
+namespace Unova.API.Controllers;
 
 [ApiController]
 [Route("api/auth")]

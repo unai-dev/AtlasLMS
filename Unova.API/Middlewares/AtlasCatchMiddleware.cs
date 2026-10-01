@@ -1,10 +1,10 @@
 using System.Net;
 using System.Text.Json;
 
-using AtlasLMS.Domain.Exceptions;
-using AtlasLMS.Shared.Responses;
+using Unova.Domain.Exceptions;
+using Unova.Shared.Responses;
 
-namespace AtlasLMS.API.Middlewares;
+namespace Unova.API.Middlewares;
 
 public class AtlasCatchMiddleware
 {

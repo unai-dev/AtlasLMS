@@ -1,6 +1,6 @@
-using AtlasLMS.Domain.Entities.Common;
+using Unova.Domain.Entities.Common;
 
-namespace AtlasLMS.Domain.Entities;
+namespace Unova.Domain.Entities;
 
 public class Category : BaseEntity
 {

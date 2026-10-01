@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using AtlasLMS.Domain.Entities;
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AtlasLMS.Data.Configurations;
+using Unova.Domain.Entities;
+
+namespace Unova.Infrastructure.Configurations;
 
 public class LibraryConfiguration : IEntityTypeConfiguration<Library>
 {

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using AtlasLMS.Domain.Entities;
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AtlasLMS.Data.Configurations;
+using Unova.Domain.Entities;
+
+namespace Unova.Infrastructure.Configurations;
 
 public class AddressConfiguration : IEntityTypeConfiguration<Address>
 {
@@ -31,7 +27,7 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
         builder.Property(x => x.Country)
             .HasMaxLength(255)
             .IsRequired();
-        
+
         builder.Property(x => x.City)
             .HasMaxLength(255)
             .IsRequired();

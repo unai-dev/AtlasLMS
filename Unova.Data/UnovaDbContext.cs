@@ -1,18 +1,15 @@
-using System.Reflection;
-
-using AtlasLMS.Data.Configurations;
-using AtlasLMS.Domain.Entities;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace AtlasLMS.Data;
+using Unova.Domain.Entities;
 
-public class AtlasDbContext : IdentityDbContext<User, IdentityRole<int>, int>
+namespace Unova.Infrastructure;
+
+public class UnovaDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 {
     #region NEW
-    public AtlasDbContext(DbContextOptions<AtlasDbContext> options) : base(options) { }
+    public UnovaDbContext(DbContextOptions<UnovaDbContext> options) : base(options) { }
     #endregion
 
     #region DBSETS
@@ -32,7 +29,7 @@ public class AtlasDbContext : IdentityDbContext<User, IdentityRole<int>, int>
         base.OnModelCreating(builder);
 
         #region Entity Configurations
-        builder.ApplyConfigurationsFromAssembly(typeof(AtlasDbContext).Assembly);
+        builder.ApplyConfigurationsFromAssembly(typeof(UnovaDbContext).Assembly);
         #endregion
     }
     #endregion

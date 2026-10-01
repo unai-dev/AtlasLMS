@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Unova.Domain.Entities.Common;
 
-using AtlasLMS.Domain.Entities.Common;
+namespace Unova.Domain.Entities;
 
-namespace AtlasLMS.Domain.Entities;
-
-public class Address: BaseEntity
+public class Address : BaseEntity
 {
     #region Properties
     public string MainAddress { get; set; } = null!;

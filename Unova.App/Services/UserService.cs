@@ -1,29 +1,28 @@
-﻿using AtlasLMS.Application.Contracts;
-using AtlasLMS.Data;
-using AtlasLMS.Domain;
-using AtlasLMS.Domain.Entities;
-using AtlasLMS.Domain.Exceptions;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.DTOs.Update;
-
-using AutoMapper;
+﻿using AutoMapper;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace AtlasLMS.Application.Services;
+using Unova.App.Contracts;
+using Unova.Domain;
+using Unova.Domain.Entities;
+using Unova.Infrastructure;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
+using Unova.Shared.DTOs.Update;
+
+namespace Unova.App.Services;
 
 public class UserService : IUserService
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _accessor;
-    private readonly AtlasDbContext _context;
+    private readonly UnovaDbContext _context;
 
-    public UserService(UserManager<User> userManager, IMapper mapper, IHttpContextAccessor accessor, AtlasDbContext context)
+    public UserService(UserManager<User> userManager, IMapper mapper, IHttpContextAccessor accessor, UnovaDbContext context)
     {
         _userManager = userManager;
         _mapper = mapper;

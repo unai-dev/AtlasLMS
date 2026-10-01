@@ -2,19 +2,18 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-using AtlasLMS.Application.Contracts;
-using AtlasLMS.Domain.Entities;
-using AtlasLMS.Domain.Exceptions;
-using AtlasLMS.Shared.DTOs.Auth;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.Responses;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AtlasLMS.Application.Services;
+using Unova.App.Contracts;
+using Unova.Domain.Entities;
+using Unova.Shared.DTOs.Auth;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.Responses;
+
+namespace Unova.App.Services;
 
 public class AuthService : IAuthService
 {
@@ -52,7 +51,7 @@ public class AuthService : IAuthService
         var user = new User
         {
             CIF = dto.CIF,
-            UserName =  dto.UserName ?? dto.Email.Split("@")[0],
+            UserName = dto.UserName ?? dto.Email.Split("@")[0],
             Email = dto.Email
         };
 

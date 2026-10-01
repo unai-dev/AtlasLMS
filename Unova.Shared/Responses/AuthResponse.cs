@@ -1,3 +1,3 @@
-namespace AtlasLMS.Shared.Responses;
+namespace Unova.Shared.Responses;
 
 public record AuthResponse(string Token, DateTime Expiration);

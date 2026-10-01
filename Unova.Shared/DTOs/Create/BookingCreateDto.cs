@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace AtlasLMS.Shared.DTOs.Create;
+namespace Unova.Shared.DTOs.Create;
 
 public class BookingCreateDto
 {

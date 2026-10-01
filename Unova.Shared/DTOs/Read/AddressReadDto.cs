@@ -1,6 +1,6 @@
-﻿using AtlasLMS.Shared.DTOs.Common;
+﻿using Unova.Shared.DTOs.Common;
 
-namespace AtlasLMS.Shared.DTOs.Read;
+namespace Unova.Shared.DTOs.Read;
 
 public class AddressReadDto : BaseDto
 {

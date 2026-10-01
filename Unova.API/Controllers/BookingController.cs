@@ -1,13 +1,12 @@
-﻿using AtlasLMS.Application.Contracts;
-using AtlasLMS.Domain.Entities;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AtlasLMS.API.Controllers;
+using Unova.App.Contracts;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
+
+namespace Unova.API.Controllers;
 
 [ApiController]
 [Route("api/bookings")]

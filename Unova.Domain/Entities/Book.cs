@@ -1,8 +1,6 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using Unova.Domain.Entities.Common;
 
-using AtlasLMS.Domain.Entities.Common;
-
-namespace AtlasLMS.Domain.Entities;
+namespace Unova.Domain.Entities;
 
 public class Book : BaseEntity
 {

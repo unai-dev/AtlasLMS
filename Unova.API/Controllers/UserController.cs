@@ -1,12 +1,12 @@
-﻿using AtlasLMS.Application.Contracts;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
-using AtlasLMS.Shared.DTOs.Update;
+﻿using Microsoft.AspNetCore.Mvc;
 
-using Microsoft.AspNetCore.Mvc;
+using Unova.App.Contracts;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
+using Unova.Shared.DTOs.Update;
 
-namespace AtlasLMS.API.Controllers;
+namespace Unova.API.Controllers;
 
 [ApiController]
 [Route("api/users")]
@@ -38,7 +38,7 @@ public class UserController : ControllerBase
     [Route("detail/{ID}")]
     public async Task<ActionResult<UserDetailDto>> GetDetail([FromRoute] int ID) =>
         Ok(await _userService.GetDetail(ID));
-    
+
     [HttpPost]
     public async Task<ActionResult<UserReadDto>> Post([FromBody] UserCreateDto dto)
     {

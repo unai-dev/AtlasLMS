@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using AtlasLMS.Domain.Entities;
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AtlasLMS.Data.Configurations;
+using Unova.Domain.Entities;
 
-public class CenterConfiguration: IEntityTypeConfiguration<Center>
+namespace Unova.Infrastructure.Configurations;
+
+public class CenterConfiguration : IEntityTypeConfiguration<Center>
 {
     public void Configure(EntityTypeBuilder<Center> builder)
     {

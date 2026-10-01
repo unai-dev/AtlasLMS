@@ -1,24 +1,23 @@
-﻿using AtlasLMS.Application.Contracts;
-using AtlasLMS.Data;
-using AtlasLMS.Domain.Entities;
-using AtlasLMS.Domain.Exceptions;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
-
-using AutoMapper;
+﻿using AutoMapper;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace AtlasLMS.Application.Services;
+using Unova.App.Contracts;
+using Unova.Domain.Entities;
+using Unova.Infrastructure;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
+
+namespace Unova.App.Services;
 
 public class CenterService : ICenterService
 {
     private readonly IUserService _userService;
-    private readonly AtlasDbContext _context;
+    private readonly UnovaDbContext _context;
     private readonly IMapper _mapper;
 
-    public CenterService(IUserService userService, AtlasDbContext context, IMapper mapper)
+    public CenterService(IUserService userService, UnovaDbContext context, IMapper mapper)
     {
         _userService = userService;
         _context = context;

@@ -1,23 +1,16 @@
-﻿using AtlasLMS.Application.Contracts;
-using AtlasLMS.Data;
-using AtlasLMS.Domain.Entities;
-using AtlasLMS.Domain.Exceptions;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
-
-using AutoMapper;
+﻿using AutoMapper;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace AtlasLMS.Application.Services;
+
+namespace Unova.App.Services;
 
 public class AddressService : IAddressService
 {
-    private readonly AtlasDbContext _context;
+    private readonly UnovaDbContext _context;
     private readonly IMapper _mapper;
 
-    public AddressService(AtlasDbContext context, IMapper mapper)
+    public AddressService(UnovaDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

@@ -1,4 +1,4 @@
-namespace AtlasLMS.Domain.Entities.Common;
+namespace Unova.Domain.Entities.Common;
 
 public abstract class BaseEntity
 {

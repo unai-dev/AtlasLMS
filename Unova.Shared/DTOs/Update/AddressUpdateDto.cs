@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AtlasLMS.Shared.DTOs.Update;
+namespace Unova.Shared.DTOs.Update;
 
 public class AddressUpdateDto
 {

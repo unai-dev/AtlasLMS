@@ -1,4 +1,4 @@
-namespace AtlasLMS.Shared.DTOs.Common;
+namespace Unova.Shared.DTOs.Common;
 
 public abstract class BaseDto
 {

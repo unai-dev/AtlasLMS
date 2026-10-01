@@ -1,5 +1,4 @@
-﻿
-namespace AtlasLMS.Domain;
+﻿namespace Unova.Domain;
 
 #region EBookingStatus
 public enum EBookingStatus

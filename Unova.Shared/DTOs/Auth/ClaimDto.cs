@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AtlasLMS.Shared.DTOs.Auth;
+namespace Unova.Shared.DTOs.Auth;
 
 public class ClaimDto
 {

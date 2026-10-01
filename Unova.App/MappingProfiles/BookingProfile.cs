@@ -1,11 +1,11 @@
-using AtlasLMS.Domain.Entities;
-using AtlasLMS.Shared.DTOs.Create;
-using AtlasLMS.Shared.DTOs.Detail;
-using AtlasLMS.Shared.DTOs.Read;
-
 using AutoMapper;
 
-namespace AtlasLMS.Application.MappingProfiles;
+using Unova.Domain.Entities;
+using Unova.Shared.DTOs.Create;
+using Unova.Shared.DTOs.Detail;
+using Unova.Shared.DTOs.Read;
+
+namespace Unova.App.MappingProfiles;
 
 public class BookingProfile : Profile
 {
@@ -13,7 +13,7 @@ public class BookingProfile : Profile
     {
         // Booking -> ReadDto
         CreateMap<Booking, BookingReadDto>().ReverseMap();
-        
+
         // Booking -> DetailDto
         CreateMap<Booking, BookingDetailDto>().ReverseMap();
 

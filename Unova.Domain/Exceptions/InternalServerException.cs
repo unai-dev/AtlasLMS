@@ -1,4 +1,4 @@
-﻿namespace AtlasLMS.Domain.Exceptions;
+﻿namespace Unova.Domain.Exceptions;
 
 public class InternalServerException : Exception
 {

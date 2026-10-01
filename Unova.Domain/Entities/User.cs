@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace AtlasLMS.Domain.Entities;
+namespace Unova.Domain.Entities;
 
 public class User : IdentityUser<int>
 {
