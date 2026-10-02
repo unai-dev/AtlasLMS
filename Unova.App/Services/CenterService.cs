@@ -42,7 +42,7 @@ public class CenterService : ICenterService
     {
         var center = await _context.Centers
             .Include(x => x.Enterprise)
-            .Include(x => x.Copies)
+            .Include(x => x.Locations)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"Center with ID {ID} not found.");

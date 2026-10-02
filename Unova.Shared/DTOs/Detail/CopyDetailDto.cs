@@ -7,9 +7,7 @@ public class CopyDetailDto : CopyReadDto
     #region Related Properties
     public int BookID { get; set; }
     public BookReadDto? Book { get; set; }
-    public int CenterID { get; set; }
-    public CenterReadDto? Center { get; set; }
-    public int? LocationID { get; set; }
+    public int LocationID { get; set; }
     public LocationReadDto? Location { get; set; }
     #endregion
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Unova.Infrastructure;
 
@@ -11,9 +12,11 @@ using Unova.Infrastructure;
 namespace Unova.Infrastructure.Migrations
 {
     [DbContext(typeof(UnovaDbContext))]
-    partial class UnovaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261002111547_FixCenterRelations")]
+    partial class FixCenterRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

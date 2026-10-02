@@ -14,7 +14,7 @@ public class Center : UnovaEntity
     public int EnterpriseID { get; set; }
     public Enterprise? Enterprise { get; set; }
 
-    public List<Copy> Copies { get; set; } = new List<Copy>();
+    public List<Location> Locations { get; set; } = new List<Location>();
     public List<User> Users { get; set; } = new List<User>();
     #endregion
 }

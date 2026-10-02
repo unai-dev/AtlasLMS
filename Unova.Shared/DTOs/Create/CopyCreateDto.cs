@@ -10,7 +10,6 @@ public class CopyCreateDto
 
     #region Related properties
     public int BookID { get; set; }
-    public int CenterID { get; set; }
-    public int? LocationID { get; set; }
+    public int LocationID { get; set; }
     #endregion
 }
