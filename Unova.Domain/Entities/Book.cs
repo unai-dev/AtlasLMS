@@ -23,7 +23,7 @@ public class Book : BaseEntity
     public Location? Location { get; set; }
 
     public List<Booking> Bookings { get; set; } = new List<Booking>();
-    public List<Center> Centers = new List<Center>();
+    public List<Center> Centers { get; set; } = new List<Center>();
     public List<Copy> Copies { get; set; } = new List<Copy>();
     #endregion
 }

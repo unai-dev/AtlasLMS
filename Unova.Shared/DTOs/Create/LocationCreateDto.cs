@@ -14,4 +14,8 @@ public class LocationCreateDto
     public string Column { get; set; } = string.Empty;
     public int LimitOfBooks { get; set; }
     #endregion
+
+    #region Related properties
+    public int CenterID { get; set; }
+    #endregion
 }

@@ -5,6 +5,9 @@ namespace Unova.Shared.DTOs.Detail;
 public class LocationDetailDto : LocationReadDto
 {
     #region Related Properties
+    public int CenterID { get; set; }
+    public CenterReadDto? Center { get; set; }
+
     public List<BookReadDto> Books { get; set; } = new List<BookReadDto>();
     #endregion
 }
