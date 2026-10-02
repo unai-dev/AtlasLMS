@@ -1,6 +1,6 @@
 namespace Unova.Domain.Entities.Common;
 
-public abstract class BaseEntity
+public abstract class UnovaEntity
 {
     public int ID { get; set; }
     public bool IsActive { get; set; } = true;

@@ -2,7 +2,7 @@
 
 namespace Unova.Domain.Entities;
 
-public class Copy : BaseEntity
+public class Copy : UnovaEntity
 {
     #region Properties
     public string Code { get; set; } = null!;

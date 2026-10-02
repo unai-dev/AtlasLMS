@@ -2,7 +2,7 @@
 
 namespace Unova.Domain.Entities;
 
-public class Address : BaseEntity
+public class Address : UnovaEntity
 {
     #region Properties
     public string MainAddress { get; set; } = null!;

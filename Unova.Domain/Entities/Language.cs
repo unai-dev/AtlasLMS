@@ -2,7 +2,7 @@
 
 namespace Unova.Domain.Entities;
 
-public class Language : BaseEntity
+public class Language : UnovaEntity
 {
     #region Properties
     public string Iso639Code { get; set; } = null!;

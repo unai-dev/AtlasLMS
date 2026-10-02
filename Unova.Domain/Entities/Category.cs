@@ -2,7 +2,7 @@ using Unova.Domain.Entities.Common;
 
 namespace Unova.Domain.Entities;
 
-public class Category : BaseEntity
+public class Category : UnovaEntity
 {
     #region Properties
     public string Name { get; set; } = null!;

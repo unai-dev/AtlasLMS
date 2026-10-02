@@ -2,7 +2,7 @@ using Unova.Shared.DTOs.Common;
 
 namespace Unova.Shared.DTOs.Read;
 
-public class LocationReadDto : BaseDto
+public class LocationReadDto : UnovaDTO
 {
     public required string Aisle { get; set; }
     public required string Shelf { get; set; }

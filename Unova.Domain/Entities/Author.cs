@@ -2,7 +2,7 @@ using Unova.Domain.Entities.Common;
 
 namespace Unova.Domain.Entities;
 
-public class Author : BaseEntity
+public class Author : UnovaEntity
 {
     #region Properties
     public string FirstName { get; set; } = null!;

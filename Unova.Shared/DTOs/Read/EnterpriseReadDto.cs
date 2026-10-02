@@ -2,7 +2,7 @@
 
 namespace Unova.Shared.DTOs.Read;
 
-public class EnterpriseReadDto : BaseDto
+public class EnterpriseReadDto : UnovaDTO
 {
     #region Properties 
     public required string Name { get; set; }

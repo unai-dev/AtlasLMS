@@ -2,7 +2,7 @@ using Unova.Shared.DTOs.Common;
 
 namespace Unova.Shared.DTOs.Read;
 
-public class BookReadDto : BaseDto
+public class BookReadDto : UnovaDTO
 {
     public required string Title { get; set; }
     public required string ISBN { get; set; }

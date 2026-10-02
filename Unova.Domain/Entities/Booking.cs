@@ -2,7 +2,7 @@ using Unova.Domain.Entities.Common;
 
 namespace Unova.Domain.Entities;
 
-public class Booking : BaseEntity
+public class Booking : UnovaEntity
 {
     #region Properties
     public DateTime StartTime { get; set; }

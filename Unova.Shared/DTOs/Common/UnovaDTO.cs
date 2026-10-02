@@ -1,6 +1,6 @@
 namespace Unova.Shared.DTOs.Common;
 
-public abstract class BaseDto
+public abstract class UnovaDTO
 {
     public int ID { get; set; }
     public bool IsActive { get; set; }

@@ -2,7 +2,7 @@ using Unova.Domain.Entities.Common;
 
 namespace Unova.Domain.Entities;
 
-public class Location : BaseEntity
+public class Location : UnovaEntity
 {
     #region Properties
     public string Aisle { get; set; } = null!;
