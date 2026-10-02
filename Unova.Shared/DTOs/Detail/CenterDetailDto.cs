@@ -8,7 +8,7 @@ public class CenterDetailDto : CenterReadDto
     public int EnterpriseID { get; set; }
     public EnterpriseReadDto? Enterprise { get; set; }
 
-    public List<BookReadDto> Books { get; set; } = new List<BookReadDto>();
+    public List<CopyReadDto> Copies { get; set; } = new List<CopyReadDto>();
     public List<UserReadDto> Users { get; set; } = new List<UserReadDto>();
     #endregion
 }

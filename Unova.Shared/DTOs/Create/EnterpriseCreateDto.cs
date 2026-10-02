@@ -16,7 +16,6 @@ public class EnterpriseCreateDto
     #endregion
 
     #region Related Properties 
-    [Required]
     public int AddressID { get; set; }
     #endregion
 }

@@ -8,9 +8,9 @@ public class BookDetailDto : BookReadDto
     public int AuthorID { get; set; }
     public AuthorReadDto? Author { get; set; }
     public int CategoryID { get; set; }
-    public required string CategoryName { get; set; }
     public CategoryReadDto? Category { get; set; }
-    public int? LocationID { get; set; }
-    public LocationReadDto? Location { get; set; }
+
+    public List<CopyReadDto> Copies { get; set; } = new List<CopyReadDto>();
+    public List<BookingReadDto> Bookings { get; set; } = new List<BookingReadDto>();
     #endregion
 }

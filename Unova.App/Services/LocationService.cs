@@ -35,7 +35,7 @@ public class LocationService : ILocationService
     public async Task<LocationDetailDto> GetDetail(int ID)
     {
         var location = await _context.Locations
-            .Include(x => x.Books)
+            .Include(x => x.Copies)
             .Include(x => x.Center)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ID == ID)
@@ -68,10 +68,6 @@ public class LocationService : ILocationService
     {
         var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
             ?? throw new NotFoundException($"La localizacion con ID {ID} no existe");
-
-        var locationHaveAnyBook = await _context.Books.AnyAsync(x => x.LocationID == ID);
-        if (locationHaveAnyBook)
-            throw new BadRequestException($"La localizacion a eliminar, contiene libros");
 
         _context.Remove(location);
         await _context.SaveChangesAsync();

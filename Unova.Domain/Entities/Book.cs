@@ -19,11 +19,7 @@ public class Book : UnovaEntity
     public int CategoryID { get; set; }
     public Category? Category { get; set; }
 
-    public int? LocationID { get; set; }
-    public Location? Location { get; set; }
-
     public List<Booking> Bookings { get; set; } = new List<Booking>();
-    public List<Center> Centers { get; set; } = new List<Center>();
     public List<Copy> Copies { get; set; } = new List<Copy>();
     #endregion
 }

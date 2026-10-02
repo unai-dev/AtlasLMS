@@ -15,6 +15,6 @@ public class Location : UnovaEntity
     public int CenterID { get; set; }
     public Center? Center { get; set; }
 
-    public List<Book> Books { get; set; } = new List<Book>();
+    public List<Copy> Copies { get; set; } = new List<Copy>();
     #endregion
 }

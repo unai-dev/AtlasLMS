@@ -8,6 +8,6 @@ public class LocationDetailDto : LocationReadDto
     public int CenterID { get; set; }
     public CenterReadDto? Center { get; set; }
 
-    public List<BookReadDto> Books { get; set; } = new List<BookReadDto>();
+    public List<CopyReadDto> Copies { get; set; } = new List<CopyReadDto>();
     #endregion
 }
