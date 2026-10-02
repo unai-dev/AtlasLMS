@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using Unova.API.Controllers.Common;
 using Unova.App.Contracts;
 using Unova.Shared.DTOs.Create;
@@ -16,6 +17,10 @@ public class BookingController : UnovaController
     {
         _bookingService = bookingService;
     }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<BookingReadDto>>> GetAll()
+        => Ok(await _bookingService.GetAll());
 
     [HttpGet("user/{userID}")]
     public async Task<ActionResult<IEnumerable<BookingReadDto>>> GetByUser(int userID) =>
