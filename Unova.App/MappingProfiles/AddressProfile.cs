@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 
-using Unova.Shared.DTOs.Update;
-
 namespace Unova.App.MappingProfiles;
 
 public class AddressProfile : Profile
@@ -16,8 +14,5 @@ public class AddressProfile : Profile
 
         // CreateDto -> Address
         CreateMap<AddressCreateDto, Address>().ReverseMap();
-
-        // UpdateDto -> Address
-        CreateMap<AddressUpdateDto, Address>().ReverseMap();
     }
 }

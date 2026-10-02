@@ -15,5 +15,6 @@ public class Center : BaseEntity
     public Enterprise? Enterprise { get; set; }
 
     public List<Book> Books { get; set; } = new List<Book>();
+    public List<User> Users { get; set; } = new List<User>();
     #endregion
 }

@@ -9,5 +9,6 @@ public class CenterDetailDto : CenterReadDto
     public EnterpriseReadDto? Enterprise { get; set; }
 
     public List<BookReadDto> Books { get; set; } = new List<BookReadDto>();
+    public List<UserReadDto> Users { get; set; } = new List<UserReadDto>();
     #endregion
 }

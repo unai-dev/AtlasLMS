@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 
-using Unova.Shared.DTOs.Update;
-
 namespace Unova.App.MappingProfiles;
 
 public class CenterProfile : Profile
@@ -16,8 +14,5 @@ public class CenterProfile : Profile
 
         // CreateDto -> Center
         CreateMap<CenterCreateDto, Center>().ReverseMap();
-
-        // UpdateDto -> Center
-        CreateMap<CenterUpdateDto, Center>().ReverseMap();
     }
 }

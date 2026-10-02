@@ -4,7 +4,6 @@ using Unova.App.Contracts;
 using Unova.Shared.DTOs.Create;
 using Unova.Shared.DTOs.Detail;
 using Unova.Shared.DTOs.Read;
-using Unova.Shared.DTOs.Update;
 
 namespace Unova.API.Controllers;
 
@@ -43,11 +42,6 @@ public class UserController : UnovaController
         var result = await _userService.Create(dto);
         return CreatedAtAction(nameof(Get), new { ID = result.ID }, result);
     }
-
-    [HttpPut]
-    [Route("{ID}")]
-    public async Task<ActionResult<UserReadDto>> Put([FromRoute] int ID, [FromBody] UserUpdateDto dto) =>
-        Ok(await _userService.UpdateUserAsync(ID, dto));
 
     [HttpDelete]
     [Route("{ID}")]

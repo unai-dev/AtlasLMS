@@ -11,12 +11,14 @@ public class UserCreateDto
     public string CIF { get; set; } = string.Empty;
     [Required]
     public string Password { get; set; } = string.Empty;
+    [Required]
     [StringLength(25)]
-    public string? UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
     #endregion
 
     #region Related Properties
     public int EnterpriseID { get; set; }
     public int LanguageID { get; set; }
+    public int CenterID { get; set; }
     #endregion
 }

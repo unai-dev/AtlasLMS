@@ -18,6 +18,9 @@ public class User : IdentityUser<int>
     public int LanguageID { get; set; }
     public Language? Language { get; set; }
 
+    public int CenterID { get; set; }
+    public Center? Center { get; set; }
+
     public List<Booking> Bookings { get; set; } = new List<Booking>();
     #endregion
 }

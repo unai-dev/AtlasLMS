@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using Unova.Domain;
-using Unova.Shared.DTOs.Update;
 
 namespace Unova.App.Services;
 
@@ -58,6 +57,8 @@ public class UserService : IUserService
         var user = await _userManager.Users
             .Include(x => x.Enterprise)
             .Include(x => x.Bookings)
+            .Include(x => x.Center)
+            .Include(x => x.Language)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Email == claim.Value);
         return _mapper.Map<UserDetailDto>(user);
@@ -73,59 +74,21 @@ public class UserService : IUserService
         if (existsCIF)
             throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
 
-        //Si existe un usuario con el mismo nickname, lanzamos badrequest
-        if (!string.IsNullOrEmpty(dto.UserName))
-        {
-            var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName));
-            if (existsUsername)
-                throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
-        }
+        var enterprise = await _context.Enterprises
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ID == dto.EnterpriseID)
+            ?? throw new NotFoundException($"La empreas {dto.EnterpriseID} no existe");
 
-        //Si el DTO no contiene el nombre de usuario, guardamos la primera parte del email(unai@gmail.com) => unai
-        dto.UserName = !string.IsNullOrEmpty(dto.UserName) ? dto.UserName : dto.Email.Split("@")[0];
+        var existsCenter = await _context.Centers.AnyAsync(x => x.ID == dto.CenterID && x.EnterpriseID == enterprise.ID);
+        if (!existsCenter)
+            throw new NotFoundException($"El centro {dto.CenterID} no figura en la empresa");
+
+        var existsLanguage = await _context.Languages.AnyAsync(x => x.ID == dto.LanguageID);
+        if (!existsLanguage)
+            throw new NotFoundException($"El lenguaje {dto.LanguageID} no existe");
 
         var user = _mapper.Map<User>(dto);
         await _userManager.CreateAsync(user, dto.Password);
-        return _mapper.Map<UserReadDto>(user);
-    }
-
-    public async Task<UserReadDto> UpdateUserAsync(int ID, UserUpdateDto dto)
-    {
-        var user = await _userManager.FindByIdAsync(ID.ToString())
-            ?? throw new NotFoundException($"Usuario con ID {ID} no encontrado");
-
-        //Si el Email ya consta en nuestra base de datos, lanzamos badrequest
-        if (!string.IsNullOrEmpty(dto.Email))
-        {
-            var existsEmail = await _userManager.FindByEmailAsync(dto.Email!);
-            if (existsEmail is not null && existsEmail.Id != ID)
-                throw new BadRequestException($"El email {dto.Email} ya pertenece a nuestro sistema");
-        }
-
-        //Si el CIF ya consta en nuestra base de datos, lanzamos badrequest
-        if (!string.IsNullOrEmpty(dto.CIF))
-        {
-            var existsCIF = await _userManager.Users.AnyAsync(x => x.CIF.Equals(dto.CIF) && x.Id != ID);
-            if (existsCIF)
-                throw new BadRequestException($"El CIF {dto.CIF} ya pertenece a nuestro sistema");
-        }
-
-        //Si existe un usuario con el mismo nickname, lanzamos badrequest
-        if (!string.IsNullOrEmpty(dto.UserName))
-        {
-            var existsUsername = await _userManager.Users.AnyAsync(x => x.UserName!.Equals(dto.UserName) && x.Id != ID);
-            if (existsUsername)
-                throw new BadRequestException($"El nombre de usuario {dto.UserName} ya esta ocupado");
-        }
-
-        //Si el DTO no tiene la informacion, guardamos el valor anterior
-        user.Email = dto.Email ?? user.Email;
-        user.CIF = dto.CIF ?? user.CIF;
-        user.UserName = dto.UserName ?? user.UserName;
-
-        user.UpdatedAt = DateTime.UtcNow;
-
-        await _userManager.UpdateAsync(user);
         return _mapper.Map<UserReadDto>(user);
     }
 

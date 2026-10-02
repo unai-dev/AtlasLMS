@@ -4,7 +4,6 @@ using Unova.App.Contracts;
 using Unova.Shared.DTOs.Create;
 using Unova.Shared.DTOs.Detail;
 using Unova.Shared.DTOs.Read;
-using Unova.Shared.DTOs.Update;
 
 namespace Unova.API.Controllers;
 
@@ -36,11 +35,6 @@ public class EnterpriseController : UnovaController
         var result = await _enterpriseService.Create(dto);
         return CreatedAtAction(nameof(GetById), new { id = result.ID }, result);
     }
-
-    [HttpPut]
-    [Route("{id:int}")]
-    public async Task<ActionResult<EnterpriseReadDto>> Put([FromRoute] int ID, [FromBody] EnterpriseUpdateDto dto) =>
-        Ok(await _enterpriseService.UpdateEnterpriseAsync(ID, dto));
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)

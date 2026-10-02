@@ -1,7 +1,5 @@
 using AutoMapper;
 
-using Unova.Shared.DTOs.Update;
-
 namespace Unova.App.MappingProfiles;
 
 public class LanguageProfile : Profile
@@ -16,8 +14,5 @@ public class LanguageProfile : Profile
 
         // CreateDto -> Language
         CreateMap<LanguageCreateDto, Language>().ReverseMap();
-
-        // UpdateDto -> Language
-        CreateMap<LanguageUpdateDto, Language>().ReverseMap();
     }
 }

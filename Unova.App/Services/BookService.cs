@@ -3,7 +3,6 @@
 using Microsoft.EntityFrameworkCore;
 
 using Unova.Domain;
-using Unova.Shared.DTOs.Update;
 
 namespace Unova.App.Services;
 
@@ -85,64 +84,6 @@ public class BookService : IBookService
         return _mapper.Map<BookReadDto>(book);
     }
 
-    public async Task<BookReadDto> UpdateBookAsync(int ID, BookUpdateDto dto)
-    {
-        var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"El libro con ID {ID} no existe");
-
-        //Si el autor no existe, lanzamos badrequest
-        if (dto.AuthorID.HasValue)
-        {
-            var authorExists = await _context.Authors.AnyAsync(x => x.ID == dto.AuthorID);
-            if (!authorExists)
-                throw new NotFoundException($"El autor con el ID {dto.AuthorID} no existe");
-        }
-
-        //Si la categoria no existe, lanzamos badrequest
-        if (dto.CategoryID.HasValue)
-        {
-            var categoryExists = await _context.Categories.AnyAsync(x => x.ID == dto.CategoryID);
-            if (!categoryExists)
-                throw new NotFoundException($"La categoria con el ID {dto.CategoryID} no existe");
-        }
-
-        //Si la localizacion no existe, lanzamos badrequest
-        if (dto.LocationID.HasValue)
-        {
-            var locationExists = await _context.Locations.AnyAsync(x => x.ID == dto.LocationID);
-            if (!locationExists)
-                throw new NotFoundException($"La localizacion con el ID {dto.LocationID} no existe");
-        }
-
-        //Si el ISBN ya es ocupado por otro ejemplar, lanzamos badrequest
-        if (!string.IsNullOrEmpty(dto.ISBN))
-        {
-            var bookExists = await _context.Books.AnyAsync(x => x.ISBN.Equals(dto.ISBN) && x.ID != ID);
-            if (bookExists)
-                throw new BadRequestException($"El libro con ISBN {dto.ISBN} ya figura en nuestra base de datos");
-        }
-
-        //Si la fecha es mayor a la actual, lanzamos badrequest
-        if (dto.PublicationAt.HasValue && dto.PublicationAt > DateTime.UtcNow)
-            throw new BadRequestException($"La fecha de publicacion es invalida. No puede ser mayor a la actual");
-
-        //Si el DTO no contiene la informacion, guardamos el valor anterior
-        book.Title = dto.Title ?? book.Title;
-        book.ISBN = dto.ISBN ?? book.ISBN;
-        book.Synopsis = dto.Synopsis ?? book.Synopsis;
-
-        book.Stock = dto.Stock ?? book.Stock;
-        book.PublicationAt = dto.PublicationAt ?? book.PublicationAt;
-
-        book.AuthorID = dto.AuthorID ?? book.AuthorID;
-        book.CategoryID = dto.CategoryID ?? book.CategoryID;
-        book.LocationID = dto.LocationID ?? book.LocationID;
-
-        book.UpdatedAt = DateTime.UtcNow;
-
-        await _context.SaveChangesAsync();
-        return _mapper.Map<BookReadDto>(book);
-    }
     public async Task Delete(int ID)
     {
         var book = await _context.Books.FirstOrDefaultAsync(x => x.ID == ID)

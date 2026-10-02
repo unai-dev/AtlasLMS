@@ -2,8 +2,6 @@ using AutoMapper;
 
 using Microsoft.EntityFrameworkCore;
 
-using Unova.Shared.DTOs.Update;
-
 namespace Unova.App.Services;
 
 public class AuthorService : IAuthorService
@@ -57,29 +55,6 @@ public class AuthorService : IAuthorService
         _context.Add(author);
         await _context.SaveChangesAsync();
 
-        return _mapper.Map<AuthorReadDto>(author);
-    }
-
-    public async Task<AuthorReadDto> UpdateAuthorAsync(int ID, AuthorUpdateDto dto)
-    {
-        var author = await _context.Authors.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"El autor con ID {ID} no existe");
-
-        //Validamos que el usuario con el mismo nombre no exista
-        if (!string.IsNullOrEmpty(dto.FirstName) && !string.IsNullOrEmpty(dto.LastName))
-        {
-            var authorWithNameExists = await _context.Authors
-                .AnyAsync(x => x.FirstName.Equals(dto.FirstName) && x.LastName.Equals(dto.LastName));
-            if (authorWithNameExists)
-                throw new BadRequestException($"El autor {dto.FirstName} {dto.LastName} ya existe");
-        }
-
-        //Si el DTO no tiene la informacion, guardamos el valor anterior
-        author.FirstName = dto.FirstName ?? author.FirstName;
-        author.LastName = dto.LastName ?? author.LastName;
-        author.UpdatedAt = DateTime.UtcNow;
-
-        await _context.SaveChangesAsync();
         return _mapper.Map<AuthorReadDto>(author);
     }
 

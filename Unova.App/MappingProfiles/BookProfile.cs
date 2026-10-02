@@ -1,7 +1,5 @@
 using AutoMapper;
 
-using Unova.Shared.DTOs.Update;
-
 namespace Unova.App.MappingProfiles;
 
 public class BookProfile : Profile
@@ -18,8 +16,5 @@ public class BookProfile : Profile
 
         // CreateDto -> Book
         CreateMap<BookCreateDto, Book>().ReverseMap();
-
-        // UpdateDto -> Book
-        CreateMap<BookUpdateDto, Book>().ReverseMap();
     }
 }

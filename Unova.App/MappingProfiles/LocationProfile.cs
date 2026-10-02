@@ -1,7 +1,5 @@
 using AutoMapper;
 
-using Unova.Shared.DTOs.Update;
-
 namespace Unova.App.MappingProfiles;
 
 public class LocationProfile : Profile
@@ -16,8 +14,5 @@ public class LocationProfile : Profile
 
         // CreateDto -> Location
         CreateMap<LocationCreateDto, Location>().ReverseMap();
-
-        // UpdateDto -> Location
-        CreateMap<LocationUpdateDto, Location>().ReverseMap();
     }
 }

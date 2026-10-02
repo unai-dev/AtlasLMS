@@ -2,8 +2,6 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using Unova.Shared.DTOs.Update;
-
 namespace Unova.App.Services;
 
 public class LocationService : ILocationService
@@ -62,38 +60,6 @@ public class LocationService : ILocationService
 
         var location = _mapper.Map<Location>(dto);
         _context.Add(location);
-        await _context.SaveChangesAsync();
-        return _mapper.Map<LocationReadDto>(location);
-    }
-
-    public async Task<LocationReadDto> UpdateLocationAsync(int ID, LocationUpdateDto dto)
-    {
-        var location = await _context.Locations.FirstOrDefaultAsync(x => x.ID == ID)
-            ?? throw new NotFoundException($"Ubicaion con ID {ID} no encontrada");
-
-        //Normalizamos para guardar unicamente en mayusculas
-        if (!string.IsNullOrEmpty(dto.Shelf)) dto.Shelf = dto.Shelf.ToUpper();
-        if (!string.IsNullOrEmpty(dto.Column)) dto.Column = dto.Column.ToUpper();
-        if (!string.IsNullOrEmpty(dto.Aisle)) dto.Aisle = dto.Aisle.ToUpper();
-
-        //Si la localizacion concatenando, pasillo, columna y estante existe, lanzamos badrequest
-        var existsLocation = await _context.Locations.AnyAsync(
-            x => x.Column.Equals(dto.Column) &&
-            x.Shelf.Equals(dto.Shelf) &&
-            x.Aisle.Equals(dto.Aisle) &&
-            x.ID != ID);
-        if (existsLocation)
-            throw new BadRequestException($"Ya existe la localizacion introducida");
-
-        //En el caso que no venga la informacion en el DTO guardamos el valor anterior
-        location.Aisle = dto.Aisle ?? location.Aisle;
-        location.Column = dto.Column ?? location.Column;
-        location.Shelf = dto.Shelf ?? location.Shelf;
-
-        location.LimitOfBooks = dto.LimitOfBooks ?? location.LimitOfBooks;
-
-        location.UpdatedAt = DateTime.UtcNow;
-
         await _context.SaveChangesAsync();
         return _mapper.Map<LocationReadDto>(location);
     }
