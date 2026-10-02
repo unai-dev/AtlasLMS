@@ -15,6 +15,9 @@ public class User : IdentityUser<int>
     public int EnterpriseID { get; set; }
     public Enterprise? Enterprise { get; set; }
 
+    public int LanguageID { get; set; }
+    public Language? Language { get; set; }
+
     public List<Booking> Bookings { get; set; } = new List<Booking>();
     #endregion
 }

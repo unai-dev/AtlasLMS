@@ -479,6 +479,72 @@ namespace Unova.Infrastructure.Migrations
                     b.ToTable("asp_Enterprises", (string)null);
                 });
 
+            modelBuilder.Entity("Unova.Domain.Entities.Language", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Iso639Code")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(55)
+                        .HasColumnType("nvarchar(55)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("asp_Languages", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedAt = new DateTime(2026, 10, 2, 7, 18, 3, 987, DateTimeKind.Utc).AddTicks(9787),
+                            IsActive = true,
+                            Iso639Code = "ES",
+                            Name = "Español"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedAt = new DateTime(2026, 10, 2, 7, 18, 3, 988, DateTimeKind.Utc).AddTicks(1585),
+                            IsActive = true,
+                            Iso639Code = "EN",
+                            Name = "English"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CreatedAt = new DateTime(2026, 10, 2, 7, 18, 3, 988, DateTimeKind.Utc).AddTicks(1587),
+                            IsActive = true,
+                            Iso639Code = "EU",
+                            Name = "Euskera"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            CreatedAt = new DateTime(2026, 10, 2, 7, 18, 3, 988, DateTimeKind.Utc).AddTicks(1588),
+                            IsActive = true,
+                            Iso639Code = "FR",
+                            Name = "Français"
+                        });
+                });
+
             modelBuilder.Entity("Unova.Domain.Entities.Location", b =>
                 {
                     b.Property<int>("ID")
@@ -561,6 +627,9 @@ namespace Unova.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("LanguageID")
+                        .HasColumnType("int");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -600,6 +669,8 @@ namespace Unova.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EnterpriseID");
+
+                    b.HasIndex("LanguageID");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -763,6 +834,10 @@ namespace Unova.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Unova.Domain.Entities.Language", null)
+                        .WithMany("Users")
+                        .HasForeignKey("LanguageID");
+
                     b.Navigation("Enterprise");
                 });
 
@@ -797,6 +872,11 @@ namespace Unova.Infrastructure.Migrations
                 {
                     b.Navigation("Centers");
 
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Unova.Domain.Entities.Language", b =>
+                {
                     b.Navigation("Users");
                 });
 

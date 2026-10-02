@@ -14,4 +14,9 @@ public class UserCreateDto
     [StringLength(25)]
     public string? UserName { get; set; }
     #endregion
+
+    #region Related Properties
+    public int EnterpriseID { get; set; }
+    public int LanguageID { get; set; }
+    #endregion
 }

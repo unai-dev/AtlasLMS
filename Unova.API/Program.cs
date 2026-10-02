@@ -33,6 +33,7 @@ builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<ICenterService, CenterService>();
 builder.Services.AddScoped<ICopyService, CopyService>();
 builder.Services.AddScoped<IEnterpriseService, EnterpriseService>();
+builder.Services.AddScoped<ILanguageService, LanguageService>();
 #endregion
 
 #region AUTOMAPPER 
