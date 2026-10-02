@@ -1,18 +1,5 @@
-using AutoMapper;
+using Unova.App.MappingProfiles.Common;
 
-namespace Unova.App.MappingProfiles;
-
-public class LocationProfile : Profile
+public class LocationProfile : UnovaProfile<Location, LocationReadDto, LocationDetailDto, LocationCreateDto>
 {
-    public LocationProfile()
-    {
-        // Location -> ReadDto
-        CreateMap<Location, LocationReadDto>().ReverseMap();
-
-        // Location -> ReadDto
-        CreateMap<Location, LocationDetailDto>().ReverseMap();
-
-        // CreateDto -> Location
-        CreateMap<LocationCreateDto, Location>().ReverseMap();
-    }
 }

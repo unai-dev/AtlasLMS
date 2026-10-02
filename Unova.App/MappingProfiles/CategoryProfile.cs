@@ -1,15 +1,5 @@
-using AutoMapper;
+using Unova.App.MappingProfiles.Common;
 
-namespace Unova.App.MappingProfiles;
-
-public class CategoryProfile : Profile
+public class CategoryProfile : UnovaProfile<Category, CategoryReadDto, CategoryDetailDto, CategoryCreateDto>
 {
-    public CategoryProfile()
-    {
-        // Category -> ReadDto
-        CreateMap<Category, CategoryReadDto>().ReverseMap();
-
-        // CreateDto -> Category
-        CreateMap<CategoryCreateDto, Category>().ReverseMap();
-    }
 }

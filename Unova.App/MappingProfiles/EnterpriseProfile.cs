@@ -1,18 +1,5 @@
-﻿using AutoMapper;
+﻿using Unova.App.MappingProfiles.Common;
 
-namespace Unova.App.MappingProfiles;
-
-public class EnterpriseProfile : Profile
+public class EnterpriseProfile : UnovaProfile<Enterprise, EnterpriseReadDto, EnterpriseDetailDto, EnterpriseCreateDto>
 {
-    public EnterpriseProfile()
-    {
-        // Enterprise -> ReadDto
-        CreateMap<Enterprise, EnterpriseReadDto>().ReverseMap();
-
-        // Enterprise -> DetailDto
-        CreateMap<Enterprise, EnterpriseDetailDto>().ReverseMap();
-
-        // CreateDto -> Enterprise
-        CreateMap<EnterpriseCreateDto, Enterprise>().ReverseMap();
-    }
 }

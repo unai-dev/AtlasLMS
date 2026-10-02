@@ -1,18 +1,7 @@
-using AutoMapper;
+using Unova.App.MappingProfiles.Common;
 
 namespace Unova.App.MappingProfiles;
 
-public class AuthorProfile : Profile
+public class AuthorProfile : UnovaProfile<Author, AuthorReadDto, AuthorDetailDto, AuthorCreateDto>
 {
-    public AuthorProfile()
-    {
-        // Author -> ReadDto
-        CreateMap<Author, AuthorReadDto>().ReverseMap();
-
-        // Author -> DetailDto
-        CreateMap<Author, AuthorDetailDto>().ReverseMap();
-
-        // CreateDto -> Author
-        CreateMap<AuthorCreateDto, Author>().ReverseMap();
-    }
 }

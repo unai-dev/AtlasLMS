@@ -1,19 +1,5 @@
-using AutoMapper;
+using Unova.App.MappingProfiles.Common;
 
-namespace Unova.App.MappingProfiles;
-
-public class CopyProfile : Profile
+public class CopyProfile : UnovaProfile<Copy, CopyReadDto, CopyDetailDto, CopyCreateDto>
 {
-    public CopyProfile()
-    {
-        // Copy -> ReadDto
-        CreateMap<Copy, CopyReadDto>().ReverseMap();
-
-        // Copy -> DetailDto
-        CreateMap<Copy, CopyDetailDto>()
-            .ReverseMap();
-
-        // CreateDto -> Copy
-        CreateMap<CopyCreateDto, Copy>().ReverseMap();
-    }
 }

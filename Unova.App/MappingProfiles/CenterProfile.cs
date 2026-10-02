@@ -1,18 +1,5 @@
-﻿using AutoMapper;
+﻿using Unova.App.MappingProfiles.Common;
 
-namespace Unova.App.MappingProfiles;
-
-public class CenterProfile : Profile
+public class CenterProfile : UnovaProfile<Center, CenterReadDto, CenterDetailDto, CenterCreateDto>
 {
-    public CenterProfile()
-    {
-        // Center -> ReadDto
-        CreateMap<Center, CenterReadDto>().ReverseMap();
-
-        // Center -> DetailDto
-        CreateMap<Center, CenterDetailDto>().ReverseMap();
-
-        // CreateDto -> Center
-        CreateMap<CenterCreateDto, Center>().ReverseMap();
-    }
 }

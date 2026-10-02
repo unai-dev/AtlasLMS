@@ -1,18 +1,5 @@
-using AutoMapper;
+using Unova.App.MappingProfiles.Common;
 
-namespace Unova.App.MappingProfiles;
-
-public class LanguageProfile : Profile
+public class LanguageProfile : UnovaProfile<Language, LanguageReadDto, LanguageDetailDto, LanguageCreateDto>
 {
-    public LanguageProfile()
-    {
-        // Language -> ReadDto
-        CreateMap<Language, LanguageReadDto>().ReverseMap();
-
-        // Language -> DetailDto
-        CreateMap<Language, LanguageDetailDto>().ReverseMap();
-
-        // CreateDto -> Language
-        CreateMap<LanguageCreateDto, Language>().ReverseMap();
-    }
 }

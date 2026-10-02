@@ -1,20 +1,5 @@
-using AutoMapper;
+using Unova.App.MappingProfiles.Common;
 
-namespace Unova.App.MappingProfiles;
-
-public class BookProfile : Profile
+public class BookProfile : UnovaProfile<Book, BookReadDto, BookDetailDto, BookCreateDto>
 {
-    public BookProfile()
-    {
-        // Book -> ReadDto
-        CreateMap<Book, BookReadDto>().ReverseMap();
-
-        // Book -> DetailDto
-        CreateMap<Book, BookDetailDto>()
-            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category!.Name))
-            .ReverseMap();
-
-        // CreateDto -> Book
-        CreateMap<BookCreateDto, Book>().ReverseMap();
-    }
 }

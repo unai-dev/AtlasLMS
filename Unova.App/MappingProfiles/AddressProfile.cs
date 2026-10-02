@@ -1,18 +1,5 @@
-﻿using AutoMapper;
+﻿using Unova.App.MappingProfiles.Common;
 
-namespace Unova.App.MappingProfiles;
-
-public class AddressProfile : Profile
+public class AddressProfile : UnovaProfile<Address, AddressReadDto, AddressDetailDto, AddressCreateDto>
 {
-    public AddressProfile()
-    {
-        // Address -> ReadDto
-        CreateMap<Address, AddressReadDto>().ReverseMap();
-
-        // Address -> DetailDto
-        CreateMap<Address, AddressDetailDto>().ReverseMap();
-
-        // CreateDto -> Address
-        CreateMap<AddressCreateDto, Address>().ReverseMap();
-    }
 }

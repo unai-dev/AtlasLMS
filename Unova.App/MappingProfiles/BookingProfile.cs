@@ -1,18 +1,5 @@
-using AutoMapper;
+using Unova.App.MappingProfiles.Common;
 
-namespace Unova.App.MappingProfiles;
-
-public class BookingProfile : Profile
+public class BookingProfile : UnovaProfile<Booking, BookingReadDto, BookingDetailDto, BookingCreateDto>
 {
-    public BookingProfile()
-    {
-        // Booking -> ReadDto
-        CreateMap<Booking, BookingReadDto>().ReverseMap();
-
-        // Booking -> DetailDto
-        CreateMap<Booking, BookingDetailDto>().ReverseMap();
-
-        // CreateDto -> Booking
-        CreateMap<BookingCreateDto, Booking>().ReverseMap();
-    }
 }
