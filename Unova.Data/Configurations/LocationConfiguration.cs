@@ -20,7 +20,7 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
             .IsRequired()
             .HasMaxLength(5);
 
-        builder.Property(x => x.LimitOfBooks)
+        builder.Property(x => x.Limit)
             .HasDefaultValue(5);
     }
 }

@@ -8,7 +8,7 @@ public class Location : UnovaEntity
     public string Aisle { get; set; } = null!;
     public string Shelf { get; set; } = null!;
     public string Column { get; set; } = null!;
-    public int LimitOfBooks { get; set; } = 5;
+    public int Limit { get; set; } = 5;
     #endregion
 
     #region Related Properties
